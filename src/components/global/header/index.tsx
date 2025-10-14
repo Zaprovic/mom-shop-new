@@ -1,0 +1,54 @@
+import React from "react";
+import { Button } from "../../ui/button";
+import { Heart, ShoppingBag, Sparkles } from "lucide-react";
+import { ModeToggle } from "../mode-toggle";
+
+const Header = () => {
+  return (
+    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container mx-auto flex h-16 items-center justify-between px-4">
+        <div className="flex items-center gap-2">
+          <Sparkles className="h-6 w-6 text-primary" />
+          <span className="text-xl font-bold text-foreground">GlowBeauty</span>
+        </div>
+        <nav className="hidden md:flex items-center gap-6">
+          <a
+            href="#"
+            className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
+          >
+            Shop
+          </a>
+          <a
+            href="#"
+            className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
+          >
+            Skincare
+          </a>
+          <a
+            href="#"
+            className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
+          >
+            Makeup
+          </a>
+          <a
+            href="#"
+            className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
+          >
+            About
+          </a>
+        </nav>
+        <div className="flex items-center gap-2">
+          <Button variant="ghost" size="icon">
+            <Heart className="h-5 w-5" />
+          </Button>
+          <Button variant="ghost" size="icon">
+            <ShoppingBag className="h-5 w-5" />
+          </Button>
+          <ModeToggle />
+        </div>
+      </div>
+    </header>
+  );
+};
+
+export default Header;
