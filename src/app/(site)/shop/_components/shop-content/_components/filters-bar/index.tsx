@@ -11,7 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { SlidersHorizontal, Grid3x3, List, Search } from "lucide-react";
 
-interface FiltersBarProps {
+type props = {
   categories: string[];
   selectedCategory: string;
   onCategoryChange: (category: string) => void;
@@ -25,7 +25,7 @@ interface FiltersBarProps {
   totalCount: number;
   searchQuery: string;
   onSearchChange: (query: string) => void;
-}
+};
 
 export function FiltersBar({
   categories,
@@ -41,7 +41,7 @@ export function FiltersBar({
   totalCount,
   searchQuery,
   onSearchChange,
-}: FiltersBarProps) {
+}: props) {
   return (
     <section className="border-b bg-background sticky top-16 z-40">
       <div className="container mx-auto px-4 py-4">

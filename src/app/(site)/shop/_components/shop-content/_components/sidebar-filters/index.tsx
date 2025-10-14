@@ -6,19 +6,19 @@ import { Slider } from "@/components/ui/slider";
 import { Star, SlidersHorizontal } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 
-interface SidebarFiltersProps {
+type props = {
   priceRange: [number, number];
   onPriceRangeChange: (range: [number, number]) => void;
   onResetFilters: () => void;
   showFilters: boolean;
-}
+};
 
 export function SidebarFilters({
   priceRange,
   onPriceRangeChange,
   onResetFilters,
   showFilters,
-}: SidebarFiltersProps) {
+}: props) {
   return (
     <aside
       className={`lg:w-64 space-y-6 ${

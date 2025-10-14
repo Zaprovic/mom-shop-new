@@ -1,11 +1,11 @@
 import type { Product } from "@/types/product";
 import { ProductCard } from "../product-card";
 
-interface ProductGridProps {
+type props = {
   products: Product[];
-}
+};
 
-export function ProductGrid({ products }: ProductGridProps) {
+export function ProductGrid({ products }: props) {
   return (
     <div
       className="grid gap-6"
