@@ -1,11 +1,9 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { FiltersBar } from "../filters-bar";
-import { SidebarFilters } from "../sidebar-filters";
-import { ProductGrid } from "../product-grid";
-import { ProductList } from "../product-list";
-import { EmptyState } from "../empty-state";
+import { FiltersBar } from "./_components/filters-bar";
+import { SidebarFilters } from "./_components/sidebar-filters";
+import { EmptyState } from "./_components/empty-state";
 import { useMediaQuery } from "@/app/(site)/shop/hooks/use-media-query";
 import {
   Pagination,
@@ -18,6 +16,8 @@ import {
 } from "@/components/ui/pagination";
 import type { Product } from "@/types/product";
 import { ITEMS_PER_PAGE_DESKTOP_PAGINATION } from "../../utils/constants";
+import { ProductGrid } from "./_components/product-grid";
+import { ProductList } from "./_components/product-list";
 
 type props = {
   initialProducts: Product[];
