@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Slider } from "@/components/ui/slider";
 import { Star, SlidersHorizontal } from "lucide-react";
 
 interface SidebarFiltersProps {
@@ -36,13 +37,12 @@ export function SidebarFilters({
                 <span className="text-muted-foreground">Min</span>
                 <span className="font-medium">${priceRange[0]}</span>
               </div>
-              <input
-                type="range"
-                min="0"
-                max="100"
-                value={priceRange[0]}
-                onChange={(e) =>
-                  onPriceRangeChange([parseInt(e.target.value), priceRange[1]])
+              <Slider
+                min={0}
+                max={100}
+                value={priceRange}
+                onValueChange={(vals) =>
+                  onPriceRangeChange([Number(vals[0]), Number(vals[1])])
                 }
                 className="w-full"
               />
@@ -50,16 +50,6 @@ export function SidebarFilters({
                 <span className="text-muted-foreground">Max</span>
                 <span className="font-medium">${priceRange[1]}</span>
               </div>
-              <input
-                type="range"
-                min="0"
-                max="100"
-                value={priceRange[1]}
-                onChange={(e) =>
-                  onPriceRangeChange([priceRange[0], parseInt(e.target.value)])
-                }
-                className="w-full"
-              />
             </div>
           </div>
 
