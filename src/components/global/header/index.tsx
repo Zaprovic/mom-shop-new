@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "../../ui/button";
 import { Heart, ShoppingBag, Sparkles } from "lucide-react";
 import { ModeToggle } from "../mode-toggle";
+import Link from "next/link";
 
 const Header = () => {
   return (
@@ -9,15 +10,19 @@ const Header = () => {
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <div className="flex items-center gap-2">
           <Sparkles className="h-6 w-6 text-primary" />
-          <span className="text-xl font-bold text-foreground">GlowBeauty</span>
+          <Link href={"/"}>
+            <span className="text-xl font-bold text-foreground">
+              GlowBeauty
+            </span>
+          </Link>
         </div>
         <nav className="hidden md:flex items-center gap-6">
-          <a
-            href="#"
+          <Link
+            href="/shop"
             className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
           >
             Shop
-          </a>
+          </Link>
           <a
             href="#"
             className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
