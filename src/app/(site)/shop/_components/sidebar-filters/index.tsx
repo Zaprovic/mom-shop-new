@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Slider } from "@/components/ui/slider";
 import { Star, SlidersHorizontal } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
 
 interface SidebarFiltersProps {
   priceRange: [number, number];
@@ -62,7 +63,7 @@ export function SidebarFilters({
                   key={rating}
                   className="flex items-center gap-2 cursor-pointer hover:text-foreground text-muted-foreground transition-colors"
                 >
-                  <input type="checkbox" className="rounded" />
+                  <Checkbox className="rounded" />
                   <div className="flex items-center gap-1">
                     {[...Array(rating)].map((_, i) => (
                       <Star
@@ -82,11 +83,11 @@ export function SidebarFilters({
             <h3 className="font-semibold mb-4">Availability</h3>
             <div className="space-y-2">
               <label className="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" className="rounded" defaultChecked />
+                <Checkbox className="rounded" defaultChecked />
                 <span className="text-sm">In Stock</span>
               </label>
               <label className="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" className="rounded" />
+                <Checkbox className="rounded" />
                 <span className="text-sm">Out of Stock</span>
               </label>
             </div>
