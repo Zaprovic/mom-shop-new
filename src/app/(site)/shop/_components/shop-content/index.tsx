@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { FiltersBar } from "./_components/filters-bar";
 import { SidebarFilters } from "./_components/sidebar-filters";
 import { EmptyState } from "./_components/empty-state";
@@ -43,6 +43,31 @@ export function ShopContent({
   const loadMoreRef = useRef<HTMLDivElement>(null);
   const productsTopRef = useRef<HTMLDivElement>(null);
   const isDesktop = useMediaQuery("(min-width: 1024px)");
+
+  // Wrapped setters that reset pagination when filters change
+  const setSelectedCategoryWithReset = useCallback((category: string) => {
+    setSelectedCategory(category);
+    setCurrentPage(1);
+    setDisplayedItems(ITEMS_PER_PAGE_DESKTOP_PAGINATION);
+  }, []);
+
+  const setSortByWithReset = useCallback((sort: string) => {
+    setSortBy(sort);
+    setCurrentPage(1);
+    setDisplayedItems(ITEMS_PER_PAGE_DESKTOP_PAGINATION);
+  }, []);
+
+  const setPriceRangeWithReset = useCallback((range: [number, number]) => {
+    setPriceRange(range);
+    setCurrentPage(1);
+    setDisplayedItems(ITEMS_PER_PAGE_DESKTOP_PAGINATION);
+  }, []);
+
+  const setSearchQueryWithReset = useCallback((query: string) => {
+    setSearchQuery(query);
+    setCurrentPage(1);
+    setDisplayedItems(ITEMS_PER_PAGE_DESKTOP_PAGINATION);
+  }, []);
 
   // Filter and sort products
   const filteredProducts = initialProducts
@@ -90,12 +115,6 @@ export function ShopContent({
       )
     : filteredProducts.slice(0, displayedItems);
 
-  // Reset to first page/items when filters change
-  useEffect(() => {
-    setCurrentPage(1);
-    setDisplayedItems(ITEMS_PER_PAGE_DESKTOP_PAGINATION);
-  }, [selectedCategory, sortBy, priceRange, searchQuery]);
-
   // Scroll to top on pagination change (desktop only)
   useEffect(() => {
     if (isDesktop && productsTopRef.current) {
@@ -138,16 +157,16 @@ export function ShopContent({
   }, [isDesktop, displayedItems, filteredProducts.length]);
 
   const handleResetFilters = () => {
-    setSelectedCategory("All");
-    setPriceRange([0, 100]);
-    setSortBy("featured");
-    setSearchQuery("");
+    setSelectedCategoryWithReset("All");
+    setPriceRangeWithReset([0, 100]);
+    setSortByWithReset("featured");
+    setSearchQueryWithReset("");
   };
 
   const handleClearFilters = () => {
-    setSelectedCategory("All");
-    setPriceRange([0, 100]);
-    setSearchQuery("");
+    setSelectedCategoryWithReset("All");
+    setPriceRangeWithReset([0, 100]);
+    setSearchQueryWithReset("");
   };
 
   // Generate page numbers for pagination
@@ -187,17 +206,17 @@ export function ShopContent({
       <FiltersBar
         categories={categories}
         selectedCategory={selectedCategory}
-        onCategoryChange={setSelectedCategory}
+        onCategoryChange={setSelectedCategoryWithReset}
         sortOptions={sortOptions}
         sortBy={sortBy}
-        onSortChange={setSortBy}
+        onSortChange={setSortByWithReset}
         viewMode={viewMode}
         onViewModeChange={setViewMode}
         onToggleFilters={() => setShowFilters(!showFilters)}
         filteredCount={filteredProducts.length}
         totalCount={initialProducts.length}
         searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
+        onSearchChange={setSearchQueryWithReset}
       />
 
       {/* Main Content */}
@@ -206,7 +225,7 @@ export function ShopContent({
           {/* Sidebar Filters */}
           <SidebarFilters
             priceRange={priceRange}
-            onPriceRangeChange={setPriceRange}
+            onPriceRangeChange={setPriceRangeWithReset}
             onResetFilters={handleResetFilters}
             showFilters={showFilters}
           />
