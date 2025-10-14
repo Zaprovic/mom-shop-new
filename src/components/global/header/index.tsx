@@ -1,10 +1,15 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import { Button } from "../../ui/button";
-import { Heart, ShoppingBag, Sparkles } from "lucide-react";
+import { Heart, ShoppingBag, Sparkles, Menu } from "lucide-react";
 import { ModeToggle } from "../mode-toggle";
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from "../../ui/sheet";
 import Link from "next/link";
 
 const Header = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
@@ -50,8 +55,53 @@ const Header = () => {
             <ShoppingBag className="h-5 w-5" />
           </Button>
           <ModeToggle />
+          <Button
+            variant="ghost"
+            size="icon"
+            className="md:hidden"
+            onClick={() => setIsOpen(true)}
+          >
+            <Menu className="h-5 w-5" />
+          </Button>
         </div>
       </div>
+      <Sheet open={isOpen} onOpenChange={setIsOpen}>
+        <SheetContent side="left">
+          <SheetHeader>
+            <SheetTitle>Navigation</SheetTitle>
+          </SheetHeader>
+          <div className="flex flex-col gap-4">
+            <a
+              href="#"
+              className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
+              onClick={() => setIsOpen(false)}
+            >
+              Shop
+            </a>
+            <a
+              href="#"
+              className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
+              onClick={() => setIsOpen(false)}
+            >
+              Skincare
+            </a>
+            <a
+              href="#"
+              className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
+              onClick={() => setIsOpen(false)}
+            >
+              Makeup
+            </a>
+            <a
+              href="#"
+              className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
+              onClick={() => setIsOpen(false)}
+            >
+              About
+            </a>
+          </div>
+        </SheetContent>
+      </Sheet>
     </header>
   );
 };
