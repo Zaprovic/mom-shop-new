@@ -1,19 +1,34 @@
 import { Button } from "@/components/ui/button";
+import {
+  Empty,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+  EmptyDescription,
+  EmptyContent,
+} from "@/components/ui/empty";
 import { Sparkles } from "lucide-react";
 
-interface EmptyStateProps {
+type props = {
   onClearFilters: () => void;
-}
+};
 
-export function EmptyState({ onClearFilters }: EmptyStateProps) {
+export function EmptyState({ onClearFilters }: props) {
   return (
-    <div className="text-center py-16">
-      <Sparkles className="h-16 w-16 mx-auto text-muted-foreground mb-4" />
-      <h3 className="text-xl font-semibold mb-2">No products found</h3>
-      <p className="text-muted-foreground mb-6">
-        Try adjusting your filters or search criteria
-      </p>
-      <Button onClick={onClearFilters}>Clear Filters</Button>
-    </div>
+    <Empty>
+      <EmptyHeader>
+        <EmptyMedia variant="icon">
+          <Sparkles className="h-8 w-8 text-muted-foreground" />
+        </EmptyMedia>
+        <EmptyTitle>No products found</EmptyTitle>
+        <EmptyDescription>
+          Try adjusting your filters or search criteria
+        </EmptyDescription>
+      </EmptyHeader>
+
+      <EmptyContent>
+        <Button onClick={onClearFilters}>Clear Filters</Button>
+      </EmptyContent>
+    </Empty>
   );
 }
