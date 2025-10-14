@@ -8,7 +8,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { SlidersHorizontal, Grid3x3, List } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { SlidersHorizontal, Grid3x3, List, Search } from "lucide-react";
 
 interface FiltersBarProps {
   categories: string[];
@@ -22,6 +23,8 @@ interface FiltersBarProps {
   onToggleFilters: () => void;
   filteredCount: number;
   totalCount: number;
+  searchQuery: string;
+  onSearchChange: (query: string) => void;
 }
 
 export function FiltersBar({
@@ -36,11 +39,25 @@ export function FiltersBar({
   onToggleFilters,
   filteredCount,
   totalCount,
+  searchQuery,
+  onSearchChange,
 }: FiltersBarProps) {
   return (
     <section className="border-b bg-background sticky top-16 z-40">
       <div className="container mx-auto px-4 py-4">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          {/* Search Input */}
+          <div className="relative w-full md:max-w-sm">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              type="text"
+              placeholder="Search products..."
+              value={searchQuery}
+              onChange={(e) => onSearchChange(e.target.value)}
+              className="pl-9"
+            />
+          </div>
+
           {/* Category Pills */}
           <div className="flex flex-wrap items-center gap-2">
             {categories.map((category) => (

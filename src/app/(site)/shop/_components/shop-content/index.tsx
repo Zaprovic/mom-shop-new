@@ -35,6 +35,7 @@ export function ShopContent({
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 100]);
   const [showFilters, setShowFilters] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   // Pagination & Infinite Scroll
   const [currentPage, setCurrentPage] = useState(1);
@@ -46,10 +47,19 @@ export function ShopContent({
   // Filter and sort products
   const filteredProducts = initialProducts
     .filter((product) => {
+      // Category filter
       if (selectedCategory !== "All" && product.category !== selectedCategory)
         return false;
+      // Price range filter
       if (product.price < priceRange[0] || product.price > priceRange[1])
         return false;
+      // Search query filter
+      if (searchQuery.trim() !== "") {
+        const query = searchQuery.toLowerCase();
+        const matchesName = product.name.toLowerCase().includes(query);
+        const matchesCategory = product.category.toLowerCase().includes(query);
+        if (!matchesName && !matchesCategory) return false;
+      }
       return true;
     })
     .sort((a, b) => {
@@ -84,7 +94,7 @@ export function ShopContent({
   useEffect(() => {
     setCurrentPage(1);
     setDisplayedItems(ITEMS_PER_PAGE_DESKTOP_PAGINATION);
-  }, [selectedCategory, sortBy, priceRange]);
+  }, [selectedCategory, sortBy, priceRange, searchQuery]);
 
   // Scroll to top on pagination change (desktop only)
   useEffect(() => {
@@ -131,11 +141,13 @@ export function ShopContent({
     setSelectedCategory("All");
     setPriceRange([0, 100]);
     setSortBy("featured");
+    setSearchQuery("");
   };
 
   const handleClearFilters = () => {
     setSelectedCategory("All");
     setPriceRange([0, 100]);
+    setSearchQuery("");
   };
 
   // Generate page numbers for pagination
@@ -184,6 +196,8 @@ export function ShopContent({
         onToggleFilters={() => setShowFilters(!showFilters)}
         filteredCount={filteredProducts.length}
         totalCount={initialProducts.length}
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
       />
 
       {/* Main Content */}
