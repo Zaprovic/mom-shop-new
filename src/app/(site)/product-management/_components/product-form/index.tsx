@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -57,8 +57,6 @@ type FormData = {
 };
 
 export const ProductForm = ({ onSubmit }: ProductFormProps) => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
   const form = useForm<FormData>({
     resolver: zodResolver(productSchema),
     defaultValues: {
@@ -72,10 +70,10 @@ export const ProductForm = ({ onSubmit }: ProductFormProps) => {
     },
   });
 
+  const { isSubmitting } = form.formState;
+
   const handleSubmit = async (data: FormData) => {
     try {
-      setIsSubmitting(true);
-
       // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 500));
 
@@ -94,12 +92,8 @@ export const ProductForm = ({ onSubmit }: ProductFormProps) => {
         badge: null,
         inStock: true,
       });
-
-      // sonner handles toast lifecycle automatically
     } catch (error) {
       console.error("Error creating product:", error);
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
