@@ -42,22 +42,12 @@ const BADGE_OPTIONS = [
   { value: "limited", label: "Limited Edition" },
 ];
 
-interface ProductFormProps {
+type props = {
   onSubmit?: (data: ProductFormData) => void;
-}
-
-type FormData = {
-  name: string;
-  price: string;
-  category: string;
-  rating: string;
-  reviews: string;
-  badge?: string | null;
-  inStock: boolean;
 };
 
-export const ProductForm = ({ onSubmit }: ProductFormProps) => {
-  const form = useForm<FormData>({
+export const ProductForm = ({ onSubmit }: props) => {
+  const form = useForm<ProductFormData>({
     resolver: zodResolver(productSchema),
     defaultValues: {
       name: "",
@@ -72,14 +62,14 @@ export const ProductForm = ({ onSubmit }: ProductFormProps) => {
 
   const { isSubmitting } = form.formState;
 
-  const handleSubmit = async (data: FormData) => {
+  const handleSubmit = async (data: ProductFormData) => {
     try {
       // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 500));
 
       // Call the external onSubmit handler if provided
       if (onSubmit) {
-        onSubmit(data as ProductFormData);
+        onSubmit(data);
       }
 
       toast.success("Product created successfully!");

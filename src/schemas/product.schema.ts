@@ -47,3 +47,15 @@ export const productSchema = z.object({
 });
 
 export type ProductFormData = z.infer<typeof productSchema>;
+
+// Runtime product type (with parsed values and id)
+export type Product = {
+  id: number;
+  name: string;
+  price: number;
+  category: string;
+  rating: number;
+  reviews: number;
+  badge?: string | null;
+  inStock: boolean;
+};
