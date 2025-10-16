@@ -1,91 +1,29 @@
 "use client";
 
 import React from "react";
-import { toast } from "sonner";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { productSchema, type ProductFormData } from "@/schemas/product.schema";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormControl,
-  FormDescription,
-  FormMessage,
-} from "@/components/ui/form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Form } from "@/components/ui/form";
+import { FORM_MESSAGES, FORM_DEFAULT_VALUES } from "./utils/constants";
+import { type IProductFormProps } from "./types";
+import { ProductNameField } from "./_components/product-name-field";
+import { PriceField } from "./_components/price-field";
+import { CategoryField } from "./_components/category-field";
+import { RatingField } from "./_components/rating-field";
+import { ReviewsField } from "./_components/reviews-field";
+import { BadgeField } from "./_components/badge-field";
+import { StockField } from "./_components/stock-field";
+import { useProductForm } from "./hooks/use-product-form";
+import { useProductFormHandler } from "./hooks/use-product-form-handler";
 
-const PRODUCT_CATEGORIES = [
-  "Skincare",
-  "Makeup",
-  "Haircare",
-  "Fragrances",
-  "Wellness",
-];
-
-const BADGE_OPTIONS = [
-  { value: "best-seller", label: "Best Seller" },
-  { value: "new", label: "New" },
-  { value: "trending", label: "Trending" },
-  { value: "popular", label: "Popular" },
-  { value: "limited", label: "Limited Edition" },
-];
-
-type props = {
-  onSubmit?: (data: ProductFormData) => void;
-};
-
-export const ProductForm = ({ onSubmit }: props) => {
-  const form = useForm<ProductFormData>({
-    resolver: zodResolver(productSchema),
-    defaultValues: {
-      name: "",
-      price: "",
-      category: "",
-      rating: "5",
-      reviews: "0",
-      badge: null,
-      inStock: true,
-    },
-  });
-
+export const ProductForm = ({ onSubmit }: IProductFormProps) => {
+  const form = useProductForm();
   const { isSubmitting } = form.formState;
 
-  const handleSubmit = async (data: ProductFormData) => {
-    try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 500));
-
-      // Call the external onSubmit handler if provided
-      if (onSubmit) {
-        onSubmit(data);
-      }
-
-      toast.success("Product created successfully!");
-      form.reset({
-        name: "",
-        price: "",
-        category: "",
-        rating: "5",
-        reviews: "0",
-        badge: null,
-        inStock: true,
-      });
-    } catch (error) {
-      console.error("Error creating product:", error);
-    }
-  };
+  const { handleSubmit } = useProductFormHandler({
+    onSubmit,
+    resetForm: form.reset,
+  });
 
   return (
     <Card className="w-full">
@@ -98,202 +36,35 @@ export const ProductForm = ({ onSubmit }: props) => {
             onSubmit={form.handleSubmit(handleSubmit)}
             className="space-y-6"
           >
-            {/* Product Name */}
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Product Name</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Enter product name"
-                      {...field}
-                      disabled={isSubmitting}
-                    />
-                  </FormControl>
-                  <FormDescription>
-                    The name of your product (2-100 characters)
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <ProductNameField control={form.control} disabled={isSubmitting} />
 
-            {/* Price and Category Grid */}
             <div className="grid gap-6 md:grid-cols-2">
-              <FormField
-                control={form.control}
-                name="price"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Price ($)</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="0.00"
-                        type="number"
-                        step="0.01"
-                        min="0"
-                        {...field}
-                        disabled={isSubmitting}
-                      />
-                    </FormControl>
-                    <FormDescription>Product price in USD</FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="category"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Category</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                      disabled={isSubmitting}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select a category" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {PRODUCT_CATEGORIES.map((category) => (
-                          <SelectItem key={category} value={category}>
-                            {category}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              <PriceField control={form.control} disabled={isSubmitting} />
+              <CategoryField control={form.control} disabled={isSubmitting} />
             </div>
 
-            {/* Rating and Reviews Grid */}
             <div className="grid gap-6 md:grid-cols-2">
-              <FormField
-                control={form.control}
-                name="rating"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Rating</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="0"
-                        type="number"
-                        step="0.1"
-                        min="0"
-                        max="5"
-                        {...field}
-                        disabled={isSubmitting}
-                      />
-                    </FormControl>
-                    <FormDescription>Rating out of 5</FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="reviews"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Number of Reviews</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="0"
-                        type="number"
-                        min="0"
-                        {...field}
-                        disabled={isSubmitting}
-                      />
-                    </FormControl>
-                    <FormDescription>
-                      Total number of customer reviews
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              <RatingField control={form.control} disabled={isSubmitting} />
+              <ReviewsField control={form.control} disabled={isSubmitting} />
             </div>
 
-            {/* Badge */}
-            <FormField
-              control={form.control}
-              name="badge"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Badge (Optional)</FormLabel>
-                  <Select
-                    onValueChange={(value) =>
-                      field.onChange(value === "null" ? null : value)
-                    }
-                    value={field.value || "null"}
-                    disabled={isSubmitting}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select a badge or leave empty" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="null">No Badge</SelectItem>
-                      {BADGE_OPTIONS.map((badge) => (
-                        <SelectItem key={badge.value} value={badge.value}>
-                          {badge.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormDescription>
-                    Add a badge to highlight your product
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <BadgeField control={form.control} disabled={isSubmitting} />
 
-            {/* Stock Status */}
-            <FormField
-              control={form.control}
-              name="inStock"
-              render={({ field }) => (
-                <FormItem className="flex flex-row items-center gap-3 space-y-0">
-                  <FormControl>
-                    <Checkbox
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                      disabled={isSubmitting}
-                    />
-                  </FormControl>
-                  <div className="flex flex-col gap-1">
-                    <FormLabel className="font-medium">In Stock</FormLabel>
-                    <FormDescription>
-                      Is this product currently available?
-                    </FormDescription>
-                  </div>
-                </FormItem>
-              )}
-            />
+            <StockField control={form.control} disabled={isSubmitting} />
 
-            {/* Submit Button */}
             <div className="flex gap-3 pt-4">
               <Button type="submit" disabled={isSubmitting} className="flex-1">
-                {isSubmitting ? "Creating..." : "Create Product"}
+                {isSubmitting
+                  ? FORM_MESSAGES.submitLoading
+                  : FORM_MESSAGES.submitButton}
               </Button>
               <Button
                 type="button"
                 variant="outline"
                 disabled={isSubmitting}
-                onClick={() => form.reset()}
+                onClick={() => form.reset(FORM_DEFAULT_VALUES)}
               >
-                Reset
+                {FORM_MESSAGES.resetButton}
               </Button>
             </div>
           </form>
