@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { productSchema, type ProductFormData } from "@/schemas/product.schema";
@@ -57,7 +58,6 @@ type FormData = {
 
 export const ProductForm = ({ onSubmit }: ProductFormProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [successMessage, setSuccessMessage] = useState("");
 
   const form = useForm<FormData>({
     resolver: zodResolver(productSchema),
@@ -75,7 +75,6 @@ export const ProductForm = ({ onSubmit }: ProductFormProps) => {
   const handleSubmit = async (data: FormData) => {
     try {
       setIsSubmitting(true);
-      setSuccessMessage("");
 
       // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 500));
@@ -85,7 +84,7 @@ export const ProductForm = ({ onSubmit }: ProductFormProps) => {
         onSubmit(data as ProductFormData);
       }
 
-      setSuccessMessage("Product created successfully!");
+      toast.success("Product created successfully!");
       form.reset({
         name: "",
         price: "",
@@ -96,8 +95,7 @@ export const ProductForm = ({ onSubmit }: ProductFormProps) => {
         inStock: true,
       });
 
-      // Clear success message after 3 seconds
-      setTimeout(() => setSuccessMessage(""), 3000);
+      // sonner handles toast lifecycle automatically
     } catch (error) {
       console.error("Error creating product:", error);
     } finally {
@@ -111,12 +109,6 @@ export const ProductForm = ({ onSubmit }: ProductFormProps) => {
         <CardTitle>Create New Product</CardTitle>
       </CardHeader>
       <CardContent>
-        {successMessage && (
-          <div className="mb-6 rounded-lg border border-green-200 bg-green-50 p-4 text-sm text-green-800 dark:border-green-900/30 dark:bg-green-950/30 dark:text-green-300">
-            {successMessage}
-          </div>
-        )}
-
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(handleSubmit)}
