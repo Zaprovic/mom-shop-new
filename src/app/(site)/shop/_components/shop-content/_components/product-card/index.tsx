@@ -3,17 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Star, Heart, Sparkles } from "lucide-react";
-
-export type Product = {
-  id: number;
-  name: string;
-  price: number;
-  category: string;
-  rating: number;
-  reviews: number;
-  badge?: string | null;
-  inStock: boolean;
-};
+import { Product } from "@/types/product";
 
 type props = {
   product: Product;
