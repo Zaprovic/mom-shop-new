@@ -29,10 +29,10 @@ const Header = () => {
             Shop
           </Link>
           <a
-            href="#"
+            href="/product-management"
             className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
           >
-            Skincare
+            My products
           </a>
           <a
             href="#"
@@ -83,7 +83,7 @@ const Header = () => {
               className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
               onClick={() => setIsOpen(false)}
             >
-              Skincare
+              Manage my products
             </a>
             <a
               href="#"
