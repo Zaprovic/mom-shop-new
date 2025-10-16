@@ -71,13 +71,13 @@ const Header = () => {
             <SheetTitle>Navigation</SheetTitle>
           </SheetHeader>
           <div className="flex flex-col gap-4">
-            <a
-              href="#"
+            <Link
+              href="/shop"
               className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
               onClick={() => setIsOpen(false)}
             >
               Shop
-            </a>
+            </Link>
             <a
               href="#"
               className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
