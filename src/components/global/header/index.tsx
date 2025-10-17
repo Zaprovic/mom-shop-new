@@ -78,13 +78,13 @@ const Header = () => {
             >
               Shop
             </Link>
-            <a
-              href="#"
+            <Link
+              href="/product-management"
               className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
               onClick={() => setIsOpen(false)}
             >
               Manage my products
-            </a>
+            </Link>
             <a
               href="#"
               className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
