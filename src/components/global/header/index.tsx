@@ -80,6 +80,7 @@ const Header = () => {
             <Link
               href="/"
               className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
+              onClick={() => setIsOpen(false)}
             >
               Home
             </Link>
