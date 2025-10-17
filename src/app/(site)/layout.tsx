@@ -4,6 +4,8 @@ import "../globals.css";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import Header from "@/components/global/header";
 import { Toaster } from "@/components/ui/sonner";
+import { ClerkProvider, SignedOut, SignInButton } from "@clerk/nextjs";
+import { Button } from "@/components/ui/button";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -23,19 +25,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${poppins.variable} antialiased`}>
-        <ThemeProvider
-          attribute={"class"}
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Header />
-          <Toaster />
-          {children}
-        </ThemeProvider>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en" suppressHydrationWarning>
+        <body className={`${poppins.variable} antialiased`}>
+          <ThemeProvider
+            attribute={"class"}
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <Header />
+            <Toaster />
+            {children}
+          </ThemeProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
