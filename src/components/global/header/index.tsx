@@ -23,6 +23,12 @@ const Header = () => {
         </div>
         <nav className="hidden md:flex items-center gap-6">
           <Link
+            href="/"
+            className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
+          >
+            Home
+          </Link>
+          <Link
             href="/shop"
             className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
           >
@@ -71,6 +77,12 @@ const Header = () => {
             <SheetTitle>Navigation</SheetTitle>
           </SheetHeader>
           <div className="flex flex-col gap-4">
+            <Link
+              href="/"
+              className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
+            >
+              Home
+            </Link>
             <Link
               href="/shop"
               className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
