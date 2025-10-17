@@ -21,7 +21,7 @@ function ProductCardList({ product }: props) {
             <div className="w-28 h-28 bg-muted rounded-lg flex items-center justify-center flex-shrink-0 relative overflow-hidden">
               <Sparkles className="h-10 w-10 text-primary group-hover:scale-110 transition-transform" />
               {product.badge && (
-                <Badge className="absolute top-2 left-2 text-xs bg-background">
+                <Badge className="absolute top-2 left-2 text-xs bg-background text-foreground">
                   {product.badge}
                 </Badge>
               )}
@@ -88,7 +88,7 @@ function ProductCardGrid({ product }: props) {
 
             {/* Badges */}
             {product.badge && (
-              <Badge className="absolute top-3 left-3 bg-background">
+              <Badge className="absolute top-3 left-3 bg-background text-foreground">
                 {product.badge}
               </Badge>
             )}
