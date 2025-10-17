@@ -13,7 +13,7 @@ type props = {
 
 function ProductCardList({ product }: props) {
   return (
-    <Card className="group cursor-pointer hover:shadow-lg transition-all py-2">
+    <Card className="group cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-[1.01] py-2">
       <Link href={`/shop/${product.id}`}>
         <CardContent className="p-3">
           <div className="flex gap-3">
@@ -50,7 +50,7 @@ function ProductCardList({ product }: props) {
 
 function ProductCardGrid({ product }: props) {
   return (
-    <Card className="group cursor-pointer hover:shadow-xl transition-all p-0">
+    <Card className="group cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 p-0">
       <Link href={`/shop/${product.id}`}>
         <CardContent className="p-0">
           <ProductImage product={product} mode="grid" />
