@@ -6,6 +6,7 @@ import { Heart, ShoppingBag, Sparkles, Menu } from "lucide-react";
 import { ModeToggle } from "../mode-toggle";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "../../ui/sheet";
 import Link from "next/link";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,12 +29,14 @@ const Header = () => {
           >
             Shop
           </Link>
-          <a
-            href="/product-management"
-            className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
-          >
-            My products
-          </a>
+          <SignedIn>
+            <Link
+              href="/product-management"
+              className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
+            >
+              My products
+            </Link>
+          </SignedIn>
           <a
             href="#"
             className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
@@ -55,6 +58,19 @@ const Header = () => {
             <ShoppingBag className="h-5 w-5" />
           </Button>
           <ModeToggle />
+
+          {/* Authentication Section */}
+          <SignedOut>
+            <Link href="/sign-in">
+              <Button variant="default" size="sm" className="hidden md:flex">
+                Sign In
+              </Button>
+            </Link>
+          </SignedOut>
+          <SignedIn>
+            <UserButton afterSignOutUrl="/" />
+          </SignedIn>
+
           <Button
             variant="ghost"
             size="icon"
@@ -85,13 +101,15 @@ const Header = () => {
             >
               Shop
             </Link>
-            <Link
-              href="/product-management"
-              className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
-              onClick={() => setIsOpen(false)}
-            >
-              Manage my products
-            </Link>
+            <SignedIn>
+              <Link
+                href="/product-management"
+                className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
+                Manage my products
+              </Link>
+            </SignedIn>
             <a
               href="#"
               className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
@@ -106,6 +124,23 @@ const Header = () => {
             >
               About
             </a>
+
+            {/* Mobile Authentication */}
+            <div className="pt-4 border-t">
+              <SignedOut>
+                <Link href="/sign-in" onClick={() => setIsOpen(false)}>
+                  <Button variant="default" className="w-full">
+                    Sign In
+                  </Button>
+                </Link>
+              </SignedOut>
+              <SignedIn>
+                <div className="flex items-center gap-2">
+                  <UserButton afterSignOutUrl="/" />
+                  <span className="text-sm text-foreground/80">Account</span>
+                </div>
+              </SignedIn>
+            </div>
           </div>
         </SheetContent>
       </Sheet>
