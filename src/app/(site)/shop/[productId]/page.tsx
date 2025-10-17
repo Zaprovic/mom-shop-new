@@ -24,7 +24,7 @@ export default async function SingleProductPage({
           <CardContent className="text-center py-12">
             <h2 className="text-2xl font-bold mb-2">Product not found</h2>
             <p className="text-muted-foreground mb-4">
-              We couldn't find the product you're looking for.
+              We couldn&apos;t find the product you&apos;re looking for.
             </p>
             <Link href="/shop">
               <Button variant="outline">Back to shop</Button>
