@@ -3,17 +3,14 @@ import { type UseFormReset } from "react-hook-form";
 import { type ProductFormData } from "@/schemas/product.schema";
 import { FORM_DEFAULT_VALUES } from "../utils/constants";
 
-interface UseProductFormHandlerParams {
+type props = {
   onSubmit?: (data: ProductFormData) => void | Promise<void>;
   resetForm: UseFormReset<ProductFormData>;
-}
+};
 
 const API_CALL_DELAY = 500; // Simulated API call delay in ms
 
-export const useProductFormHandler = ({
-  onSubmit,
-  resetForm,
-}: UseProductFormHandlerParams) => {
+export const useProductFormHandler = ({ onSubmit, resetForm }: props) => {
   const handleSubmit = async (data: ProductFormData) => {
     try {
       // Simulate API call
