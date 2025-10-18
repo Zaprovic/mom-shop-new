@@ -115,5 +115,3 @@ export function PriceAndCTA({ product, mode }: PriceCTAProps) {
     </div>
   );
 }
-
-export default null;
