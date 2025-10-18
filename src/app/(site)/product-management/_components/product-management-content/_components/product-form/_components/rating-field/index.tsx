@@ -1,5 +1,5 @@
 import React from "react";
-import { Control } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import {
   FormField,
   FormItem,
@@ -10,24 +10,22 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { type ProductFormData } from "@/schemas/product.schema";
-import { FORM_MESSAGES } from "../../utils/constants";
 import { type IFormFieldProps } from "../../types";
 
-interface RatingFieldProps extends IFormFieldProps {
-  control: Control<ProductFormData>;
-}
+interface RatingFieldProps extends IFormFieldProps {}
 
-export const RatingField = ({ control, disabled }: RatingFieldProps) => {
+export const RatingField = ({ disabled }: RatingFieldProps) => {
+  const { control } = useFormContext<ProductFormData>();
   return (
     <FormField
       control={control}
       name="rating"
       render={({ field }) => (
         <FormItem>
-          <FormLabel>{FORM_MESSAGES.rating}</FormLabel>
+          <FormLabel>Rating</FormLabel>
           <FormControl>
             <Input
-              placeholder={FORM_MESSAGES.ratingPlaceholder}
+              placeholder="0"
               type="number"
               step="0.1"
               min="0"
@@ -36,7 +34,7 @@ export const RatingField = ({ control, disabled }: RatingFieldProps) => {
               disabled={disabled}
             />
           </FormControl>
-          <FormDescription>{FORM_MESSAGES.ratingDescription}</FormDescription>
+          <FormDescription>Rating out of 5</FormDescription>
           <FormMessage />
         </FormItem>
       )}

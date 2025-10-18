@@ -1,5 +1,5 @@
 import React from "react";
-import { Control } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import {
   FormField,
   FormItem,
@@ -15,21 +15,20 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { type ProductFormData } from "@/schemas/product.schema";
-import { PRODUCT_CATEGORIES, FORM_MESSAGES } from "../../utils/constants";
+import { PRODUCT_CATEGORIES } from "../../utils/constants";
 import { type IFormFieldProps } from "../../types";
 
-interface CategoryFieldProps extends IFormFieldProps {
-  control: Control<ProductFormData>;
-}
+interface CategoryFieldProps extends IFormFieldProps {}
 
-export const CategoryField = ({ control, disabled }: CategoryFieldProps) => {
+export const CategoryField = ({ disabled }: CategoryFieldProps) => {
+  const { control } = useFormContext<ProductFormData>();
   return (
     <FormField
       control={control}
       name="category"
       render={({ field }) => (
         <FormItem>
-          <FormLabel>{FORM_MESSAGES.category}</FormLabel>
+          <FormLabel>Category</FormLabel>
           <Select
             onValueChange={field.onChange}
             defaultValue={field.value}
@@ -37,7 +36,7 @@ export const CategoryField = ({ control, disabled }: CategoryFieldProps) => {
           >
             <FormControl>
               <SelectTrigger>
-                <SelectValue placeholder={FORM_MESSAGES.categoryPlaceholder} />
+                <SelectValue placeholder="Select a category" />
               </SelectTrigger>
             </FormControl>
             <SelectContent>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Control } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import {
   FormField,
   FormItem,
@@ -16,21 +16,20 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { type ProductFormData } from "@/schemas/product.schema";
-import { BADGE_OPTIONS, FORM_MESSAGES } from "../../utils/constants";
+import { BADGE_OPTIONS } from "../../utils/constants";
 import { type IFormFieldProps } from "../../types";
 
-interface BadgeFieldProps extends IFormFieldProps {
-  control: Control<ProductFormData>;
-}
+interface BadgeFieldProps extends IFormFieldProps {}
 
-export const BadgeField = ({ control, disabled }: BadgeFieldProps) => {
+export const BadgeField = ({ disabled }: BadgeFieldProps) => {
+  const { control } = useFormContext<ProductFormData>();
   return (
     <FormField
       control={control}
       name="badge"
       render={({ field }) => (
         <FormItem>
-          <FormLabel>{FORM_MESSAGES.badge}</FormLabel>
+          <FormLabel>Badge (Optional)</FormLabel>
           <Select
             onValueChange={(value) =>
               field.onChange(value === "null" ? null : value)
@@ -40,11 +39,11 @@ export const BadgeField = ({ control, disabled }: BadgeFieldProps) => {
           >
             <FormControl>
               <SelectTrigger>
-                <SelectValue placeholder={FORM_MESSAGES.badgePlaceholder} />
+                <SelectValue placeholder="Select a badge or leave empty" />
               </SelectTrigger>
             </FormControl>
             <SelectContent>
-              <SelectItem value="null">{FORM_MESSAGES.noBadge}</SelectItem>
+              <SelectItem value="null">No Badge</SelectItem>
               {BADGE_OPTIONS.map((badge: (typeof BADGE_OPTIONS)[number]) => (
                 <SelectItem key={badge.value} value={badge.value}>
                   {badge.label}
@@ -52,7 +51,9 @@ export const BadgeField = ({ control, disabled }: BadgeFieldProps) => {
               ))}
             </SelectContent>
           </Select>
-          <FormDescription>{FORM_MESSAGES.badgeDescription}</FormDescription>
+          <FormDescription>
+            Add a badge to highlight your product
+          </FormDescription>
           <FormMessage />
         </FormItem>
       )}

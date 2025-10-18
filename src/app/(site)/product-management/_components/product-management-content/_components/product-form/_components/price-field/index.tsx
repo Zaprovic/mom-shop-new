@@ -1,5 +1,5 @@
 import React from "react";
-import { Control } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import {
   FormField,
   FormItem,
@@ -10,24 +10,25 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { type ProductFormData } from "@/schemas/product.schema";
-import { FORM_MESSAGES } from "../../utils/constants";
 import { type IFormFieldProps } from "../../types";
+import { CircleDollarSign } from "lucide-react";
 
-interface PriceFieldProps extends IFormFieldProps {
-  control: Control<ProductFormData>;
-}
+interface PriceFieldProps extends IFormFieldProps {}
 
-export const PriceField = ({ control, disabled }: PriceFieldProps) => {
+export const PriceField = ({ disabled }: PriceFieldProps) => {
+  const { control } = useFormContext<ProductFormData>();
   return (
     <FormField
       control={control}
       name="price"
       render={({ field }) => (
         <FormItem>
-          <FormLabel>{FORM_MESSAGES.price}</FormLabel>
+          <FormLabel>
+            Price <CircleDollarSign className="size-4" />{" "}
+          </FormLabel>
           <FormControl>
             <Input
-              placeholder={FORM_MESSAGES.pricePlaceholder}
+              placeholder="0.00"
               type="number"
               step="0.01"
               min="0"
@@ -35,7 +36,7 @@ export const PriceField = ({ control, disabled }: PriceFieldProps) => {
               disabled={disabled}
             />
           </FormControl>
-          <FormDescription>{FORM_MESSAGES.priceDescription}</FormDescription>
+          <FormDescription>Product price in USD</FormDescription>
           <FormMessage />
         </FormItem>
       )}

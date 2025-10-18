@@ -1,5 +1,5 @@
 import React from "react";
-import { Control } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import {
   FormField,
   FormItem,
@@ -10,31 +10,29 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { type ProductFormData } from "@/schemas/product.schema";
-import { FORM_MESSAGES } from "../../utils/constants";
 import { type IFormFieldProps } from "../../types";
 
-interface ReviewsFieldProps extends IFormFieldProps {
-  control: Control<ProductFormData>;
-}
+interface ReviewsFieldProps extends IFormFieldProps {}
 
-export const ReviewsField = ({ control, disabled }: ReviewsFieldProps) => {
+export const ReviewsField = ({ disabled }: ReviewsFieldProps) => {
+  const { control } = useFormContext<ProductFormData>();
   return (
     <FormField
       control={control}
       name="reviews"
       render={({ field }) => (
         <FormItem>
-          <FormLabel>{FORM_MESSAGES.reviews}</FormLabel>
+          <FormLabel>Number of Reviews</FormLabel>
           <FormControl>
             <Input
-              placeholder={FORM_MESSAGES.reviewsPlaceholder}
+              placeholder="0"
               type="number"
               min="0"
               {...field}
               disabled={disabled}
             />
           </FormControl>
-          <FormDescription>{FORM_MESSAGES.reviewsDescription}</FormDescription>
+          <FormDescription>Total number of customer reviews</FormDescription>
           <FormMessage />
         </FormItem>
       )}

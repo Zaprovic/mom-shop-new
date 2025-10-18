@@ -1,7 +1,7 @@
 import { toast } from "sonner";
 import { type UseFormReset } from "react-hook-form";
 import { type ProductFormData } from "@/schemas/product.schema";
-import { FORM_DEFAULT_VALUES, FORM_MESSAGES } from "../utils/constants";
+import { FORM_DEFAULT_VALUES } from "../utils/constants";
 
 interface UseProductFormHandlerParams {
   onSubmit?: (data: ProductFormData) => void | Promise<void>;
@@ -24,7 +24,7 @@ export const useProductFormHandler = ({
         await onSubmit(data);
       }
 
-      toast.success(FORM_MESSAGES.submitSuccess);
+      toast.success("Product created successfully!");
       resetForm(FORM_DEFAULT_VALUES);
     } catch (error) {
       console.error("Error creating product:", error);

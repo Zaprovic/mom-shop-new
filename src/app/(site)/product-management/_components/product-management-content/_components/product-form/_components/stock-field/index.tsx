@@ -1,5 +1,5 @@
 import React from "react";
-import { Control } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import {
   FormField,
   FormItem,
@@ -9,14 +9,12 @@ import {
 } from "@/components/ui/form";
 import { Checkbox } from "@/components/ui/checkbox";
 import { type ProductFormData } from "@/schemas/product.schema";
-import { FORM_MESSAGES } from "../../utils/constants";
 import { type IFormFieldProps } from "../../types";
 
-interface StockFieldProps extends IFormFieldProps {
-  control: Control<ProductFormData>;
-}
+interface StockFieldProps extends IFormFieldProps {}
 
-export const StockField = ({ control, disabled }: StockFieldProps) => {
+export const StockField = ({ disabled }: StockFieldProps) => {
+  const { control } = useFormContext<ProductFormData>();
   return (
     <FormField
       control={control}
@@ -31,11 +29,9 @@ export const StockField = ({ control, disabled }: StockFieldProps) => {
             />
           </FormControl>
           <div className="flex flex-col gap-1">
-            <FormLabel className="font-medium">
-              {FORM_MESSAGES.inStock}
-            </FormLabel>
+            <FormLabel className="font-medium">In Stock</FormLabel>
             <FormDescription>
-              {FORM_MESSAGES.inStockDescription}
+              Is this product currently available?
             </FormDescription>
           </div>
         </FormItem>

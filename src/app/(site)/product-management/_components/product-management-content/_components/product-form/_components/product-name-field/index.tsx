@@ -1,5 +1,5 @@
 import React from "react";
-import { Control } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import {
   FormField,
   FormItem,
@@ -10,33 +10,28 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { type ProductFormData } from "@/schemas/product.schema";
-import { FORM_MESSAGES } from "../../utils/constants";
 import { type IFormFieldProps } from "../../types";
 
-interface ProductNameFieldProps extends IFormFieldProps {
-  control: Control<ProductFormData>;
-}
+interface props extends IFormFieldProps {}
 
-export const ProductNameField = ({
-  control,
-  disabled,
-}: ProductNameFieldProps) => {
+export const ProductNameField = ({ disabled }: props) => {
+  const { control } = useFormContext<ProductFormData>();
   return (
     <FormField
       control={control}
       name="name"
       render={({ field }) => (
         <FormItem>
-          <FormLabel>{FORM_MESSAGES.productName}</FormLabel>
+          <FormLabel>Product Name</FormLabel>
           <FormControl>
             <Input
-              placeholder={FORM_MESSAGES.productNamePlaceholder}
+              placeholder="Enter product name..."
               {...field}
               disabled={disabled}
             />
           </FormControl>
           <FormDescription>
-            {FORM_MESSAGES.productNameDescription}
+            The name of your product (2-100 characters)
           </FormDescription>
           <FormMessage />
         </FormItem>
