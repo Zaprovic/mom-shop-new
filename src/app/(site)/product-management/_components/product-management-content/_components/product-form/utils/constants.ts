@@ -4,7 +4,7 @@ export const PRODUCT_CATEGORIES = [
   "Haircare",
   "Fragrances",
   "Wellness",
-] as const;
+];
 
 export const BADGE_OPTIONS = [
   { value: "best-seller", label: "Best Seller" },
@@ -12,7 +12,7 @@ export const BADGE_OPTIONS = [
   { value: "trending", label: "Trending" },
   { value: "popular", label: "Popular" },
   { value: "limited", label: "Limited Edition" },
-] as const;
+];
 
 export const FORM_DEFAULT_VALUES = {
   name: "",
@@ -22,7 +22,7 @@ export const FORM_DEFAULT_VALUES = {
   reviews: "0",
   badge: null,
   inStock: true,
-} as const;
+};
 
 export const FORM_MESSAGES = {
   submitLoading: "Creating...",
@@ -49,4 +49,4 @@ export const FORM_MESSAGES = {
   noBadge: "No Badge",
   inStock: "In Stock",
   inStockDescription: "Is this product currently available?",
-} as const;
+};
