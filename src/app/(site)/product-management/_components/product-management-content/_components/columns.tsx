@@ -1,7 +1,6 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { Product } from "@/types/product";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { MoreHorizontal, Trash2 } from "lucide-react";
+import { ProductFormData } from "@/schemas/product.schema";
 
 interface ColumnsProps {
   onDelete: (id: number) => void;
@@ -20,7 +20,7 @@ interface ColumnsProps {
 
 export const createColumns = ({
   onDelete,
-}: ColumnsProps): ColumnDef<Product>[] => [
+}: ColumnsProps): ColumnDef<ProductFormData>[] => [
   {
     accessorKey: "name",
     header: "Name",

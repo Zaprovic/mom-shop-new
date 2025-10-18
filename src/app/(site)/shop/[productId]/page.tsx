@@ -1,11 +1,11 @@
 import React from "react";
 import { products } from "@/mock/products";
-import { Product } from "@/types/product";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Star, Heart, ShoppingCart, ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import { ProductFormData } from "@/schemas/product.schema";
 
 export default async function SingleProductPage({
   params,
@@ -15,7 +15,9 @@ export default async function SingleProductPage({
   const { productId } = await params;
 
   const idNum = parseInt(productId || "", 10);
-  const product = products.find((p) => p.id === idNum) as Product | undefined;
+  const product = products.find((p) => p.id === idNum) as
+    | ProductFormData
+    | undefined;
 
   if (!product) {
     return (
@@ -79,16 +81,19 @@ export default async function SingleProductPage({
           {/* Rating */}
           <div className="flex items-center gap-2 mb-6">
             <div className="flex items-center gap-1">
-              {[...Array(5)].map((_, i) => (
-                <Star
-                  key={i}
-                  className={`h-4 w-4 ${
-                    i < Math.floor(product.rating)
-                      ? "text-chart-4 fill-chart-4"
-                      : "text-muted fill-muted"
-                  }`}
-                />
-              ))}
+              {[...Array(5)].map((_, i) => {
+                const ratingNum = Number(product.rating) || 0;
+                return (
+                  <Star
+                    key={i}
+                    className={`h-4 w-4 ${
+                      i < Math.floor(ratingNum)
+                        ? "text-chart-4 fill-chart-4"
+                        : "text-muted fill-muted"
+                    }`}
+                  />
+                );
+              })}
             </div>
             <span className="text-sm text-muted-foreground">
               {product.rating} • {product.reviews} reviews

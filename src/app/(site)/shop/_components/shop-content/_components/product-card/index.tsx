@@ -1,13 +1,13 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Product } from "@/types/product";
 import { ProductImage, ProductRating, PriceAndCTA } from "./shared";
 import { Heart } from "lucide-react";
 import Link from "next/link";
+import { ProductFormData } from "@/schemas/product.schema";
 
 type props = {
-  product: Product;
+  product: ProductFormData;
   viewMode?: "grid" | "list";
 };
 

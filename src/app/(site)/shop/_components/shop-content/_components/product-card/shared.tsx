@@ -2,10 +2,10 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Star, Heart, Sparkles } from "lucide-react";
-import type { Product } from "@/types/product";
+import { ProductFormData } from "@/schemas/product.schema";
 
 type ImageProps = {
-  product: Product;
+  product: ProductFormData;
   mode: "grid" | "list";
 };
 
@@ -60,7 +60,7 @@ export function ProductImage({ product, mode }: ImageProps) {
 }
 
 type RatingProps = {
-  product: Product;
+  product: ProductFormData;
 };
 
 export function ProductRating({ product }: RatingProps) {
@@ -70,7 +70,7 @@ export function ProductRating({ product }: RatingProps) {
         <Star
           key={i}
           className={`h-3 w-3 ${
-            i < Math.floor(product.rating)
+            i < Math.floor(Number(product.rating) || 0)
               ? "text-chart-4 fill-chart-4"
               : "text-muted fill-muted"
           }`}
@@ -85,7 +85,7 @@ export function ProductRating({ product }: RatingProps) {
 }
 
 type PriceCTAProps = {
-  product: Product;
+  product: ProductFormData;
   mode: "grid" | "list";
 };
 

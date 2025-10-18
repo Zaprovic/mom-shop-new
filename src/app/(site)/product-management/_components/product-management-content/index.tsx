@@ -3,24 +3,23 @@
 import React, { useState } from "react";
 import { ProductForm } from "./_components/product-form";
 import { ProductFormData } from "@/schemas/product.schema";
-import type { Product } from "@/types/product";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { DataTable } from "./_components/data-table";
 import { createColumns } from "./_components/columns";
 
 export const ProductManagementContent = () => {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<ProductFormData[]>([]);
   const [isFormVisible, setIsFormVisible] = useState(false);
 
   const handleProductSubmit = (data: ProductFormData) => {
-    const newProduct: Product = {
+    const newProduct: ProductFormData = {
       id: Math.max(0, ...products.map((p) => p.id)) + 1,
       name: data.name,
-      price: parseFloat(data.price),
+      price: data.price,
       category: data.category,
-      rating: parseFloat(data.rating),
-      reviews: parseInt(data.reviews),
+      rating: data.rating,
+      reviews: data.reviews,
       badge: data.badge || null,
       inStock: data.inStock,
     };
@@ -108,7 +107,7 @@ export const ProductManagementContent = () => {
                 <p className="text-sm text-foreground/60">Average Rating</p>
                 <p className="text-3xl font-bold text-foreground">
                   {(
-                    products.reduce((sum, p) => sum + p.rating, 0) /
+                    products.reduce((sum, p) => sum + Number(p.rating), 0) /
                     products.length
                   ).toFixed(1)}
                 </p>
@@ -118,7 +117,10 @@ export const ProductManagementContent = () => {
               <CardContent className="flex flex-col gap-2 pt-6">
                 <p className="text-sm text-foreground/60">Total Value</p>
                 <p className="text-3xl font-bold text-foreground">
-                  ${products.reduce((sum, p) => sum + p.price, 0).toFixed(2)}
+                  $
+                  {products
+                    .reduce((sum, p) => sum + Number(p.price), 0)
+                    .toFixed(2)}
                 </p>
               </CardContent>
             </Card>

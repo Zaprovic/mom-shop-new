@@ -16,10 +16,10 @@ export const BADGE_OPTIONS = [
 
 export const FORM_DEFAULT_VALUES = {
   name: "",
-  price: "",
+  price: 0,
   category: "",
-  rating: "5",
-  reviews: "0",
+  rating: 5,
+  reviews: 0,
   badge: null,
   inStock: true,
 };

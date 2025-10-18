@@ -1,6 +1,6 @@
 import { products } from "@/mock/products";
-import { Product } from "@/types/product";
 import { ProductModalWrapper } from "../_components/product-modal";
+import { ProductFormData } from "@/schemas/product.schema";
 
 export default async function ProductInterceptPage({
   params,
@@ -9,7 +9,9 @@ export default async function ProductInterceptPage({
 }) {
   const { productId } = await params;
   const idNum = parseInt(productId || "", 10);
-  const product = products.find((p) => p.id === idNum) as Product | undefined;
+  const product = products.find((p) => p.id === idNum) as
+    | ProductFormData
+    | undefined;
 
   if (!product) {
     return null;

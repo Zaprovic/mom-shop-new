@@ -1,6 +1,6 @@
-import type { Product } from "@/types/product";
+import { ProductFormData } from "@/schemas/product.schema";
 
-export const products: Product[] = [
+export const products: ProductFormData[] = [
   {
     id: 1,
     name: "Radiant Glow Serum",

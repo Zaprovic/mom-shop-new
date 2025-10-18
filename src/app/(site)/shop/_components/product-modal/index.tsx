@@ -2,15 +2,15 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Product } from "@/types/product";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { X, ExternalLink, Star, Heart, ShoppingCart } from "lucide-react";
 import Link from "next/link";
+import { ProductFormData } from "@/schemas/product.schema";
 
 type Props = {
-  product: Product;
+  product: ProductFormData;
   onClose: () => void;
 };
 
@@ -141,16 +141,19 @@ export function ProductModal({ product, onClose }: Props) {
                 {/* Rating */}
                 <div className="flex items-center gap-2 mb-4">
                   <div className="flex items-center gap-1">
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        className={`h-4 w-4 ${
-                          i < Math.floor(product.rating)
-                            ? "text-chart-4 fill-chart-4"
-                            : "text-muted fill-muted"
-                        }`}
-                      />
-                    ))}
+                    {[...Array(5)].map((_, i) => {
+                      const ratingNum = Number(product.rating) || 0;
+                      return (
+                        <Star
+                          key={i}
+                          className={`h-4 w-4 ${
+                            i < Math.floor(ratingNum)
+                              ? "text-chart-4 fill-chart-4"
+                              : "text-muted fill-muted"
+                          }`}
+                        />
+                      );
+                    })}
                   </div>
                   <span className="text-sm text-muted-foreground">
                     {product.rating} • {product.reviews} reviews
@@ -221,7 +224,7 @@ export function ProductModal({ product, onClose }: Props) {
 }
 
 // Wrapper component for use in intercepting routes
-export function ProductModalWrapper({ product }: { product: Product }) {
+export function ProductModalWrapper({ product }: { product: ProductFormData }) {
   const router = useRouter();
 
   const handleClose = () => {

@@ -14,13 +14,13 @@ import {
   PaginationPrevious,
   PaginationEllipsis,
 } from "@/components/ui/pagination";
-import type { Product } from "@/types/product";
 import { ITEMS_PER_PAGE_DESKTOP_PAGINATION } from "../../utils/constants";
 import { ProductGrid } from "./_components/product-grid";
 import { ProductList } from "./_components/product-list";
+import { ProductFormData } from "@/schemas/product.schema";
 
 type props = {
-  initialProducts: Product[];
+  initialProducts: ProductFormData[];
   categories: string[];
   sortOptions: { label: string; value: string }[];
 };
@@ -76,7 +76,11 @@ export function ShopContent({
       if (selectedCategory !== "All" && product.category !== selectedCategory)
         return false;
       // Price range filter
-      if (product.price < priceRange[0] || product.price > priceRange[1])
+      const price =
+        typeof product.price === "string"
+          ? parseFloat(product.price)
+          : product.price;
+      if (Number.isNaN(price) || price < priceRange[0] || price > priceRange[1])
         return false;
       // Search query filter
       if (searchQuery.trim() !== "") {
@@ -88,15 +92,20 @@ export function ShopContent({
       return true;
     })
     .sort((a, b) => {
+      const priceA =
+        typeof a.price === "string" ? parseFloat(a.price) : a.price;
+      const priceB =
+        typeof b.price === "string" ? parseFloat(b.price) : b.price;
+
       switch (sortBy) {
         case "price-asc":
-          return a.price - b.price;
+          return (priceA ?? 0) - (priceB ?? 0);
         case "price-desc":
-          return b.price - a.price;
+          return (priceB ?? 0) - (priceA ?? 0);
         case "rating":
-          return b.rating - a.rating;
+          return Number(b.rating) - Number(a.rating);
         case "reviews":
-          return b.reviews - a.reviews;
+          return Number(b.reviews) - Number(a.reviews);
         default:
           return 0;
       }

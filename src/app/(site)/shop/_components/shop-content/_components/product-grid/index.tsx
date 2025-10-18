@@ -1,8 +1,8 @@
-import type { Product } from "@/types/product";
+import { ProductFormData } from "@/schemas/product.schema";
 import { ProductCard } from "../product-card";
 
 type props = {
-  products: Product[];
+  products: ProductFormData[];
 };
 
 export function ProductGrid({ products }: props) {

@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export const productSchema = z.object({
+  id: z.number(),
   name: z
     .string()
     .min(2, {
@@ -9,53 +10,20 @@ export const productSchema = z.object({
     .max(100, {
       message: "Product name must not exceed 100 characters.",
     }),
-  price: z
-    .string()
-    .refine((val) => !isNaN(parseFloat(val)), {
-      message: "Price must be a valid number.",
-    })
-    .refine((val) => parseFloat(val) > 0, {
-      message: "Price must be greater than 0.",
-    }),
+  price: z.coerce.number().min(0, {
+    message: "Price must be a non-negative number.",
+  }),
   category: z.string().min(1, {
     message: "Please select a category.",
   }),
-  rating: z
-    .string()
-    .refine((val) => !isNaN(parseFloat(val)), {
-      message: "Rating must be a valid number.",
-    })
-    .refine(
-      (val) => {
-        const num = parseFloat(val);
-        return num >= 0 && num <= 5;
-      },
-      {
-        message: "Rating must be between 0 and 5.",
-      }
-    ),
-  reviews: z
-    .string()
-    .refine((val) => !isNaN(parseInt(val)), {
-      message: "Reviews must be a valid number.",
-    })
-    .refine((val) => parseInt(val) >= 0, {
-      message: "Reviews cannot be negative.",
-    }),
+  rating: z.coerce.number().min(0).max(5, {
+    message: "Rating must be between 0 and 5.",
+  }),
+  reviews: z.coerce.number().min(0, {
+    message: "Number of reviews must be a non-negative integer.",
+  }),
   badge: z.union([z.string(), z.null()]).optional(),
   inStock: z.boolean(),
 });
 
 export type ProductFormData = z.infer<typeof productSchema>;
-
-// Runtime product type (with parsed values and id)
-export type Product = {
-  id: number;
-  name: string;
-  price: number;
-  category: string;
-  rating: number;
-  reviews: number;
-  badge?: string | null;
-  inStock: boolean;
-};
