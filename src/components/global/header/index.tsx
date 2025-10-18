@@ -7,6 +7,7 @@ import { ModeToggle } from "../mode-toggle";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "../../ui/sheet";
 import Link from "next/link";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import NavItem from "./_components/nav-item";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,32 +24,12 @@ const Header = () => {
           </Link>
         </div>
         <nav className="hidden md:flex items-center gap-6">
-          <Link
-            href="/shop"
-            className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
-          >
-            Shop
-          </Link>
+          <NavItem href="/shop">Shop</NavItem>
           <SignedIn>
-            <Link
-              href="/product-management"
-              className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
-            >
-              My products
-            </Link>
+            <NavItem href="/product-management">My products</NavItem>
           </SignedIn>
-          <a
-            href="#"
-            className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
-          >
-            Makeup
-          </a>
-          <a
-            href="#"
-            className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
-          >
-            About
-          </a>
+          <NavItem href="#">Makeup</NavItem>
+          <NavItem href="#">About</NavItem>
         </nav>
         <div className="flex items-center gap-2">
           <Button variant="ghost" size="icon">
@@ -87,43 +68,26 @@ const Header = () => {
             <SheetTitle>Navigation</SheetTitle>
           </SheetHeader>
           <div className="flex flex-col gap-4">
-            <Link
-              href="/"
-              className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
-              onClick={() => setIsOpen(false)}
-            >
+            <NavItem href="/" onClick={() => setIsOpen(false)}>
               Home
-            </Link>
-            <Link
-              href="/shop"
-              className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
-              onClick={() => setIsOpen(false)}
-            >
+            </NavItem>
+            <NavItem href="/shop" onClick={() => setIsOpen(false)}>
               Shop
-            </Link>
+            </NavItem>
             <SignedIn>
-              <Link
+              <NavItem
                 href="/product-management"
-                className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
                 onClick={() => setIsOpen(false)}
               >
                 Manage my products
-              </Link>
+              </NavItem>
             </SignedIn>
-            <a
-              href="#"
-              className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
-              onClick={() => setIsOpen(false)}
-            >
+            <NavItem href="#" onClick={() => setIsOpen(false)}>
               Makeup
-            </a>
-            <a
-              href="#"
-              className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
-              onClick={() => setIsOpen(false)}
-            >
+            </NavItem>
+            <NavItem href="#" onClick={() => setIsOpen(false)}>
               About
-            </a>
+            </NavItem>
 
             {/* Mobile Authentication */}
             <div className="pt-4 border-t">
