@@ -18,9 +18,7 @@ import { type ProductFormData } from "@/schemas/product.schema";
 import { PRODUCT_CATEGORIES } from "../../utils/constants";
 import { type IFormFieldProps } from "../../types";
 
-interface CategoryFieldProps extends IFormFieldProps {}
-
-export const CategoryField = ({ disabled }: CategoryFieldProps) => {
+export const CategoryField = ({ disabled }: IFormFieldProps) => {
   const { control } = useFormContext<ProductFormData>();
   return (
     <FormField

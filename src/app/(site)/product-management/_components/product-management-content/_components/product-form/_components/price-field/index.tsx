@@ -13,9 +13,7 @@ import { type ProductFormData } from "@/schemas/product.schema";
 import { type IFormFieldProps } from "../../types";
 import { CircleDollarSign } from "lucide-react";
 
-interface PriceFieldProps extends IFormFieldProps {}
-
-export const PriceField = ({ disabled }: PriceFieldProps) => {
+export const PriceField = ({ disabled }: IFormFieldProps) => {
   const { control } = useFormContext<ProductFormData>();
   return (
     <FormField

@@ -19,9 +19,7 @@ import { type ProductFormData } from "@/schemas/product.schema";
 import { BADGE_OPTIONS } from "../../utils/constants";
 import { type IFormFieldProps } from "../../types";
 
-interface BadgeFieldProps extends IFormFieldProps {}
-
-export const BadgeField = ({ disabled }: BadgeFieldProps) => {
+export const BadgeField = ({ disabled }: IFormFieldProps) => {
   const { control } = useFormContext<ProductFormData>();
   return (
     <FormField

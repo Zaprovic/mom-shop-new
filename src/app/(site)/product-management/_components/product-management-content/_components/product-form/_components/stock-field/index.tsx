@@ -11,9 +11,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { type ProductFormData } from "@/schemas/product.schema";
 import { type IFormFieldProps } from "../../types";
 
-interface StockFieldProps extends IFormFieldProps {}
-
-export const StockField = ({ disabled }: StockFieldProps) => {
+export const StockField = ({ disabled }: IFormFieldProps) => {
   const { control } = useFormContext<ProductFormData>();
   return (
     <FormField

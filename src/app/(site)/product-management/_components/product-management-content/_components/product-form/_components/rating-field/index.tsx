@@ -12,9 +12,7 @@ import { Input } from "@/components/ui/input";
 import { type ProductFormData } from "@/schemas/product.schema";
 import { type IFormFieldProps } from "../../types";
 
-interface RatingFieldProps extends IFormFieldProps {}
-
-export const RatingField = ({ disabled }: RatingFieldProps) => {
+export const RatingField = ({ disabled }: IFormFieldProps) => {
   const { control } = useFormContext<ProductFormData>();
   return (
     <FormField
