@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { FiltersBar } from "./_components/filters-bar";
 import { SidebarFilters } from "./_components/sidebar-filters";
 import { EmptyState } from "./_components/empty-state";
-import { useMediaQuery } from "@/app/(site)/shop/hooks/use-media-query";
+import { useMediaQuery } from "@/app/(pages)/shop/hooks/use-media-query";
 import {
   Pagination,
   PaginationContent,

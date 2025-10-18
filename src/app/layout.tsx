@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
-import "../globals.css";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import Header from "@/components/global/header";
 import { Toaster } from "@/components/ui/sonner";
 import { ClerkProvider } from "@clerk/nextjs";
+import "./globals.css";
 
 const poppins = Poppins({
   variable: "--font-poppins",
