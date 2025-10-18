@@ -13,11 +13,16 @@ import { RatingField } from "./_components/rating-field";
 import { ReviewsField } from "./_components/reviews-field";
 import { BadgeField } from "./_components/badge-field";
 import { StockField } from "./_components/stock-field";
-import { useProductForm } from "./hooks/use-product-form";
 import { useProductFormHandler } from "./hooks/use-product-form-handler";
+import { useForm } from "react-hook-form";
+import { ProductFormData, productSchema } from "@/schemas/product.schema";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export const ProductForm = ({ onSubmit }: IProductFormProps) => {
-  const form = useProductForm();
+  const form = useForm<ProductFormData>({
+    resolver: zodResolver(productSchema),
+    defaultValues: FORM_DEFAULT_VALUES,
+  });
   const { isSubmitting } = form.formState;
 
   const { handleSubmit } = useProductFormHandler({
