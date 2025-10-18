@@ -4,7 +4,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form } from "@/components/ui/form";
-import { FORM_MESSAGES, FORM_DEFAULT_VALUES } from "./utils/constants";
+import { FORM_DEFAULT_VALUES } from "./utils/constants";
 import { type IProductFormProps } from "./types";
 import { ProductNameField } from "./_components/product-name-field";
 import { PriceField } from "./_components/price-field";
@@ -36,27 +36,25 @@ export const ProductForm = ({ onSubmit }: IProductFormProps) => {
             onSubmit={form.handleSubmit(handleSubmit)}
             className="space-y-6"
           >
-            <ProductNameField control={form.control} disabled={isSubmitting} />
+            <ProductNameField disabled={isSubmitting} />
 
             <div className="grid gap-6 md:grid-cols-2">
-              <PriceField control={form.control} disabled={isSubmitting} />
-              <CategoryField control={form.control} disabled={isSubmitting} />
+              <PriceField disabled={isSubmitting} />
+              <CategoryField disabled={isSubmitting} />
             </div>
 
             <div className="grid gap-6 md:grid-cols-2">
-              <RatingField control={form.control} disabled={isSubmitting} />
-              <ReviewsField control={form.control} disabled={isSubmitting} />
+              <RatingField disabled={isSubmitting} />
+              <ReviewsField disabled={isSubmitting} />
             </div>
 
-            <BadgeField control={form.control} disabled={isSubmitting} />
+            <BadgeField disabled={isSubmitting} />
 
-            <StockField control={form.control} disabled={isSubmitting} />
+            <StockField disabled={isSubmitting} />
 
             <div className="flex gap-3 pt-4">
               <Button type="submit" disabled={isSubmitting} className="flex-1">
-                {isSubmitting
-                  ? FORM_MESSAGES.submitLoading
-                  : FORM_MESSAGES.submitButton}
+                {isSubmitting ? "Creating..." : "Create product"}
               </Button>
               <Button
                 type="button"
@@ -64,7 +62,7 @@ export const ProductForm = ({ onSubmit }: IProductFormProps) => {
                 disabled={isSubmitting}
                 onClick={() => form.reset(FORM_DEFAULT_VALUES)}
               >
-                {FORM_MESSAGES.resetButton}
+                Reset
               </Button>
             </div>
           </form>
