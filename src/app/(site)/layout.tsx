@@ -4,8 +4,7 @@ import "../globals.css";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import Header from "@/components/global/header";
 import { Toaster } from "@/components/ui/sonner";
-import { ClerkProvider, SignedOut, SignInButton } from "@clerk/nextjs";
-import { Button } from "@/components/ui/button";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const poppins = Poppins({
   variable: "--font-poppins",
