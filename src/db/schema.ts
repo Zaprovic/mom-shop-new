@@ -17,6 +17,28 @@ import { z } from "zod";
 
 // ------------------------------------------------------------------------
 
+export const user = pgTable("user", {
+  id: serial("id").primaryKey(),
+  email: varchar("email", { length: 255 }).notNull().unique(),
+  firstName: varchar("first_name", { length: 100 }).notNull(),
+  lastName: varchar("last_name", { length: 100 }).notNull(),
+});
+
+export const createUserSchema = createSelectSchema(user);
+export type CreateUserType = z.infer<typeof createUserSchema>;
+
+export const insertUserSchema = createInsertSchema(user);
+export type InsertUserType = z.infer<typeof insertUserSchema>;
+
+export const updateUserSchema = createUpdateSchema(user);
+export type UpdateUserType = z.infer<typeof updateUserSchema>;
+
+export const userRelations = relations(user, ({ many }) => ({
+  products: many(product),
+}));
+
+// ------------------------------------------------------------------------
+
 export const category = pgTable("category", {
   id: serial("id").primaryKey(),
   name: varchar("name", { length: 50 }).notNull().unique(),
@@ -44,6 +66,11 @@ export const product = pgTable("product", {
   rating: real("rating").default(0).notNull(),
   reviews: integer("reviews").default(0).notNull(),
   inStock: boolean("in_stock").default(true).notNull(),
+  userId: serial("user_id")
+    .notNull()
+    .references(() => user.id, {
+      onDelete: "cascade",
+    }),
 });
 
 export const createProductSchema = createSelectSchema(product);
@@ -55,8 +82,12 @@ export type InsertProductType = z.infer<typeof insertProductSchema>;
 export const updateProductSchema = createUpdateSchema(product);
 export type UpdateProductType = z.infer<typeof updateProductSchema>;
 
-export const productRelations = relations(product, ({ many }) => ({
+export const productRelations = relations(product, ({ many, one }) => ({
   productCategory: many(productCategory),
+  user: one(user, {
+    fields: [product.userId],
+    references: [user.id],
+  }),
 }));
 
 // ------------------------------------------------------------------------
