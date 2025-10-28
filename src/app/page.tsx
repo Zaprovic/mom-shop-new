@@ -8,13 +8,13 @@ import CTASection from "./_components/sections/cta-section";
 export default function Home() {
   return (
     <div className="min-h-screen bg-background">
-      <>
+      <div className="max-w-6xl mx-auto">
         <HeroSection />
         <CategoriesSection />
         <FeaturedProducts />
         <BenefitsSection />
         <CTASection />
-      </>
+      </div>
 
       <Footer />
     </div>
