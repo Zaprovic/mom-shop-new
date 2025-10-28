@@ -2,6 +2,7 @@ import { relations } from "drizzle-orm";
 import {
   boolean,
   integer,
+  pgSchema,
   pgTable,
   primaryKey,
   real,
@@ -15,10 +16,13 @@ import {
 } from "drizzle-zod";
 import { z } from "zod";
 
+export const shopSchema = pgSchema("shop");
+export const authSchema = pgSchema("auth");
+
 // ------------------------------------------------------------------------
 
-export const user = pgTable("user", {
-  id: serial("id").primaryKey(),
+export const user = authSchema.table("user", {
+  id: varchar("id", { length: 255 }).primaryKey(),
   email: varchar("email", { length: 255 }).notNull().unique(),
   firstName: varchar("first_name", { length: 100 }).notNull(),
   lastName: varchar("last_name", { length: 100 }).notNull(),
@@ -39,7 +43,7 @@ export const userRelations = relations(user, ({ many }) => ({
 
 // ------------------------------------------------------------------------
 
-export const category = pgTable("category", {
+export const category = shopSchema.table("category", {
   id: serial("id").primaryKey(),
   name: varchar("name", { length: 50 }).notNull().unique(),
 });
@@ -59,14 +63,14 @@ export const categoryRelations = relations(category, ({ many }) => ({
 
 // ------------------------------------------------------------------------
 
-export const product = pgTable("product", {
+export const product = shopSchema.table("product", {
   id: serial("id").primaryKey(),
   name: varchar("name", { length: 100 }).notNull(),
   price: real("price").notNull(),
   rating: real("rating").default(0).notNull(),
   reviews: integer("reviews").default(0).notNull(),
   inStock: boolean("in_stock").default(true).notNull(),
-  userId: serial("user_id")
+  userId: varchar("user_id", { length: 255 })
     .notNull()
     .references(() => user.id, {
       onDelete: "cascade",
@@ -92,7 +96,7 @@ export const productRelations = relations(product, ({ many, one }) => ({
 
 // ------------------------------------------------------------------------
 
-export const productCategory = pgTable(
+export const productCategory = shopSchema.table(
   "product_category",
   {
     productId: serial("product_id")
