@@ -1,9 +1,12 @@
 import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
-import { db } from "@/db";
 import { user as userTable } from "@/db/schema";
 import { eq } from "drizzle-orm";
+import { drizzle } from "drizzle-orm/neon-http";
+
+// Force dynamic route to avoid build-time evaluation
+export const dynamic = "force-dynamic";
 
 export async function POST(req: Request) {
   console.log("🔔 Webhook received!");
@@ -70,6 +73,9 @@ export async function POST(req: Request) {
 
     // Insert user into database
     try {
+      // Initialize db connection at runtime
+      const db = drizzle(process.env.DATABASE_URL!);
+
       await db.insert(userTable).values({
         id: id,
         email: email_addresses[0]?.email_address ?? "",
@@ -89,6 +95,9 @@ export async function POST(req: Request) {
 
     // Update user in database
     try {
+      // Initialize db connection at runtime
+      const db = drizzle(process.env.DATABASE_URL!);
+
       await db
         .update(userTable)
         .set({
@@ -114,6 +123,9 @@ export async function POST(req: Request) {
 
     // Delete user from database
     try {
+      // Initialize db connection at runtime
+      const db = drizzle(process.env.DATABASE_URL!);
+
       await db.delete(userTable).where(eq(userTable.id, id));
 
       console.log(`✅ User ${id} deleted from database`);
