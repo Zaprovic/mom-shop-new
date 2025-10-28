@@ -3,7 +3,6 @@ import {
   boolean,
   integer,
   pgSchema,
-  pgTable,
   primaryKey,
   real,
   serial,
