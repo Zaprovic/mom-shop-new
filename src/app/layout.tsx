@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/components/providers/theme-provider";
 import Header from "@/components/global/header";
 import { Toaster } from "@/components/ui/sonner";
 import { ClerkProvider } from "@clerk/nextjs";
+import { createUserIfNotExists } from "@/server/auth";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -18,11 +19,13 @@ export const metadata: Metadata = {
     "Discover premium beauty and skincare products crafted with natural ingredients. Transform your daily routine into a luxurious self-care ritual.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  await createUserIfNotExists();
+
   return (
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
