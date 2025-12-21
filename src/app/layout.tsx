@@ -7,6 +7,8 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { createUserIfNotExists } from "@/server/auth";
 import "./globals.css";
 
+// this is just a test comment
+
 const poppins = Poppins({
   variable: "--font-poppins",
   subsets: ["latin"],
