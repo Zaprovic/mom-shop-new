@@ -7,10 +7,12 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { DataTable } from "./_components/data-table";
 import { createColumns } from "./_components/columns";
+import { useUser } from "@clerk/nextjs";
 
 export const ProductManagementContent = () => {
   const [products, setProducts] = useState<ProductFormData[]>([]);
   const [isFormVisible, setIsFormVisible] = useState(false);
+  const { user } = useUser()
 
   const handleProductSubmit = (data: ProductFormData) => {
     const newProduct: ProductFormData = {
@@ -38,7 +40,7 @@ export const ProductManagementContent = () => {
       <div className="mb-8 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
         <div>
           <h1 className="text-3xl font-bold text-foreground">
-            Product Management
+            Welcome back, {user?.firstName}
           </h1>
           <p className="mt-2 text-foreground/60">
             Create and manage your product catalog
