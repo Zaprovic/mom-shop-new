@@ -6,6 +6,8 @@ import { Toaster } from "@/components/ui/sonner";
 import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 
+// this is just a test comment
+
 const poppins = Poppins({
   variable: "--font-poppins",
   subsets: ["latin"],
