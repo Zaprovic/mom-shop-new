@@ -11,6 +11,7 @@ export type Category = {
 export type IProductFormProps = {
   onSubmit?: (data: ProductFormValues) => void | Promise<void>;
   categories: Category[];
+  initialValues?: ProductFormValues;
 };
 
 export type IFormFieldProps = {

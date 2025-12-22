@@ -15,12 +15,17 @@ import { useForm, type Resolver } from "react-hook-form";
 import { ProductFormValues, productFormSchema } from "@/schemas/product.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-export const ProductForm = ({ onSubmit, categories }: IProductFormProps) => {
+export const ProductForm = ({
+  onSubmit,
+  categories,
+  initialValues,
+}: IProductFormProps) => {
   const form = useForm<ProductFormValues>({
     resolver: zodResolver(productFormSchema) as Resolver<ProductFormValues>,
-    defaultValues: FORM_DEFAULT_VALUES,
+    defaultValues: initialValues || FORM_DEFAULT_VALUES,
   });
   const { isSubmitting } = form.formState;
+  const isEditing = !!initialValues;
 
   const { handleSubmit } = useProductFormHandler({
     onSubmit,
@@ -43,7 +48,13 @@ export const ProductForm = ({ onSubmit, categories }: IProductFormProps) => {
 
         <div className="flex gap-3 pt-4">
           <Button type="submit" disabled={isSubmitting} className="flex-1">
-            {isSubmitting ? "Creating..." : "Create product"}
+            {isSubmitting
+              ? isEditing
+                ? "Updating..."
+                : "Creating..."
+              : isEditing
+              ? "Update product"
+              : "Create product"}
           </Button>
           <Button
             type="button"

@@ -19,6 +19,13 @@ import { useUser } from "@clerk/nextjs";
 import { Category } from "./_components/product-form/types";
 import { formatToCOP } from "@/lib/utils";
 import { PlusCircle } from "lucide-react";
+import {
+  createProductAction,
+  updateProductAction,
+  deleteProductAction,
+} from "../../actions";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 type ProductManagementContentProps = {
   categories: Category[];
@@ -78,28 +85,55 @@ export const ProductManagementContent = ({
 }: ProductManagementContentProps) => {
   const [products, setProducts] = useState<ProductFormData[]>(initialProducts);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [editingProduct, setEditingProduct] = useState<ProductFormData | null>(
+    null
+  );
   const { user } = useUser();
+  const router = useRouter();
 
   useEffect(() => {
     setProducts(initialProducts);
   }, [initialProducts]);
 
-  const handleProductSubmit = (data: ProductFormValues) => {
-    const newProduct: ProductFormData = {
-      id: Math.max(0, ...products.map((p) => p.id)) + 1,
-      name: data.name,
-      price: data.price,
-      category: data.category,
-      imageUrl: data.imageUrl,
-      inStock: data.inStock,
-    };
-
-    setProducts((prev) => [newProduct, ...prev]);
-    setIsDialogOpen(false);
+  const handleProductSubmit = async (data: ProductFormValues) => {
+    try {
+      if (editingProduct) {
+        const result = await updateProductAction(editingProduct.id, data);
+        if (result.success) {
+          toast.success("Product updated successfully");
+          router.refresh();
+        } else {
+          toast.error("Failed to update product");
+        }
+      } else {
+        await createProductAction(data);
+        toast.success("Product created successfully");
+        router.refresh();
+      }
+      setIsDialogOpen(false);
+      setEditingProduct(null);
+    } catch (error) {
+      toast.error("Something went wrong");
+    }
   };
 
-  const handleDeleteProduct = (id: number) => {
-    setProducts((prev) => prev.filter((p) => p.id !== id));
+  const handleDeleteProduct = async (id: number) => {
+    try {
+      const result = await deleteProductAction(id);
+      if (result.success) {
+        toast.success("Product deleted successfully");
+        router.refresh();
+      } else {
+        toast.error("Failed to delete product");
+      }
+    } catch (error) {
+      toast.error("Failed to delete product");
+    }
+  };
+
+  const handleEditProduct = (product: ProductFormData) => {
+    setEditingProduct(product);
+    setIsDialogOpen(true);
   };
 
   const stats = useMemo(() => {
@@ -150,7 +184,13 @@ export const ProductManagementContent = ({
             Create and manage your product catalog
           </p>
         </div>
-        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <Dialog
+          open={isDialogOpen}
+          onOpenChange={(open) => {
+            setIsDialogOpen(open);
+            if (!open) setEditingProduct(null);
+          }}
+        >
           <DialogTrigger asChild>
             <Button size="lg" className="w-full md:w-auto">
               <PlusCircle className="mr-2 h-5 w-5" /> Create Product
@@ -158,15 +198,19 @@ export const ProductManagementContent = ({
           </DialogTrigger>
           <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[600px]">
             <DialogHeader>
-              <DialogTitle>Create New Product</DialogTitle>
+              <DialogTitle>
+                {editingProduct ? "Edit Product" : "Create New Product"}
+              </DialogTitle>
               <DialogDescription>
-                Add a new product to your catalog. Fill in all the required
-                information below.
+                {editingProduct
+                  ? "Update the product information below."
+                  : "Add a new product to your catalog. Fill in all the required information below."}
               </DialogDescription>
             </DialogHeader>
             <ProductForm
               onSubmit={handleProductSubmit}
               categories={categories}
+              initialValues={editingProduct || undefined}
             />
           </DialogContent>
         </Dialog>
@@ -214,7 +258,10 @@ export const ProductManagementContent = ({
           <div className="grid gap-6 xl:[grid-template-columns:_2fr_280px]">
             <div className="order-2 min-w-0 xl:order-1">
               <DataTable
-                columns={createColumns({ onDelete: handleDeleteProduct })}
+                columns={createColumns({
+                  onDelete: handleDeleteProduct,
+                  onEdit: handleEditProduct,
+                })}
                 data={products}
               />
             </div>

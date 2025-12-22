@@ -11,17 +11,19 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { MoreHorizontal, Trash2 } from "lucide-react";
+import { MoreHorizontal, Trash2, Edit } from "lucide-react";
 import { ProductFormData } from "@/schemas/product.schema";
 import Image from "next/image";
 import { formatToCOP } from "@/lib/utils";
 
 interface ColumnsProps {
   onDelete: (id: number) => void;
+  onEdit: (product: ProductFormData) => void;
 }
 
 export const createColumns = ({
   onDelete,
+  onEdit,
 }: ColumnsProps): ColumnDef<ProductFormData>[] => [
   {
     accessorKey: "name",
@@ -95,6 +97,10 @@ export const createColumns = ({
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuItem onClick={() => onEdit(product)}>
+              <Edit className="mr-2 h-4 w-4" />
+              Edit
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
               className="text-destructive"
