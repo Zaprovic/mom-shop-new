@@ -28,8 +28,6 @@ const Header = () => {
           <SignedIn>
             <NavItem href="/product-management">My products</NavItem>
           </SignedIn>
-          <NavItem href="#">Makeup</NavItem>
-          <NavItem href="#">About</NavItem>
         </nav>
         <div className="flex items-center gap-2">
           <Button variant="ghost" size="icon">
@@ -82,12 +80,6 @@ const Header = () => {
                 Manage my products
               </NavItem>
             </SignedIn>
-            <NavItem href="#" onClick={() => setIsOpen(false)}>
-              Makeup
-            </NavItem>
-            <NavItem href="#" onClick={() => setIsOpen(false)}>
-              About
-            </NavItem>
 
             {/* Mobile Authentication */}
             <div className="pt-4 border-t">
