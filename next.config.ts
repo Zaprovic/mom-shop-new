@@ -8,6 +8,14 @@ const nextConfig: NextConfig = {
     "d5de2647476d.ngrok-free.app",
     "*.ngrok-free.app",
   ],
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**",
+      },
+    ],
+  },
 };
 
 export default nextConfig;
