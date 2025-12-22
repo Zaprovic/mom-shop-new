@@ -2,7 +2,6 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form } from "@/components/ui/form";
 import { FORM_DEFAULT_VALUES } from "./utils/constants";
 import { type IProductFormProps } from "./types";
@@ -29,43 +28,33 @@ export const ProductForm = ({ onSubmit, categories }: IProductFormProps) => {
   });
 
   return (
-    <Card className="w-full">
-      <CardHeader>
-        <CardTitle>Create New Product</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(handleSubmit)}
-            className="space-y-6"
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
+        <ProductNameField disabled={isSubmitting} />
+
+        <div className="grid gap-6 md:grid-cols-2">
+          <PriceField disabled={isSubmitting} />
+          <CategoryField disabled={isSubmitting} categories={categories} />
+        </div>
+
+        <ImageUrlField disabled={isSubmitting} />
+
+        <StockField disabled={isSubmitting} />
+
+        <div className="flex gap-3 pt-4">
+          <Button type="submit" disabled={isSubmitting} className="flex-1">
+            {isSubmitting ? "Creating..." : "Create product"}
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            disabled={isSubmitting}
+            onClick={() => form.reset(FORM_DEFAULT_VALUES)}
           >
-            <ProductNameField disabled={isSubmitting} />
-
-            <div className="grid gap-6 md:grid-cols-2">
-              <PriceField disabled={isSubmitting} />
-              <CategoryField disabled={isSubmitting} categories={categories} />
-            </div>
-
-            <ImageUrlField disabled={isSubmitting} />
-
-            <StockField disabled={isSubmitting} />
-
-            <div className="flex gap-3 pt-4">
-              <Button type="submit" disabled={isSubmitting} className="flex-1">
-                {isSubmitting ? "Creating..." : "Create product"}
-              </Button>
-              <Button
-                type="button"
-                variant="outline"
-                disabled={isSubmitting}
-                onClick={() => form.reset(FORM_DEFAULT_VALUES)}
-              >
-                Reset
-              </Button>
-            </div>
-          </form>
-        </Form>
-      </CardContent>
-    </Card>
+            Reset
+          </Button>
+        </div>
+      </form>
+    </Form>
   );
 };

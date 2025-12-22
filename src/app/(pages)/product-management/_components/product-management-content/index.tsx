@@ -5,6 +5,14 @@ import { ProductForm } from "./_components/product-form";
 import { ProductFormData, ProductFormValues } from "@/schemas/product.schema";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { DataTable } from "./_components/data-table";
 import { createColumns } from "./_components/columns";
 import { useUser } from "@clerk/nextjs";
@@ -21,7 +29,7 @@ export const ProductManagementContent = ({
   initialProducts,
 }: ProductManagementContentProps) => {
   const [products, setProducts] = useState<ProductFormData[]>(initialProducts);
-  const [isFormVisible, setIsFormVisible] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const { user } = useUser();
 
   React.useEffect(() => {
@@ -39,7 +47,7 @@ export const ProductManagementContent = ({
     };
 
     setProducts((prev) => [newProduct, ...prev]);
-    setIsFormVisible(false);
+    setIsDialogOpen(false);
   };
 
   const handleDeleteProduct = (id: number) => {
@@ -58,21 +66,27 @@ export const ProductManagementContent = ({
             Create and manage your product catalog
           </p>
         </div>
-        <Button
-          onClick={() => setIsFormVisible(!isFormVisible)}
-          size="lg"
-          className="w-full md:w-auto"
-        >
-          {isFormVisible ? "Hide Form" : "+ Create Product"}
-        </Button>
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          <DialogTrigger asChild>
+            <Button size="lg" className="w-full md:w-auto">
+              + Create Product
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[600px]">
+            <DialogHeader>
+              <DialogTitle>Create New Product</DialogTitle>
+              <DialogDescription>
+                Add a new product to your catalog. Fill in all the required
+                information below.
+              </DialogDescription>
+            </DialogHeader>
+            <ProductForm
+              onSubmit={handleProductSubmit}
+              categories={categories}
+            />
+          </DialogContent>
+        </Dialog>
       </div>
-
-      {/* Form Section */}
-      {isFormVisible && (
-        <div className="mb-8">
-          <ProductForm onSubmit={handleProductSubmit} categories={categories} />
-        </div>
-      )}
 
       {/* Products Table */}
       {products.length === 0 ? (
@@ -86,9 +100,24 @@ export const ProductManagementContent = ({
                 Create your first product to get started
               </p>
             </div>
-            <Button onClick={() => setIsFormVisible(true)} variant="outline">
-              Create Product
-            </Button>
+            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+              <DialogTrigger asChild>
+                <Button variant="outline">Create Product</Button>
+              </DialogTrigger>
+              <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[600px]">
+                <DialogHeader>
+                  <DialogTitle>Create New Product</DialogTitle>
+                  <DialogDescription>
+                    Add a new product to your catalog. Fill in all the required
+                    information below.
+                  </DialogDescription>
+                </DialogHeader>
+                <ProductForm
+                  onSubmit={handleProductSubmit}
+                  categories={categories}
+                />
+              </DialogContent>
+            </Dialog>
           </CardContent>
         </Card>
       ) : (
