@@ -12,6 +12,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogFooter,
+  DialogClose,
 } from "@/components/ui/dialog";
 import { DataTable } from "./_components/data-table";
 import { createColumns } from "./_components/columns";
@@ -88,6 +90,8 @@ export const ProductManagementContent = ({
   const [editingProduct, setEditingProduct] = useState<ProductFormData | null>(
     null
   );
+  const [deleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
+  const [productToDelete, setProductToDelete] = useState<number | null>(null);
   const { user } = useUser();
   const router = useRouter();
 
@@ -117,9 +121,16 @@ export const ProductManagementContent = ({
     }
   };
 
-  const handleDeleteProduct = async (id: number) => {
+  const confirmDeleteProduct = (id: number) => {
+    setProductToDelete(id);
+    setDeleteConfirmationOpen(true);
+  };
+
+  const handleDeleteProduct = async () => {
+    if (productToDelete === null) return;
+
     try {
-      const result = await deleteProductAction(id);
+      const result = await deleteProductAction(productToDelete);
       if (result.success) {
         toast.success("Product deleted successfully");
         router.refresh();
@@ -128,6 +139,9 @@ export const ProductManagementContent = ({
       }
     } catch (error) {
       toast.error("Failed to delete product");
+    } finally {
+      setDeleteConfirmationOpen(false);
+      setProductToDelete(null);
     }
   };
 
@@ -214,6 +228,29 @@ export const ProductManagementContent = ({
             />
           </DialogContent>
         </Dialog>
+
+        <Dialog
+          open={deleteConfirmationOpen}
+          onOpenChange={setDeleteConfirmationOpen}
+        >
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Are you sure?</DialogTitle>
+              <DialogDescription>
+                This action cannot be undone. This will permanently delete the
+                product.
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter>
+              <DialogClose asChild>
+                <Button variant="outline">Cancel</Button>
+              </DialogClose>
+              <Button variant="destructive" onClick={handleDeleteProduct}>
+                Delete
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
 
       {/* Products Table & Insights */}
@@ -259,7 +296,7 @@ export const ProductManagementContent = ({
             <div className="order-2 min-w-0 xl:order-1">
               <DataTable
                 columns={createColumns({
-                  onDelete: handleDeleteProduct,
+                  onDelete: confirmDeleteProduct,
                   onEdit: handleEditProduct,
                 })}
                 data={products}
