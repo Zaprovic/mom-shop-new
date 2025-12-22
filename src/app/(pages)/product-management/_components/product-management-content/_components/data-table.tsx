@@ -99,7 +99,7 @@ export function DataTable<TData, TValue>({
       <div className="flex flex-col gap-3">
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <Input
-            placeholder="Filter by product name..."
+            placeholder="Filtrar por nombre de producto..."
             value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
             onChange={(event) =>
               table.getColumn("name")?.setFilterValue(event.target.value)
@@ -116,10 +116,10 @@ export function DataTable<TData, TValue>({
                   onValueChange={setSelectedCategory}
                 >
                   <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Category" />
+                    <SelectValue placeholder="Categoría" />
                   </SelectTrigger>
                   <SelectContent align="start">
-                    <SelectItem value="all">All categories</SelectItem>
+                    <SelectItem value="all">Todas las categorías</SelectItem>
                     {categoryOptions.map((c) => (
                       <SelectItem key={c} value={c}>
                         {c}
@@ -134,7 +134,7 @@ export function DataTable<TData, TValue>({
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="w-full sm:w-auto">
                   <ChevronDown className="mr-2 h-4 w-4" />
-                  Columns
+                  Columnas
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
@@ -169,7 +169,7 @@ export function DataTable<TData, TValue>({
               variant={selectedCategory === "all" ? "secondary" : "outline"}
               onClick={() => setSelectedCategory("all")}
             >
-              All
+              Todos
             </Button>
             {categoryOptions.map((c) => (
               <Button

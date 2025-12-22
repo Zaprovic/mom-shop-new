@@ -16,9 +16,9 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "GlowBeauty - Premium Beauty & Skincare Products",
+  title: "GlowBeauty - Productos de Belleza y Cuidado de la Piel Premium",
   description:
-    "Discover premium beauty and skincare products crafted with natural ingredients. Transform your daily routine into a luxurious self-care ritual.",
+    "Descubre productos de belleza y cuidado de la piel premium elaborados con ingredientes naturales. Transforma tu rutina diaria en un lujoso ritual de autocuidado.",
 };
 
 export default async function RootLayout({
@@ -30,7 +30,7 @@ export default async function RootLayout({
 
   return (
     <ClerkProvider>
-      <html lang="en" suppressHydrationWarning>
+      <html lang="es" suppressHydrationWarning>
         <body className={`${poppins.variable} antialiased`}>
           <ThemeProvider
             attribute={"class"}

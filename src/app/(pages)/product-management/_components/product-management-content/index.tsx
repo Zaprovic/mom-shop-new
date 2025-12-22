@@ -52,22 +52,22 @@ const EmptyProduct = ({
       <CardContent className="flex min-h-[300px] flex-col items-center justify-center gap-4">
         <div className="text-center">
           <p className="text-lg font-semibold text-foreground">
-            No products yet
+            Aún no hay productos
           </p>
           <p className="text-sm text-foreground/60">
-            Create your first product to get started
+            Crea tu primer producto para comenzar
           </p>
         </div>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
-            <Button variant="outline">Create Product</Button>
+            <Button variant="outline">Crear Producto</Button>
           </DialogTrigger>
           <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[600px]">
             <DialogHeader>
-              <DialogTitle>Create New Product</DialogTitle>
+              <DialogTitle>Crear Nuevo Producto</DialogTitle>
               <DialogDescription>
-                Add a new product to your catalog. Fill in all the required
-                information below.
+                Añade un nuevo producto a tu catálogo. Completa toda la
+                información requerida a continuación.
               </DialogDescription>
             </DialogHeader>
             <ProductForm

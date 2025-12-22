@@ -7,34 +7,36 @@ const HeroSection = () => {
     <section className="container mx-auto px-4 py-16 md:py-24">
       <div className="grid md:grid-cols-2 gap-12 items-center">
         <div className="space-y-6">
-          <Badge>New Collection 2025</Badge>
+          <Badge>Nueva Colección 2025</Badge>
           <h1 className="text-4xl md:text-6xl font-bold leading-tight">
-            Discover Your
-            <span className="block text-primary">Natural Glow</span>
+            Descubre Tu
+            <span className="block text-primary">Brillo Natural</span>
           </h1>
           <p className="text-lg text-muted-foreground">
-            Premium beauty and skincare products crafted with natural
-            ingredients. Transform your daily routine into a luxurious self-care
-            ritual.
+            Productos de belleza y cuidado de la piel premium elaborados con
+            ingredientes naturales. Transforma tu rutina diaria en un lujoso
+            ritual de cuidado personal.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <Button size="lg">
-              Shop Now
+              Comprar Ahora
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
             <Button size="lg" variant="outline">
-              Explore Collection
+              Explorar Colección
             </Button>
           </div>
           <div className="flex items-center gap-6 pt-4">
             <div>
               <p className="text-2xl font-bold">10K+</p>
-              <p className="text-sm text-muted-foreground">Happy Customers</p>
+              <p className="text-sm text-muted-foreground">Clientes Felices</p>
             </div>
             <div className="h-12 w-px bg-border"></div>
             <div>
               <p className="text-2xl font-bold">100%</p>
-              <p className="text-sm text-muted-foreground">Natural Products</p>
+              <p className="text-sm text-muted-foreground">
+                Productos Naturales
+              </p>
             </div>
           </div>
         </div>
@@ -42,7 +44,9 @@ const HeroSection = () => {
           <div className="aspect-square rounded-3xl bg-muted p-8 flex items-center justify-center">
             <div className="text-center">
               <Sparkles className="h-24 w-24 mx-auto text-primary mb-4" />
-              <p className="text-muted-foreground">Hero Image Placeholder</p>
+              <p className="text-muted-foreground">
+                Marcador de Imagen Principal
+              </p>
             </div>
           </div>
           {/* Floating badges */}
@@ -51,7 +55,7 @@ const HeroSection = () => {
               <Star className="h-5 w-5 text-chart-4 fill-chart-4" />
               <div>
                 <p className="font-bold">4.9</p>
-                <p className="text-xs text-muted-foreground">Rating</p>
+                <p className="text-xs text-muted-foreground">Calificación</p>
               </div>
             </div>
           </div>

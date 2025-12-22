@@ -27,7 +27,7 @@ export const createColumns = ({
 }: ColumnsProps): ColumnDef<ProductFormData>[] => [
   {
     accessorKey: "name",
-    header: "Name",
+    header: "Nombre",
     cell: ({ row }) => {
       const name = row.getValue("name") as string;
       return <div className="font-medium">{name}</div>;
@@ -36,7 +36,7 @@ export const createColumns = ({
   },
   {
     accessorKey: "category",
-    header: "Category",
+    header: "Categoría",
     cell: ({ row }) => {
       const category = row.getValue("category") as string;
       return <div className="capitalize">{category}</div>;
@@ -45,7 +45,7 @@ export const createColumns = ({
   },
   {
     accessorKey: "price",
-    header: () => <div className="text-right">Price</div>,
+    header: () => <div className="text-right">Precio</div>,
     cell: ({ row }) => {
       const price = row.getValue("price") as number;
       return (
@@ -58,7 +58,7 @@ export const createColumns = ({
   },
   {
     accessorKey: "imageUrl",
-    header: "Image",
+    header: "Imagen",
     cell: ({ row }) => {
       const imageUrl = row.getValue("imageUrl") as string;
       return (
@@ -71,12 +71,12 @@ export const createColumns = ({
   },
   {
     accessorKey: "inStock",
-    header: "Stock",
+    header: "Inventario",
     cell: ({ row }) => {
       const inStock = row.getValue("inStock") as boolean;
       return (
         <Badge variant={inStock ? "default" : "destructive"}>
-          {inStock ? "In Stock" : "Out of Stock"}
+          {inStock ? "En Stock" : "Agotado"}
         </Badge>
       );
     },
@@ -91,12 +91,12 @@ export const createColumns = ({
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
+              <span className="sr-only">Abrir menú</span>
               <MoreHorizontal className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuLabel>Acciones</DropdownMenuLabel>
             <DropdownMenuItem onClick={() => onEdit(product)}>
               <Edit className="mr-2 h-4 w-4" />
               Edit

@@ -54,7 +54,7 @@ export function ProductImage({ product, mode }: ImageProps) {
       {/* Stock overlay for grid */}
       {isGrid && !product.inStock && (
         <div className="absolute inset-0 bg-background/80 backdrop-blur flex items-center justify-center">
-          <Badge variant="secondary">Out of Stock</Badge>
+          <Badge variant="secondary">Agotado</Badge>
         </div>
       )}
     </div>
@@ -87,9 +87,11 @@ export function PriceAndCTA({ product, mode }: PriceCTAProps) {
           isGrid ? "group-hover:translate-x-1 transition-transform" : undefined
         }
       >
-        {product.inStock ? <span className="text-xs">Add</span> : <span className="text-xs">
-          Out of Stock
-        </span>}
+        {product.inStock ? (
+          <span className="text-xs">Añadir</span>
+        ) : (
+          <span className="text-xs">Agotado</span>
+        )}
       </Button>
     </div>
   );

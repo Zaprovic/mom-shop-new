@@ -50,11 +50,11 @@ export const ProductForm = ({
           <Button type="submit" disabled={isSubmitting} className="flex-1">
             {isSubmitting
               ? isEditing
-                ? "Updating..."
-                : "Creating..."
+                ? "Actualizando..."
+                : "Creando..."
               : isEditing
-              ? "Update product"
-              : "Create product"}
+              ? "Actualizar producto"
+              : "Crear producto"}
           </Button>
           <Button
             type="button"
@@ -62,7 +62,7 @@ export const ProductForm = ({
             disabled={isSubmitting}
             onClick={() => form.reset(FORM_DEFAULT_VALUES)}
           >
-            Reset
+            Restablecer
           </Button>
         </div>
       </form>

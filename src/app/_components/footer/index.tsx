@@ -12,87 +12,88 @@ const Footer = () => {
               <span className="text-xl font-bold">GlowBeauty</span>
             </div>
             <p className="text-sm text-muted-foreground">
-              Premium beauty and skincare products for your natural glow.
+              Productos de belleza y cuidado de la piel premium para tu brillo
+              natural.
             </p>
           </div>
           <div>
-            <h4 className="font-semibold mb-4">Shop</h4>
+            <h4 className="font-semibold mb-4">Tienda</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
                 <a href="#" className="hover:text-foreground transition-colors">
-                  Skincare
+                  Cuidado de la Piel
                 </a>
               </li>
               <li>
                 <a href="#" className="hover:text-foreground transition-colors">
-                  Makeup
+                  Maquillaje
                 </a>
               </li>
               <li>
                 <a href="#" className="hover:text-foreground transition-colors">
-                  Haircare
+                  Cuidado del Cabello
                 </a>
               </li>
               <li>
                 <a href="#" className="hover:text-foreground transition-colors">
-                  Fragrance
+                  Fragancias
                 </a>
               </li>
             </ul>
           </div>
           <div>
-            <h4 className="font-semibold mb-4">Support</h4>
+            <h4 className="font-semibold mb-4">Soporte</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
                 <a href="#" className="hover:text-foreground transition-colors">
-                  Contact Us
+                  Contáctanos
                 </a>
               </li>
               <li>
                 <a href="#" className="hover:text-foreground transition-colors">
-                  Shipping Info
+                  Información de Envío
                 </a>
               </li>
               <li>
                 <a href="#" className="hover:text-foreground transition-colors">
-                  Returns
+                  Devoluciones
                 </a>
               </li>
               <li>
                 <a href="#" className="hover:text-foreground transition-colors">
-                  FAQ
+                  Preguntas Frecuentes
                 </a>
               </li>
             </ul>
           </div>
           <div>
-            <h4 className="font-semibold mb-4">Company</h4>
+            <h4 className="font-semibold mb-4">Compañía</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
                 <a href="#" className="hover:text-foreground transition-colors">
-                  About Us
+                  Sobre Nosotros
                 </a>
               </li>
               <li>
                 <a href="#" className="hover:text-foreground transition-colors">
-                  Our Story
+                  Nuestra Historia
                 </a>
               </li>
               <li>
                 <a href="#" className="hover:text-foreground transition-colors">
-                  Privacy Policy
+                  Política de Privacidad
                 </a>
               </li>
               <li>
                 <a href="#" className="hover:text-foreground transition-colors">
-                  Terms of Service
+                  Términos de Servicio
                 </a>
               </li>
             </ul>
           </div>
         </div>
         <div className="border-t mt-8 pt-8 text-center text-sm text-muted-foreground">
-          <p>&copy; 2025 GlowBeauty. All rights reserved.</p>
+          <p>&copy; 2025 GlowBeauty. Todos los derechos reservados.</p>
         </div>
       </div>
     </footer>

@@ -5,19 +5,19 @@ export const productSchema = z.object({
   name: z
     .string()
     .min(2, {
-      message: "Product name must be at least 2 characters.",
+      message: "El nombre del producto debe tener al menos 2 caracteres.",
     })
     .max(100, {
-      message: "Product name must not exceed 100 characters.",
+      message: "El nombre del producto no debe exceder los 100 caracteres.",
     }),
   price: z.coerce.number().min(0, {
-    message: "Price must be a non-negative number.",
+    message: "El precio debe ser un número no negativo.",
   }),
   category: z.string().min(1, {
-    message: "Please select a category.",
+    message: "Por favor selecciona una categoría.",
   }),
   imageUrl: z.string().url({
-    message: "Please enter a valid URL.",
+    message: "Por favor ingresa una URL válida.",
   }),
   inStock: z.boolean(),
 });

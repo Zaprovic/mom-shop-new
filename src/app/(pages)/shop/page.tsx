@@ -4,14 +4,14 @@ import { db } from "@/db";
 import { category } from "@/db/schema";
 
 const sortOptions = [
-  { label: "Featured", value: "featured" },
-  { label: "Price: Low to High", value: "price-asc" },
-  { label: "Price: High to Low", value: "price-desc" },
+  { label: "Destacados", value: "featured" },
+  { label: "Precio: Menor a Mayor", value: "price-asc" },
+  { label: "Precio: Mayor a Menor", value: "price-desc" },
 ];
 
 export default async function ShopPage() {
   const categoriesData = await db.select().from(category);
-  const categories = ["All", ...categoriesData.map((c) => c.name)];
+  const categories = ["Todos", ...categoriesData.map((c) => c.name)];
 
   const productsData = await db.query.product.findMany({
     with: {
@@ -29,7 +29,7 @@ export default async function ShopPage() {
     price: product.price,
     imageUrl: product.imageUrl,
     inStock: product.inStock,
-    category: product.productCategory[0]?.category.name || "Uncategorized",
+    category: product.productCategory[0]?.category.name || "Sin Categoría",
   }));
 
   return (

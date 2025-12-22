@@ -37,7 +37,7 @@ export function ShopContent({
     5_000_000
   );
 
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedCategory, setSelectedCategory] = useState("Todos");
   const [sortBy, setSortBy] = useState("featured");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [priceRange, setPriceRange] = useState<[number, number]>([0, maxPrice]);
@@ -80,7 +80,7 @@ export function ShopContent({
   const filteredProducts = initialProducts
     .filter((product) => {
       // Category filter
-      if (selectedCategory !== "All" && product.category !== selectedCategory)
+      if (selectedCategory !== "Todos" && product.category !== selectedCategory)
         return false;
       // Price range filter
       const price =
@@ -122,9 +122,9 @@ export function ShopContent({
   // Get products to display based on device type
   const productsToDisplay = isDesktop
     ? filteredProducts.slice(
-      (currentPage - 1) * ITEMS_PER_PAGE_DESKTOP_PAGINATION,
-      currentPage * ITEMS_PER_PAGE_DESKTOP_PAGINATION
-    )
+        (currentPage - 1) * ITEMS_PER_PAGE_DESKTOP_PAGINATION,
+        currentPage * ITEMS_PER_PAGE_DESKTOP_PAGINATION
+      )
     : filteredProducts.slice(0, displayedItems);
 
   // Scroll to top on pagination change (desktop only)
@@ -328,7 +328,7 @@ export function ShopContent({
                 {!isDesktop &&
                   displayedItems >= filteredProducts.length &&
                   filteredProducts.length >
-                  ITEMS_PER_PAGE_DESKTOP_PAGINATION && (
+                    ITEMS_PER_PAGE_DESKTOP_PAGINATION && (
                     <div className="mt-8 text-center">
                       <p className="text-sm text-muted-foreground">
                         Showing all {filteredProducts.length} products

@@ -15,25 +15,31 @@ import Autoplay from "embla-carousel-autoplay";
 
 const FeaturedProducts = () => {
   const products = [
-    { name: "Radiant Glow Serum", price: "$45", badge: "Best Seller" },
-    { name: "Hydrating Face Cream", price: "$38", badge: "New" },
-    { name: "Vitamin C Cleanser", price: "$28", badge: "Trending" },
-    { name: "Anti-Aging Night Oil", price: "$52", badge: "Popular" },
+    { name: "Suero de Brillo Radiante", price: "$45", badge: "Más Vendido" },
+    { name: "Crema Facial Hidratante", price: "$38", badge: "Nuevo" },
+    { name: "Limpiador de Vitamina C", price: "$28", badge: "Tendencia" },
+    {
+      name: "Aceite Nocturno Antienvejecimiento",
+      price: "$52",
+      badge: "Popular",
+    },
   ];
 
   const plugin = React.useRef(
-    Autoplay({ delay: 3000, stopOnInteraction: true }),
+    Autoplay({ delay: 3000, stopOnInteraction: true })
   );
 
   return (
     <section className="container mx-auto px-4 py-16">
       <div className="flex items-center justify-between mb-12">
         <div>
-          <h2 className="text-3xl md:text-4xl font-bold mb-2">Bestsellers</h2>
-          <p className="text-muted-foreground">Most loved by our customers</p>
+          <h2 className="text-3xl md:text-4xl font-bold mb-2">Más Vendidos</h2>
+          <p className="text-muted-foreground">
+            Los más amados por nuestros clientes
+          </p>
         </div>
         <Button variant="ghost">
-          View All
+          Ver Todo
           <ArrowRight className="ml-2 h-4 w-4" />
         </Button>
       </div>
@@ -77,7 +83,7 @@ const FeaturedProducts = () => {
                     </div>
                     <div className="flex items-center justify-between pt-2">
                       <span className="text-xl font-bold">{product.price}</span>
-                      <Button size="sm">Add to Cart</Button>
+                      <Button size="sm">Añadir al Carrito</Button>
                     </div>
                   </div>
                 </CardContent>

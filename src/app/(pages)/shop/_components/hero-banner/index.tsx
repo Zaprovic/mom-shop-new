@@ -6,11 +6,11 @@ const HeroBanner = () => {
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-2xl">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            Shop All Products
+            Comprar Todos los Productos
           </h1>
           <p className="text-lg text-muted-foreground">
-            Discover our complete collection of premium beauty and skincare
-            products. Find your perfect match.
+            Descubre nuestra colección completa de productos de belleza y
+            cuidado de la piel premium. Encuentra tu combinación perfecta.
           </p>
         </div>
       </div>

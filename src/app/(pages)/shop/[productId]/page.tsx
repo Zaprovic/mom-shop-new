@@ -18,27 +18,27 @@ export default async function SingleProductPage({
 
   const productData = !isNaN(idNum)
     ? await db.query.product.findFirst({
-      where: (product, { eq }) => eq(product.id, idNum),
-      with: {
-        productCategory: {
-          with: {
-            category: true,
+        where: (product, { eq }) => eq(product.id, idNum),
+        with: {
+          productCategory: {
+            with: {
+              category: true,
+            },
           },
         },
-      },
-    })
+      })
     : undefined;
 
   const product = productData
     ? {
-      id: productData.id,
-      name: productData.name,
-      price: productData.price,
-      imageUrl: productData.imageUrl,
-      inStock: productData.inStock,
-      category:
-        productData.productCategory[0]?.category.name || "Uncategorized",
-    }
+        id: productData.id,
+        name: productData.name,
+        price: productData.price,
+        imageUrl: productData.imageUrl,
+        inStock: productData.inStock,
+        category:
+          productData.productCategory[0]?.category.name || "Sin Categoría",
+      }
     : undefined;
 
   if (!product) {
@@ -46,12 +46,12 @@ export default async function SingleProductPage({
       <div className="max-w-4xl mx-auto px-4 py-10">
         <Card>
           <CardContent className="text-center py-12">
-            <h2 className="text-2xl font-bold mb-2">Product not found</h2>
+            <h2 className="text-2xl font-bold mb-2">Producto no encontrado</h2>
             <p className="text-muted-foreground mb-4">
-              We couldn&apos;t find the product you&apos;re looking for.
+              No pudimos encontrar el producto que buscas.
             </p>
             <Link href="/shop">
-              <Button variant="outline">Back to shop</Button>
+              <Button variant="outline">Volver a la tienda</Button>
             </Link>
           </CardContent>
         </Card>
@@ -112,7 +112,9 @@ export default async function SingleProductPage({
           {/* Price & Actions */}
           <div className="flex items-center gap-6 mb-6">
             <div>
-              <div className="text-3xl font-bold">{formatToCOP(product.price)}</div>
+              <div className="text-3xl font-bold">
+                {formatToCOP(product.price)}
+              </div>
               {!product.inStock && (
                 <div className="text-sm text-destructive mt-1">
                   Out of stock

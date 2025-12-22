@@ -3,42 +3,47 @@ import { ProductFormData } from "@/schemas/product.schema";
 export const products: ProductFormData[] = [
   {
     id: 1,
-    name: "Radiant Glow Serum",
+    name: "Suero de Brillo Radiante",
     price: 45,
-    category: "Skincare",
-    imageUrl: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=800&q=80",
+    category: "Cuidado de la Piel",
+    imageUrl:
+      "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=800&q=80",
     inStock: true,
   },
   {
     id: 2,
-    name: "Hydrating Face Cream",
+    name: "Crema Facial Hidratante",
     price: 38,
-    category: "Skincare",
-    imageUrl: "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=800&q=80",
+    category: "Cuidado de la Piel",
+    imageUrl:
+      "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=800&q=80",
     inStock: true,
   },
   {
     id: 3,
-    name: "Vitamin C Cleanser",
+    name: "Limpiador de Vitamina C",
     price: 28,
-    category: "Skincare",
-    imageUrl: "https://images.unsplash.com/photo-1556228720-1957be83f304?w=800&q=80",
+    category: "Cuidado de la Piel",
+    imageUrl:
+      "https://images.unsplash.com/photo-1556228720-1957be83f304?w=800&q=80",
     inStock: true,
   },
   {
     id: 4,
-    name: "Anti-Aging Night Oil",
+    name: "Aceite Nocturno Antienvejecimiento",
     price: 52,
-    category: "Skincare",
-    imageUrl: "https://images.unsplash.com/photo-1608248597279-f99d160bfbc8?w=800&q=80",
+    category: "Cuidado de la Piel",
+    imageUrl:
+      "https://images.unsplash.com/photo-1608248597279-f99d160bfbc8?w=800&q=80",
     inStock: true,
   },
   {
     id: 5,
-    name: "Matte Foundation",
+    name: "Base Mate",
     price: 42,
-    category: "Makeup",
-    imageUrl: "https://images.unsplash.com/photo-1596462502278-27bfdd403348?w=800&q=80",
+    category: "Maquillaje",
+    imageUrl:
+      "https://images.unsplash.com/photo-1596462502278-27bfdd403348?w=800&q=80",
     inStock: true,
   },
 ];

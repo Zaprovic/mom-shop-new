@@ -20,15 +20,15 @@ export const ImageUrlField = ({ disabled }: IFormFieldProps) => {
       name="imageUrl"
       render={({ field }) => (
         <FormItem>
-          <FormLabel>Image URL</FormLabel>
+          <FormLabel>URL de la Imagen</FormLabel>
           <FormControl>
             <Input
-              placeholder="Enter image URL..."
+              placeholder="Ingresa la URL de la imagen..."
               {...field}
               disabled={disabled}
             />
           </FormControl>
-          <FormDescription>The URL of the product image</FormDescription>
+          <FormDescription>La URL de la imagen del producto</FormDescription>
           <FormMessage />
         </FormItem>
       )}

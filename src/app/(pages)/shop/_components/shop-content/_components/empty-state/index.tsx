@@ -20,14 +20,14 @@ export function EmptyState({ onClearFilters }: props) {
         <EmptyMedia variant="icon">
           <Sparkles className="h-8 w-8 text-muted-foreground" />
         </EmptyMedia>
-        <EmptyTitle>No products found</EmptyTitle>
+        <EmptyTitle>No se encontraron productos</EmptyTitle>
         <EmptyDescription>
-          Try adjusting your filters or search criteria
+          Intenta ajustar tus filtros o criterios de búsqueda
         </EmptyDescription>
       </EmptyHeader>
 
       <EmptyContent>
-        <Button onClick={onClearFilters}>Clear Filters</Button>
+        <Button onClick={onClearFilters}>Limpiar Filtros</Button>
       </EmptyContent>
     </Empty>
   );

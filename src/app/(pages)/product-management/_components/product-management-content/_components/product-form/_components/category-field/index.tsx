@@ -30,7 +30,7 @@ export const CategoryField = ({
       name="category"
       render={({ field }) => (
         <FormItem>
-          <FormLabel>Category</FormLabel>
+          <FormLabel>Categoría</FormLabel>
           <FormControl>
             <CreatableSelect
               isDisabled={disabled}
@@ -42,7 +42,7 @@ export const CategoryField = ({
               onChange={(option) => {
                 field.onChange(option ? option.value : "");
               }}
-              placeholder="Select or create a category"
+              placeholder="Selecciona o crea una categoría"
               className="text-sm"
               styles={{
                 control: (base) => ({
