@@ -149,7 +149,18 @@ export const ProductManagementContent = ({
             </Card>
             <Card>
               <CardContent className="flex flex-col gap-2 pt-6">
-                <p className="text-sm text-foreground/60">Average Rating</p>
+                <p className="text-sm text-foreground/60">Out of Stock</p>
+                <p className="text-3xl font-bold text-foreground">
+                  {products.filter((p) => !p.inStock).length}
+                </p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="flex flex-col gap-2 pt-6">
+                <p className="text-sm text-foreground/60">Categories</p>
+                <p className="text-3xl font-bold text-foreground">
+                  {new Set(products.map((p) => p.category)).size}
+                </p>
               </CardContent>
             </Card>
             <Card>
@@ -159,6 +170,19 @@ export const ProductManagementContent = ({
                   {formatToCOP(
                     products.reduce((sum, p) => sum + Number(p.price), 0)
                   )}
+                </p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="flex flex-col gap-2 pt-6">
+                <p className="text-sm text-foreground/60">Average Price</p>
+                <p className="text-3xl font-bold text-foreground">
+                  {products.length > 0
+                    ? formatToCOP(
+                        products.reduce((sum, p) => sum + Number(p.price), 0) /
+                          products.length
+                      )
+                    : formatToCOP(0)}
                 </p>
               </CardContent>
             </Card>
