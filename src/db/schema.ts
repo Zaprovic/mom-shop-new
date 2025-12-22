@@ -72,6 +72,7 @@ export const product = shopSchema.table("product", {
     .notNull()
     .references(() => user.id, {
       onDelete: "cascade",
+      onUpdate: "cascade",
     }),
 });
 

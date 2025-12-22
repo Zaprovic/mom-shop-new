@@ -7,14 +7,18 @@ export async function createUser(data: InsertUserType) {
   const [newUser] = await db
     .insert(userDb)
     .values(data)
-    .onConflictDoNothing()
+    .onConflictDoUpdate({
+      target: userDb.email,
+      set: {
+        id: data.id,
+      },
+    })
     .returning();
   return newUser;
 }
 
 export async function getUser() {
   const clerkUser = await currentUser();
-  console.log(clerkUser);
   if (!clerkUser) return null;
 
   const [user] = await db
