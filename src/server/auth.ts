@@ -14,6 +14,7 @@ export async function createUser(data: InsertUserType) {
 
 export async function getUser() {
   const clerkUser = await currentUser();
+  console.log(clerkUser);
   if (!clerkUser) return null;
 
   const [user] = await db
@@ -29,6 +30,5 @@ export async function getUser() {
       email: clerkUser.emailAddresses[0]?.emailAddress ?? "",
     });
   }
-
   return user;
 }

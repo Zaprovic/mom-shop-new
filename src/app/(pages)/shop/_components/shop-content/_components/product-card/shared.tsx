@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Heart, Sparkles } from "lucide-react";
 import { ProductFormData } from "@/schemas/product.schema";
+import Image from "next/image";
 
 type ImageProps = {
   product: ProductFormData;
@@ -21,7 +22,7 @@ export function ProductImage({ product, mode }: ImageProps) {
       }
     >
       {product.imageUrl ? (
-        <img
+        <Image
           src={product.imageUrl}
           alt={product.name}
           className="h-full w-full object-cover"

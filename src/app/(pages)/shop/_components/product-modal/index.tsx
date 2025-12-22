@@ -3,11 +3,11 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { X, ExternalLink, Star, Heart, ShoppingCart } from "lucide-react";
+import { X, ExternalLink, Heart, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import { ProductFormData } from "@/schemas/product.schema";
+import Image from "next/image";
 
 type Props = {
   product: ProductFormData;
@@ -103,7 +103,7 @@ export function ProductModal({ product, onClose }: Props) {
                 <div className="rounded-xl overflow-hidden bg-muted p-4">
                   <div className="w-full h-[300px] lg:h-[350px] bg-gradient-to-b from-muted/60 to-muted/40 rounded-lg flex items-center justify-center overflow-hidden">
                     {product.imageUrl ? (
-                      <img
+                      <Image
                         src={product.imageUrl}
                         alt={product.name}
                         className="h-full w-full object-cover"
@@ -174,14 +174,12 @@ export function ProductModal({ product, onClose }: Props) {
                   <CardContent className="p-4">
                     <h3 className="font-semibold mb-2 text-sm">Quick Info</h3>
                     <ul className="text-sm text-muted-foreground space-y-1.5 list-inside list-disc">
-                      <li>Rating: {product.rating} stars</li>
                       <li>Category: {product.category}</li>
                       <li>
                         {product.inStock
                           ? "Available now"
                           : "Currently out of stock"}
                       </li>
-                      <li>{product.reviews} customer reviews</li>
                     </ul>
                   </CardContent>
                 </Card>
@@ -197,12 +195,14 @@ export function ProductModal({ product, onClose }: Props) {
                       View full product page{" "}
                       <ExternalLink className="h-3 w-3 ml-2" />
                     </Button>
-                  </Link>Category: {product.category}</li>
-                      <li>
-                        {product.inStock
-                          ? "Available now"
-                          : "Currently out of stock"}
-                      
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
   );
 }
 

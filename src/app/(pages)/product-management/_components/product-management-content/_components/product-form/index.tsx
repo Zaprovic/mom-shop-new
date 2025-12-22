@@ -13,12 +13,12 @@ import { ImageUrlField } from "./_components/image-url-field";
 import { StockField } from "./_components/stock-field";
 import { useProductFormHandler } from "./hooks/use-product-form-handler";
 import { useForm, type Resolver } from "react-hook-form";
-import { ProductFormData, productSchema } from "@/schemas/product.schema";
+import { ProductFormValues, productFormSchema } from "@/schemas/product.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 export const ProductForm = ({ onSubmit, categories }: IProductFormProps) => {
-  const form = useForm<ProductFormData>({
-    resolver: zodResolver(productSchema) as Resolver<ProductFormData>,
+  const form = useForm<ProductFormValues>({
+    resolver: zodResolver(productFormSchema) as Resolver<ProductFormValues>,
     defaultValues: FORM_DEFAULT_VALUES,
   });
   const { isSubmitting } = form.formState;

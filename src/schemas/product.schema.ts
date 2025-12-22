@@ -22,4 +22,7 @@ export const productSchema = z.object({
   inStock: z.boolean(),
 });
 
+export const productFormSchema = productSchema.omit({ id: true });
+
 export type ProductFormData = z.infer<typeof productSchema>;
+export type ProductFormValues = z.infer<typeof productFormSchema>;

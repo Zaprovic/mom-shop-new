@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { MoreHorizontal, Trash2 } from "lucide-react";
 import { ProductFormData } from "@/schemas/product.schema";
+import Image from "next/image";
 
 interface ColumnsProps {
   onDelete: (id: number) => void;
@@ -52,7 +53,7 @@ export const createColumns = ({
       const imageUrl = row.getValue("imageUrl") as string;
       return (
         <div className="h-10 w-10 overflow-hidden rounded-md">
-          <img
+          <Image
             src={imageUrl}
             alt="Product"
             className="h-full w-full object-cover"

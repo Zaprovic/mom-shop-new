@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { ProductForm } from "./_components/product-form";
-import { ProductFormData } from "@/schemas/product.schema";
+import { ProductFormData, ProductFormValues } from "@/schemas/product.schema";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { DataTable } from "./_components/data-table";
@@ -12,16 +12,22 @@ import { Category } from "./_components/product-form/types";
 
 interface ProductManagementContentProps {
   categories: Category[];
+  initialProducts: ProductFormData[];
 }
 
 export const ProductManagementContent = ({
   categories,
+  initialProducts,
 }: ProductManagementContentProps) => {
-  const [products, setProducts] = useState<ProductFormData[]>([]);
+  const [products, setProducts] = useState<ProductFormData[]>(initialProducts);
   const [isFormVisible, setIsFormVisible] = useState(false);
   const { user } = useUser();
 
-  const handleProductSubmit = (data: ProductFormData) => {
+  React.useEffect(() => {
+    setProducts(initialProducts);
+  }, [initialProducts]);
+
+  const handleProductSubmit = (data: ProductFormValues) => {
     const newProduct: ProductFormData = {
       id: Math.max(0, ...products.map((p) => p.id)) + 1,
       name: data.name,
@@ -112,12 +118,6 @@ export const ProductManagementContent = ({
             <Card>
               <CardContent className="flex flex-col gap-2 pt-6">
                 <p className="text-sm text-foreground/60">Average Rating</p>
-                <p className="text-3xl font-bold text-foreground">
-                  {(
-                    products.reduce((sum, p) => sum + Number(p.rating), 0) /
-                    products.length
-                  ).toFixed(1)}
-                </p>
               </CardContent>
             </Card>
             <Card>

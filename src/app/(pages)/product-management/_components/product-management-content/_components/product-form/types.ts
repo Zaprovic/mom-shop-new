@@ -1,4 +1,7 @@
-import type { ProductFormData } from "@/schemas/product.schema";
+import type {
+  ProductFormData,
+  ProductFormValues,
+} from "@/schemas/product.schema";
 
 export type Category = {
   id: number;
@@ -6,7 +9,7 @@ export type Category = {
 };
 
 export type IProductFormProps = {
-  onSubmit?: (data: ProductFormData) => void | Promise<void>;
+  onSubmit?: (data: ProductFormValues) => void | Promise<void>;
   categories: Category[];
 };
 

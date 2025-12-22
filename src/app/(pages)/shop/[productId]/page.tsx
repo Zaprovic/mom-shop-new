@@ -2,10 +2,10 @@ import React from "react";
 import { products } from "@/mock/products";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Star, Heart, ShoppingCart, ArrowLeft } from "lucide-react";
+import { Heart, ShoppingCart, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { ProductFormData } from "@/schemas/product.schema";
+import Image from "next/image";
 
 export default async function SingleProductPage({
   params,
@@ -46,7 +46,7 @@ export default async function SingleProductPage({
             {/* Placeholder visual using icon to match product-card style */}
             <div className="w-full h-[420px] bg-gradient-to-b from-muted/60 to-muted/40 rounded-lg flex items-center justify-center overflow-hidden">
               {product.imageUrl ? (
-                <img
+                <Image
                   src={product.imageUrl}
                   alt={product.name}
                   className="h-full w-full object-cover"
@@ -118,7 +118,6 @@ export default async function SingleProductPage({
                       ? "Available now"
                       : "Currently out of stock"}
                   </li>
-                  <li>{product.reviews} customer reviews</li>
                 </ul>
               </CardContent>
             </Card>

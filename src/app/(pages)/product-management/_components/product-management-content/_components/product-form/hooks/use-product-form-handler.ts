@@ -1,20 +1,24 @@
+"use client";
+
 import { toast } from "sonner";
 import { type UseFormReset } from "react-hook-form";
-import { type ProductFormData } from "@/schemas/product.schema";
+import { type ProductFormValues } from "@/schemas/product.schema";
 import { FORM_DEFAULT_VALUES } from "../utils/constants";
+import { createProductAction } from "../../../../../actions";
+import { useRouter } from "next/navigation";
 
 type props = {
-  onSubmit?: (data: ProductFormData) => void | Promise<void>;
-  resetForm: UseFormReset<ProductFormData>;
+  onSubmit?: (data: ProductFormValues) => void | Promise<void>;
+  resetForm: UseFormReset<ProductFormValues>;
 };
 
-const API_CALL_DELAY = 500; // Simulated API call delay in ms
-
 export const useProductFormHandler = ({ onSubmit, resetForm }: props) => {
-  const handleSubmit = async (data: ProductFormData) => {
+  const router = useRouter();
+
+  const handleSubmit = async (data: ProductFormValues) => {
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, API_CALL_DELAY));
+      await createProductAction(data);
+      router.refresh();
 
       // Call the external onSubmit handler if provided
       if (onSubmit) {
