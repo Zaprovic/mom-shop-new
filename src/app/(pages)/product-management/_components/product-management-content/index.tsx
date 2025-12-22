@@ -181,27 +181,27 @@ export const ProductManagementContent = ({
           handleProductSubmit={handleProductSubmit}
         />
       ) : (
-        <>
+        <div className="w-full">
           {/* KPI strip for small screens */}
-          <div className="mb-6 grid grid-cols-1 gap-3 min-[400px]:grid-cols-2 sm:grid-cols-3 lg:hidden">
-            <Card className="min-w-0">
-              <CardContent className="min-w-0 pt-4">
+          <div className="mb-6 grid grid-cols-1 gap-3 sm:grid-cols-3 lg:hidden">
+            <Card className="min-w-0 py-4">
+              <CardContent className="min-w-0 px-4">
                 <p className="text-xs text-foreground/60">Total Products</p>
                 <p className="truncate text-base font-semibold tabular-nums sm:text-xl">
                   {stats.total}
                 </p>
               </CardContent>
             </Card>
-            <Card className="min-w-0">
-              <CardContent className="min-w-0 pt-4">
+            <Card className="min-w-0 py-4">
+              <CardContent className="min-w-0 px-4">
                 <p className="text-xs text-foreground/60">In Stock</p>
                 <p className="truncate text-base font-semibold tabular-nums sm:text-xl">
                   {stats.inStock}
                 </p>
               </CardContent>
             </Card>
-            <Card className="min-w-0">
-              <CardContent className="min-w-0 pt-4">
+            <Card className="min-w-0 py-4">
+              <CardContent className="min-w-0 px-4">
                 <p className="text-xs text-foreground/60">Total Value</p>
                 <p className="truncate text-base font-semibold tabular-nums sm:text-xl">
                   {formatToCOP(stats.totalValue)}
@@ -211,16 +211,16 @@ export const ProductManagementContent = ({
           </div>
 
           {/* Main content + sticky insights sidebar */}
-          <div className="grid gap-6 xl:[grid-template-columns:_2fr_1fr]">
-            <div className="order-2 xl:order-1">
+          <div className="grid gap-6 xl:[grid-template-columns:_2fr_280px]">
+            <div className="order-2 min-w-0 xl:order-1">
               <DataTable
                 columns={createColumns({ onDelete: handleDeleteProduct })}
                 data={products}
               />
             </div>
-            <aside className="order-1 xl:order-2 xl:sticky xl:top-24">
-              <Card className="min-w-0">
-                <CardContent className="space-y-4 pt-6">
+            <aside className="order-1 min-w-0 xl:order-2 xl:sticky xl:top-24">
+              <Card className="min-w-0 py-4 sm:py-6">
+                <CardContent className="space-y-4 px-4 pt-0 sm:px-6">
                   <div>
                     <p className="text-sm font-medium">Inventory Insights</p>
                     <p className="text-xs text-foreground/60">
@@ -313,7 +313,7 @@ export const ProductManagementContent = ({
               </Card>
             </aside>
           </div>
-        </>
+        </div>
       )}
     </div>
   );
