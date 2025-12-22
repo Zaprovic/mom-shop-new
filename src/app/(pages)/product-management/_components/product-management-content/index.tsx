@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { ProductForm } from "./_components/product-form";
 import { ProductFormData, ProductFormValues } from "@/schemas/product.schema";
 import { Card, CardContent } from "@/components/ui/card";
@@ -80,7 +80,7 @@ export const ProductManagementContent = ({
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const { user } = useUser();
 
-  React.useEffect(() => {
+  useEffect(() => {
     setProducts(initialProducts);
   }, [initialProducts]);
 
