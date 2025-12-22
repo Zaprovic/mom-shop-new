@@ -9,6 +9,7 @@ import { DataTable } from "./_components/data-table";
 import { createColumns } from "./_components/columns";
 import { useUser } from "@clerk/nextjs";
 import { Category } from "./_components/product-form/types";
+import { formatToCOP } from "@/lib/utils";
 
 interface ProductManagementContentProps {
   categories: Category[];
@@ -124,10 +125,9 @@ export const ProductManagementContent = ({
               <CardContent className="flex flex-col gap-2 pt-6">
                 <p className="text-sm text-foreground/60">Total Value</p>
                 <p className="text-3xl font-bold text-foreground">
-                  $
-                  {products
-                    .reduce((sum, p) => sum + Number(p.price), 0)
-                    .toFixed(2)}
+                  {formatToCOP(
+                    products.reduce((sum, p) => sum + Number(p.price), 0)
+                  )}
                 </p>
               </CardContent>
             </Card>

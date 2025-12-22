@@ -14,6 +14,7 @@ import {
 import { MoreHorizontal, Trash2 } from "lucide-react";
 import { ProductFormData } from "@/schemas/product.schema";
 import Image from "next/image";
+import { formatToCOP } from "@/lib/utils";
 
 interface ColumnsProps {
   onDelete: (id: number) => void;
@@ -43,7 +44,7 @@ export const createColumns = ({
     header: "Price",
     cell: ({ row }) => {
       const price = row.getValue("price") as number;
-      return <div className="text-right font-medium">${price.toFixed(2)}</div>;
+      return <div className="text-right font-medium">{formatToCOP(price)}</div>;
     },
   },
   {
