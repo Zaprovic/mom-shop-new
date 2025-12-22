@@ -11,6 +11,7 @@ type props = {
   onPriceRangeChange: (range: [number, number]) => void;
   onResetFilters: () => void;
   showFilters: boolean;
+  maxPrice: number;
 };
 
 export function SidebarFilters({
@@ -18,12 +19,12 @@ export function SidebarFilters({
   onPriceRangeChange,
   onResetFilters,
   showFilters,
+  maxPrice,
 }: props) {
   return (
     <aside
-      className={`lg:w-64 space-y-6 ${
-        showFilters ? "block" : "hidden lg:block"
-      }`}
+      className={`lg:w-64 space-y-6 ${showFilters ? "block" : "hidden lg:block"
+        }`}
     >
       <Card>
         <CardContent className="p-6 space-y-6">
@@ -40,7 +41,8 @@ export function SidebarFilters({
               </div>
               <Slider
                 min={0}
-                max={100}
+                max={maxPrice}
+                step={1}
                 value={priceRange}
                 onValueChange={(vals) =>
                   onPriceRangeChange([Number(vals[0]), Number(vals[1])])

@@ -30,10 +30,17 @@ export function ShopContent({
   categories,
   sortOptions,
 }: props) {
+  const maxPrice = Math.max(
+    ...initialProducts.map((p) =>
+      typeof p.price === "string" ? parseFloat(p.price) : p.price
+    ),
+    5_000_000
+  );
+
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [sortBy, setSortBy] = useState("featured");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 100]);
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, maxPrice]);
   const [showFilters, setShowFilters] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -115,9 +122,9 @@ export function ShopContent({
   // Get products to display based on device type
   const productsToDisplay = isDesktop
     ? filteredProducts.slice(
-        (currentPage - 1) * ITEMS_PER_PAGE_DESKTOP_PAGINATION,
-        currentPage * ITEMS_PER_PAGE_DESKTOP_PAGINATION
-      )
+      (currentPage - 1) * ITEMS_PER_PAGE_DESKTOP_PAGINATION,
+      currentPage * ITEMS_PER_PAGE_DESKTOP_PAGINATION
+    )
     : filteredProducts.slice(0, displayedItems);
 
   // Scroll to top on pagination change (desktop only)
@@ -163,14 +170,14 @@ export function ShopContent({
 
   const handleResetFilters = () => {
     setSelectedCategoryWithReset("All");
-    setPriceRangeWithReset([0, 100]);
+    setPriceRangeWithReset([0, maxPrice]);
     setSortByWithReset("featured");
     setSearchQueryWithReset("");
   };
 
   const handleClearFilters = () => {
     setSelectedCategoryWithReset("All");
-    setPriceRangeWithReset([0, 100]);
+    setPriceRangeWithReset([0, maxPrice]);
     setSearchQueryWithReset("");
   };
 
@@ -233,6 +240,7 @@ export function ShopContent({
             onPriceRangeChange={setPriceRangeWithReset}
             onResetFilters={handleResetFilters}
             showFilters={showFilters}
+            maxPrice={maxPrice}
           />
 
           {/* Products Grid/List */}
@@ -320,7 +328,7 @@ export function ShopContent({
                 {!isDesktop &&
                   displayedItems >= filteredProducts.length &&
                   filteredProducts.length >
-                    ITEMS_PER_PAGE_DESKTOP_PAGINATION && (
+                  ITEMS_PER_PAGE_DESKTOP_PAGINATION && (
                     <div className="mt-8 text-center">
                       <p className="text-sm text-muted-foreground">
                         Showing all {filteredProducts.length} products

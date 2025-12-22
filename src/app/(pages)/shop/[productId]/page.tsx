@@ -1,11 +1,10 @@
 import React from "react";
-import { products } from "@/mock/products";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Heart, ShoppingCart, ArrowLeft } from "lucide-react";
 import Link from "next/link";
-import { ProductFormData } from "@/schemas/product.schema";
 import Image from "next/image";
+import { db } from "@/db";
 
 export default async function SingleProductPage({
   params,
@@ -15,9 +14,31 @@ export default async function SingleProductPage({
   const { productId } = await params;
 
   const idNum = parseInt(productId || "", 10);
-  const product = products.find((p) => p.id === idNum) as
-    | ProductFormData
-    | undefined;
+
+  const productData = !isNaN(idNum)
+    ? await db.query.product.findFirst({
+      where: (product, { eq }) => eq(product.id, idNum),
+      with: {
+        productCategory: {
+          with: {
+            category: true,
+          },
+        },
+      },
+    })
+    : undefined;
+
+  const product = productData
+    ? {
+      id: productData.id,
+      name: productData.name,
+      price: productData.price,
+      imageUrl: productData.imageUrl,
+      inStock: productData.inStock,
+      category:
+        productData.productCategory[0]?.category.name || "Uncategorized",
+    }
+    : undefined;
 
   if (!product) {
     return (
@@ -49,6 +70,8 @@ export default async function SingleProductPage({
                 <Image
                   src={product.imageUrl}
                   alt={product.name}
+                  width={400}
+                  height={400}
                   className="h-full w-full object-cover"
                 />
               ) : (
