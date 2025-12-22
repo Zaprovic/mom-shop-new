@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { ProductForm } from "./_components/product-form";
 import { ProductFormData, ProductFormValues } from "@/schemas/product.schema";
 import { Card, CardContent } from "@/components/ui/card";
@@ -20,10 +20,57 @@ import { Category } from "./_components/product-form/types";
 import { formatToCOP } from "@/lib/utils";
 import { PlusCircle } from "lucide-react";
 
-interface ProductManagementContentProps {
+type ProductManagementContentProps = {
   categories: Category[];
   initialProducts: ProductFormData[];
-}
+};
+
+type EmptyProductProps = {
+  isDialogOpen: boolean;
+  setIsDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  handleProductSubmit: (data: ProductFormValues) => void;
+  categories: Category[];
+};
+
+const EmptyProduct = ({
+  isDialogOpen,
+  setIsDialogOpen,
+  categories,
+  handleProductSubmit,
+}: EmptyProductProps) => {
+  return (
+    <Card className="border-dashed">
+      <CardContent className="flex min-h-[300px] flex-col items-center justify-center gap-4">
+        <div className="text-center">
+          <p className="text-lg font-semibold text-foreground">
+            No products yet
+          </p>
+          <p className="text-sm text-foreground/60">
+            Create your first product to get started
+          </p>
+        </div>
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          <DialogTrigger asChild>
+            <Button variant="outline">Create Product</Button>
+          </DialogTrigger>
+          <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[600px]">
+            <DialogHeader>
+              <DialogTitle>Create New Product</DialogTitle>
+              <DialogDescription>
+                Add a new product to your catalog. Fill in all the required
+                information below.
+              </DialogDescription>
+            </DialogHeader>
+            <ProductForm
+              onSubmit={handleProductSubmit}
+              categories={categories}
+            />
+          </DialogContent>
+        </Dialog>
+      </CardContent>
+    </Card>
+  );
+};
 
 export const ProductManagementContent = ({
   categories,
@@ -55,7 +102,7 @@ export const ProductManagementContent = ({
     setProducts((prev) => prev.filter((p) => p.id !== id));
   };
 
-  const stats = React.useMemo(() => {
+  const stats = useMemo(() => {
     const total = products.length;
     const inStock = products.filter((p) => p.inStock).length;
     const outOfStock = total - inStock;
@@ -127,36 +174,12 @@ export const ProductManagementContent = ({
 
       {/* Products Table & Insights */}
       {products.length === 0 ? (
-        <Card className="border-dashed">
-          <CardContent className="flex min-h-[300px] flex-col items-center justify-center gap-4">
-            <div className="text-center">
-              <p className="text-lg font-semibold text-foreground">
-                No products yet
-              </p>
-              <p className="text-sm text-foreground/60">
-                Create your first product to get started
-              </p>
-            </div>
-            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-              <DialogTrigger asChild>
-                <Button variant="outline">Create Product</Button>
-              </DialogTrigger>
-              <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[600px]">
-                <DialogHeader>
-                  <DialogTitle>Create New Product</DialogTitle>
-                  <DialogDescription>
-                    Add a new product to your catalog. Fill in all the required
-                    information below.
-                  </DialogDescription>
-                </DialogHeader>
-                <ProductForm
-                  onSubmit={handleProductSubmit}
-                  categories={categories}
-                />
-              </DialogContent>
-            </Dialog>
-          </CardContent>
-        </Card>
+        <EmptyProduct
+          isDialogOpen={isDialogOpen}
+          setIsDialogOpen={setIsDialogOpen}
+          categories={categories}
+          handleProductSubmit={handleProductSubmit}
+        />
       ) : (
         <>
           {/* KPI strip for small screens */}
