@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Heart, Sparkles } from "lucide-react";
 import { ProductFormData } from "@/schemas/product.schema";
 import Image from "next/image";
+import { formatToCOP } from "@/lib/utils";
 
 type ImageProps = {
   product: ProductFormData;
@@ -76,8 +77,8 @@ export function PriceAndCTA({ product, mode }: PriceCTAProps) {
           : "flex items-center justify-between"
       }
     >
-      <span className={isGrid ? "text-lg font-bold" : "text-xl font-bold"}>
-        ${product.price}
+      <span className={isGrid ? "text-base font-bold" : "text-xl font-bold"}>
+        {formatToCOP(product.price)}
       </span>
       <Button
         size={isGrid ? "sm" : undefined}
@@ -86,7 +87,9 @@ export function PriceAndCTA({ product, mode }: PriceCTAProps) {
           isGrid ? "group-hover:translate-x-1 transition-transform" : undefined
         }
       >
-        {product.inStock ? "Add to Cart" : "Out of Stock"}
+        {product.inStock ? <span className="text-xs">Add</span> : <span className="text-xs">
+          Out of Stock
+        </span>}
       </Button>
     </div>
   );

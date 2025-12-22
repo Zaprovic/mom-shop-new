@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Slider } from "@/components/ui/slider";
 import { SlidersHorizontal } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
+import { formatToCOP } from "@/lib/utils";
 
 type props = {
   priceRange: [number, number];
@@ -37,7 +38,7 @@ export function SidebarFilters({
             <div className="space-y-4">
               <div className="flex items-center justify-between text-sm">
                 <span className="text-muted-foreground">Min</span>
-                <span className="font-medium">${priceRange[0]}</span>
+                <span className="font-medium">{formatToCOP(priceRange[0])}</span>
               </div>
               <Slider
                 min={0}
@@ -51,7 +52,7 @@ export function SidebarFilters({
               />
               <div className="flex items-center justify-between text-sm">
                 <span className="text-muted-foreground">Max</span>
-                <span className="font-medium">${priceRange[1]}</span>
+                <span className="font-medium">{formatToCOP(priceRange[1])}</span>
               </div>
             </div>
           </div>

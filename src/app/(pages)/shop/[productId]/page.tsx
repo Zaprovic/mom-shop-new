@@ -5,6 +5,7 @@ import { Heart, ShoppingCart, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { db } from "@/db";
+import { formatToCOP } from "@/lib/utils";
 
 export default async function SingleProductPage({
   params,
@@ -111,7 +112,7 @@ export default async function SingleProductPage({
           {/* Price & Actions */}
           <div className="flex items-center gap-6 mb-6">
             <div>
-              <div className="text-3xl font-bold">${product.price}</div>
+              <div className="text-3xl font-bold">{formatToCOP(product.price)}</div>
               {!product.inStock && (
                 <div className="text-sm text-destructive mt-1">
                   Out of stock

@@ -56,19 +56,17 @@ export function ProductModal({ product, onClose }: Props) {
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       {/* Backdrop with fade animation */}
       <div
-        className={`absolute inset-0 bg-background/80 backdrop-blur-sm transition-opacity duration-300 ${
-          isVisible ? "opacity-100" : "opacity-0"
-        }`}
+        className={`absolute inset-0 bg-background/80 backdrop-blur-sm transition-opacity duration-300 ${isVisible ? "opacity-100" : "opacity-0"
+          }`}
         onClick={handleClose}
       />
 
       {/* Modal Content with scale and fade animation */}
       <div
-        className={`relative z-10 w-full max-w-4xl max-h-[90vh] overflow-y-auto m-4 transition-all duration-300 ${
-          isVisible
-            ? "opacity-100 scale-100 translate-y-0"
-            : "opacity-0 scale-95 translate-y-4"
-        }`}
+        className={`relative z-10 w-full max-w-4xl max-h-[90vh] overflow-y-auto m-4 transition-all duration-300 ${isVisible
+          ? "opacity-100 scale-100 translate-y-0"
+          : "opacity-0 scale-95 translate-y-4"
+          }`}
       >
         <Card className="shadow-2xl">
           <CardContent className="p-6">
@@ -94,17 +92,18 @@ export function ProductModal({ product, onClose }: Props) {
             <div className="flex flex-col lg:flex-row gap-6">
               {/* Left: Image */}
               <div
-                className={`w-full lg:w-1/2 transition-all duration-500 delay-100 ${
-                  isVisible
-                    ? "opacity-100 translate-x-0"
-                    : "opacity-0 -translate-x-4"
-                }`}
+                className={`w-full lg:w-1/2 transition-all duration-500 delay-100 ${isVisible
+                  ? "opacity-100 translate-x-0"
+                  : "opacity-0 -translate-x-4"
+                  }`}
               >
                 <div className="rounded-xl overflow-hidden bg-muted p-4">
                   <div className="w-full h-[300px] lg:h-[350px] bg-gradient-to-b from-muted/60 to-muted/40 rounded-lg flex items-center justify-center overflow-hidden">
                     {product.imageUrl ? (
                       <Image
                         src={product.imageUrl}
+                        width={400}
+                        height={400}
                         alt={product.name}
                         className="h-full w-full object-cover"
                       />
@@ -128,11 +127,10 @@ export function ProductModal({ product, onClose }: Props) {
 
               {/* Right: Details */}
               <div
-                className={`w-full lg:w-1/2 transition-all duration-500 delay-200 ${
-                  isVisible
-                    ? "opacity-100 translate-x-0"
-                    : "opacity-0 translate-x-4"
-                }`}
+                className={`w-full lg:w-1/2 transition-all duration-500 delay-200 ${isVisible
+                  ? "opacity-100 translate-x-0"
+                  : "opacity-0 translate-x-4"
+                  }`}
               >
                 <div className="flex items-start justify-between mb-2">
                   <div>
