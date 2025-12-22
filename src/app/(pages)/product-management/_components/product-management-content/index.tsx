@@ -183,7 +183,7 @@ export const ProductManagementContent = ({
       ) : (
         <>
           {/* KPI strip for small screens */}
-          <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:hidden">
+          <div className="mb-6 grid grid-cols-1 gap-3 min-[400px]:grid-cols-2 sm:grid-cols-3 lg:hidden">
             <Card className="min-w-0">
               <CardContent className="min-w-0 pt-4">
                 <p className="text-xs text-foreground/60">Total Products</p>
@@ -211,14 +211,14 @@ export const ProductManagementContent = ({
           </div>
 
           {/* Main content + sticky insights sidebar */}
-          <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
-            <div className="order-2 lg:order-1">
+          <div className="grid gap-6 xl:[grid-template-columns:_2fr_1fr]">
+            <div className="order-2 xl:order-1">
               <DataTable
                 columns={createColumns({ onDelete: handleDeleteProduct })}
                 data={products}
               />
             </div>
-            <aside className="order-1 lg:order-2 lg:sticky lg:top-24">
+            <aside className="order-1 xl:order-2 xl:sticky xl:top-24">
               <Card className="min-w-0">
                 <CardContent className="space-y-4 pt-6">
                   <div>
