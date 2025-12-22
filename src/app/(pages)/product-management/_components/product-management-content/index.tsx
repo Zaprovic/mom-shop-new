@@ -55,7 +55,7 @@ export const ProductManagementContent = ({
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto max-w-7xl px-4 py-8">
       {/* Header */}
       <div className="mb-8 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
         <div>
@@ -122,13 +122,15 @@ export const ProductManagementContent = ({
         </Card>
       ) : (
         <>
-          <DataTable
-            columns={createColumns({ onDelete: handleDeleteProduct })}
-            data={products}
-          />
+          <div className="w-full">
+            <DataTable
+              columns={createColumns({ onDelete: handleDeleteProduct })}
+              data={products}
+            />
+          </div>
 
           {/* Statistics Footer */}
-          <div className="mt-12 grid gap-4 md:grid-cols-4">
+          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <Card>
               <CardContent className="flex flex-col gap-2 pt-6">
                 <p className="text-sm text-foreground/60">Total Products</p>

@@ -67,7 +67,7 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div className="space-y-4">
+    <div className="w-full space-y-4">
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <Input
           placeholder="Filter by product name..."
@@ -75,11 +75,11 @@ export function DataTable<TData, TValue>({
           onChange={(event) =>
             table.getColumn("name")?.setFilterValue(event.target.value)
           }
-          className="max-w-sm"
+          className="w-full md:max-w-sm"
         />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
+            <Button variant="outline" className="w-full md:ml-auto md:w-auto">
               <ChevronDown className="mr-2 h-4 w-4" />
               Columns
             </Button>
@@ -106,14 +106,30 @@ export function DataTable<TData, TValue>({
         </DropdownMenu>
       </div>
 
-      <div className="rounded-md border">
+      <div className="w-full overflow-auto w-full overflow-auto rounded-md border">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead
+                      key={header.id}
+                      style={{
+                        width:
+                          header.getSize() !== 150
+                            ? `${header.getSize()}px`
+                            : undefined,
+                        minWidth:
+                          header.getSize() !== 150
+                            ? `${header.getSize()}px`
+                            : undefined,
+                        maxWidth:
+                          header.getSize() !== 150
+                            ? `${header.getSize()}px`
+                            : undefined,
+                      }}
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -134,7 +150,23 @@ export function DataTable<TData, TValue>({
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                    <TableCell
+                      key={cell.id}
+                      style={{
+                        width:
+                          cell.column.getSize() !== 150
+                            ? `${cell.column.getSize()}px`
+                            : undefined,
+                        minWidth:
+                          cell.column.getSize() !== 150
+                            ? `${cell.column.getSize()}px`
+                            : undefined,
+                        maxWidth:
+                          cell.column.getSize() !== 150
+                            ? `${cell.column.getSize()}px`
+                            : undefined,
+                      }}
+                    >
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()

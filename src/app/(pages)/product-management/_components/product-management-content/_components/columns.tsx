@@ -30,6 +30,7 @@ export const createColumns = ({
       const name = row.getValue("name") as string;
       return <div className="font-medium">{name}</div>;
     },
+    size: 250,
   },
   {
     accessorKey: "category",
@@ -38,14 +39,20 @@ export const createColumns = ({
       const category = row.getValue("category") as string;
       return <div className="capitalize">{category}</div>;
     },
+    size: 150,
   },
   {
     accessorKey: "price",
-    header: "Price",
+    header: () => <div className="text-right">Price</div>,
     cell: ({ row }) => {
       const price = row.getValue("price") as number;
-      return <div className="text-right font-medium">{formatToCOP(price)}</div>;
+      return (
+        <div className="text-right font-medium tabular-nums">
+          {formatToCOP(price)}
+        </div>
+      );
     },
+    size: 180,
   },
   {
     accessorKey: "imageUrl",
@@ -58,6 +65,7 @@ export const createColumns = ({
         </div>
       );
     },
+    size: 80,
   },
   {
     accessorKey: "inStock",
@@ -70,6 +78,7 @@ export const createColumns = ({
         </Badge>
       );
     },
+    size: 140,
   },
   {
     id: "actions",
@@ -98,5 +107,6 @@ export const createColumns = ({
         </DropdownMenu>
       );
     },
+    size: 70,
   },
 ];
