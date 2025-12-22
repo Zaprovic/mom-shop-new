@@ -53,11 +53,7 @@ export const createColumns = ({
       const imageUrl = row.getValue("imageUrl") as string;
       return (
         <div className="h-10 w-10 overflow-hidden rounded-md">
-          <Image
-            src={imageUrl}
-            alt="Product"
-            className="h-full w-full object-cover"
-          />
+          <Image src={imageUrl} alt="Product" width={40} height={40} />
         </div>
       );
     },
