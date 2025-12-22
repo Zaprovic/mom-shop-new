@@ -16,13 +16,9 @@ export const productSchema = z.object({
   category: z.string().min(1, {
     message: "Please select a category.",
   }),
-  rating: z.coerce.number().min(0).max(5, {
-    message: "Rating must be between 0 and 5.",
+  imageUrl: z.string().url({
+    message: "Please enter a valid URL.",
   }),
-  reviews: z.coerce.number().min(0, {
-    message: "Number of reviews must be a non-negative integer.",
-  }),
-  badge: z.union([z.string(), z.null()]).optional(),
   inStock: z.boolean(),
 });
 

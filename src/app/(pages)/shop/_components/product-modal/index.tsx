@@ -101,8 +101,16 @@ export function ProductModal({ product, onClose }: Props) {
                 }`}
               >
                 <div className="rounded-xl overflow-hidden bg-muted p-4">
-                  <div className="w-full h-[300px] lg:h-[350px] bg-gradient-to-b from-muted/60 to-muted/40 rounded-lg flex items-center justify-center">
-                    <ShoppingCart className="h-20 w-20 text-primary" />
+                  <div className="w-full h-[300px] lg:h-[350px] bg-gradient-to-b from-muted/60 to-muted/40 rounded-lg flex items-center justify-center overflow-hidden">
+                    {product.imageUrl ? (
+                      <img
+                        src={product.imageUrl}
+                        alt={product.name}
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      <ShoppingCart className="h-20 w-20 text-primary" />
+                    )}
                   </div>
                 </div>
                 {/* Thumbnails */}
@@ -135,29 +143,6 @@ export function ProductModal({ product, onClose }: Props) {
                       {product.category}
                     </p>
                   </div>
-                  {product.badge && <Badge>{product.badge}</Badge>}
-                </div>
-
-                {/* Rating */}
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="flex items-center gap-1">
-                    {[...Array(5)].map((_, i) => {
-                      const ratingNum = Number(product.rating) || 0;
-                      return (
-                        <Star
-                          key={i}
-                          className={`h-4 w-4 ${
-                            i < Math.floor(ratingNum)
-                              ? "text-chart-4 fill-chart-4"
-                              : "text-muted fill-muted"
-                          }`}
-                        />
-                      );
-                    })}
-                  </div>
-                  <span className="text-sm text-muted-foreground">
-                    {product.rating} • {product.reviews} reviews
-                  </span>
                 </div>
 
                 {/* Price */}
@@ -212,14 +197,12 @@ export function ProductModal({ product, onClose }: Props) {
                       View full product page{" "}
                       <ExternalLink className="h-3 w-3 ml-2" />
                     </Button>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
+                  </Link>Category: {product.category}</li>
+                      <li>
+                        {product.inStock
+                          ? "Available now"
+                          : "Currently out of stock"}
+                      
   );
 }
 

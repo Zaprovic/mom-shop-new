@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Slider } from "@/components/ui/slider";
-import { Star, SlidersHorizontal } from "lucide-react";
+import { SlidersHorizontal } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 
 type props = {
@@ -51,30 +51,6 @@ export function SidebarFilters({
                 <span className="text-muted-foreground">Max</span>
                 <span className="font-medium">${priceRange[1]}</span>
               </div>
-            </div>
-          </div>
-
-          {/* Rating Filter */}
-          <div>
-            <h3 className="font-semibold mb-4">Rating</h3>
-            <div className="space-y-2">
-              {[4, 3, 2, 1].map((rating) => (
-                <label
-                  key={rating}
-                  className="flex items-center gap-2 cursor-pointer hover:text-foreground text-muted-foreground transition-colors"
-                >
-                  <Checkbox className="rounded" />
-                  <div className="flex items-center gap-1">
-                    {[...Array(rating)].map((_, i) => (
-                      <Star
-                        key={i}
-                        className="h-3 w-3 fill-chart-4 text-chart-4"
-                      />
-                    ))}
-                    <span className="text-sm ml-1">& Up</span>
-                  </div>
-                </label>
-              ))}
             </div>
           </div>
 

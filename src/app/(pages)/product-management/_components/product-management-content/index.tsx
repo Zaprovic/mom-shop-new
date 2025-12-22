@@ -8,11 +8,18 @@ import { Button } from "@/components/ui/button";
 import { DataTable } from "./_components/data-table";
 import { createColumns } from "./_components/columns";
 import { useUser } from "@clerk/nextjs";
+import { Category } from "./_components/product-form/types";
 
-export const ProductManagementContent = () => {
+interface ProductManagementContentProps {
+  categories: Category[];
+}
+
+export const ProductManagementContent = ({
+  categories,
+}: ProductManagementContentProps) => {
   const [products, setProducts] = useState<ProductFormData[]>([]);
   const [isFormVisible, setIsFormVisible] = useState(false);
-  const { user } = useUser()
+  const { user } = useUser();
 
   const handleProductSubmit = (data: ProductFormData) => {
     const newProduct: ProductFormData = {
@@ -20,9 +27,7 @@ export const ProductManagementContent = () => {
       name: data.name,
       price: data.price,
       category: data.category,
-      rating: data.rating,
-      reviews: data.reviews,
-      badge: data.badge || null,
+      imageUrl: data.imageUrl,
       inStock: data.inStock,
     };
 
@@ -58,7 +63,7 @@ export const ProductManagementContent = () => {
       {/* Form Section */}
       {isFormVisible && (
         <div className="mb-8">
-          <ProductForm onSubmit={handleProductSubmit} />
+          <ProductForm onSubmit={handleProductSubmit} categories={categories} />
         </div>
       )}
 

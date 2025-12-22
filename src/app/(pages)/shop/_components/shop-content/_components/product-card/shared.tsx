@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Star, Heart, Sparkles } from "lucide-react";
+import { Heart, Sparkles } from "lucide-react";
 import { ProductFormData } from "@/schemas/product.schema";
 
 type ImageProps = {
@@ -20,20 +20,18 @@ export function ProductImage({ product, mode }: ImageProps) {
           : "w-28 h-28 bg-muted rounded-lg flex items-center justify-center flex-shrink-0 relative overflow-hidden"
       }
     >
-      <Sparkles
-        className={isGrid ? "h-14 w-14 text-primary" : "h-10 w-10 text-primary"}
-      />
-
-      {product.badge && (
-        <Badge
+      {product.imageUrl ? (
+        <img
+          src={product.imageUrl}
+          alt={product.name}
+          className="h-full w-full object-cover"
+        />
+      ) : (
+        <Sparkles
           className={
-            isGrid
-              ? "absolute top-3 left-3 bg-background text-foreground"
-              : "absolute top-2 left-2 text-xs bg-background text-foreground"
+            isGrid ? "h-14 w-14 text-primary" : "h-10 w-10 text-primary"
           }
-        >
-          {product.badge}
-        </Badge>
+        />
       )}
 
       {/* Wishlist / Heart */}
@@ -55,31 +53,6 @@ export function ProductImage({ product, mode }: ImageProps) {
           <Badge variant="secondary">Out of Stock</Badge>
         </div>
       )}
-    </div>
-  );
-}
-
-type RatingProps = {
-  product: ProductFormData;
-};
-
-export function ProductRating({ product }: RatingProps) {
-  return (
-    <div className="flex items-center gap-1">
-      {[...Array(5)].map((_, i) => (
-        <Star
-          key={i}
-          className={`h-3 w-3 ${
-            i < Math.floor(Number(product.rating) || 0)
-              ? "text-chart-4 fill-chart-4"
-              : "text-muted fill-muted"
-          }`}
-        />
-      ))}
-      <span className="text-xs text-muted-foreground ml-1">
-        {product.rating} ({product.reviews}
-        {product.reviews !== undefined ? "" : ""})
-      </span>
     </div>
   );
 }

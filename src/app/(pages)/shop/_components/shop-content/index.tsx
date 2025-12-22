@@ -102,10 +102,6 @@ export function ShopContent({
           return (priceA ?? 0) - (priceB ?? 0);
         case "price-desc":
           return (priceB ?? 0) - (priceA ?? 0);
-        case "rating":
-          return Number(b.rating) - Number(a.rating);
-        case "reviews":
-          return Number(b.reviews) - Number(a.reviews);
         default:
           return 0;
       }

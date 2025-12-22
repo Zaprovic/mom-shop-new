@@ -46,19 +46,19 @@ export const createColumns = ({
     },
   },
   {
-    accessorKey: "rating",
-    header: "Rating",
+    accessorKey: "imageUrl",
+    header: "Image",
     cell: ({ row }) => {
-      const rating = row.getValue("rating") as number;
-      return <div className="text-center">{rating.toFixed(1)} ⭐</div>;
-    },
-  },
-  {
-    accessorKey: "reviews",
-    header: "Reviews",
-    cell: ({ row }) => {
-      const reviews = row.getValue("reviews") as number;
-      return <div className="text-center">{reviews}</div>;
+      const imageUrl = row.getValue("imageUrl") as string;
+      return (
+        <div className="h-10 w-10 overflow-hidden rounded-md">
+          <img
+            src={imageUrl}
+            alt="Product"
+            className="h-full w-full object-cover"
+          />
+        </div>
+      );
     },
   },
   {
@@ -70,20 +70,6 @@ export const createColumns = ({
         <Badge variant={inStock ? "default" : "destructive"}>
           {inStock ? "In Stock" : "Out of Stock"}
         </Badge>
-      );
-    },
-  },
-  {
-    accessorKey: "badge",
-    header: "Badge",
-    cell: ({ row }) => {
-      const badge = row.getValue("badge") as string | null;
-      return badge ? (
-        <Badge variant="secondary" className="capitalize">
-          {badge}
-        </Badge>
-      ) : (
-        <span className="text-muted-foreground">—</span>
       );
     },
   },

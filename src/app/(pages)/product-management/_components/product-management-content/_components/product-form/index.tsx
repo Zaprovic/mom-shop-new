@@ -9,16 +9,14 @@ import { type IProductFormProps } from "./types";
 import { ProductNameField } from "./_components/product-name-field";
 import { PriceField } from "./_components/price-field";
 import { CategoryField } from "./_components/category-field";
-import { RatingField } from "./_components/rating-field";
-import { ReviewsField } from "./_components/reviews-field";
-import { BadgeField } from "./_components/badge-field";
+import { ImageUrlField } from "./_components/image-url-field";
 import { StockField } from "./_components/stock-field";
 import { useProductFormHandler } from "./hooks/use-product-form-handler";
 import { useForm, type Resolver } from "react-hook-form";
 import { ProductFormData, productSchema } from "@/schemas/product.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-export const ProductForm = ({ onSubmit }: IProductFormProps) => {
+export const ProductForm = ({ onSubmit, categories }: IProductFormProps) => {
   const form = useForm<ProductFormData>({
     resolver: zodResolver(productSchema) as Resolver<ProductFormData>,
     defaultValues: FORM_DEFAULT_VALUES,
@@ -45,15 +43,10 @@ export const ProductForm = ({ onSubmit }: IProductFormProps) => {
 
             <div className="grid gap-6 md:grid-cols-2">
               <PriceField disabled={isSubmitting} />
-              <CategoryField disabled={isSubmitting} />
+              <CategoryField disabled={isSubmitting} categories={categories} />
             </div>
 
-            <div className="grid gap-6 md:grid-cols-2">
-              <RatingField disabled={isSubmitting} />
-              <ReviewsField disabled={isSubmitting} />
-            </div>
-
-            <BadgeField disabled={isSubmitting} />
+            <ImageUrlField disabled={isSubmitting} />
 
             <StockField disabled={isSubmitting} />
 

@@ -1,12 +1,12 @@
 import { relations } from "drizzle-orm";
 import {
   boolean,
-  integer,
   pgSchema,
   primaryKey,
   real,
   serial,
   varchar,
+  text,
 } from "drizzle-orm/pg-core";
 import {
   createSelectSchema,
@@ -66,8 +66,7 @@ export const product = shopSchema.table("product", {
   id: serial("id").primaryKey(),
   name: varchar("name", { length: 100 }).notNull(),
   price: real("price").notNull(),
-  rating: real("rating").default(0).notNull(),
-  reviews: integer("reviews").default(0).notNull(),
+  imageUrl: text("image_url").notNull(),
   inStock: boolean("in_stock").default(true).notNull(),
   userId: varchar("user_id", { length: 255 })
     .notNull()

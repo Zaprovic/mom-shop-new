@@ -44,8 +44,16 @@ export default async function SingleProductPage({
         <div className="w-full lg:w-1/2">
           <div className="rounded-xl overflow-hidden bg-muted p-6 flex items-center justify-center">
             {/* Placeholder visual using icon to match product-card style */}
-            <div className="w-full h-[420px] bg-gradient-to-b from-muted/60 to-muted/40 rounded-lg flex items-center justify-center">
-              <ShoppingCart className="h-28 w-28 text-primary" />
+            <div className="w-full h-[420px] bg-gradient-to-b from-muted/60 to-muted/40 rounded-lg flex items-center justify-center overflow-hidden">
+              {product.imageUrl ? (
+                <img
+                  src={product.imageUrl}
+                  alt={product.name}
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                <ShoppingCart className="h-28 w-28 text-primary" />
+              )}
             </div>
           </div>
           <div className="mt-4 flex gap-3">
@@ -70,35 +78,12 @@ export default async function SingleProductPage({
             >
               <ArrowLeft className="h-4 w-4" /> Back
             </Link>
-            {product.badge && <Badge>{product.badge}</Badge>}
           </div>
 
           <h1 className="text-3xl font-semibold mb-2">{product.name}</h1>
           <p className="text-sm text-muted-foreground mb-4">
             {product.category}
           </p>
-
-          {/* Rating */}
-          <div className="flex items-center gap-2 mb-6">
-            <div className="flex items-center gap-1">
-              {[...Array(5)].map((_, i) => {
-                const ratingNum = Number(product.rating) || 0;
-                return (
-                  <Star
-                    key={i}
-                    className={`h-4 w-4 ${
-                      i < Math.floor(ratingNum)
-                        ? "text-chart-4 fill-chart-4"
-                        : "text-muted fill-muted"
-                    }`}
-                  />
-                );
-              })}
-            </div>
-            <span className="text-sm text-muted-foreground">
-              {product.rating} • {product.reviews} reviews
-            </span>
-          </div>
 
           {/* Price & Actions */}
           <div className="flex items-center gap-6 mb-6">
@@ -127,7 +112,6 @@ export default async function SingleProductPage({
               <CardContent>
                 <h3 className="font-semibold mb-2">Highlights</h3>
                 <ul className="text-sm text-muted-foreground space-y-2 list-inside list-disc">
-                  <li>Highly rated by customers — {product.rating} stars</li>
                   <li>Category: {product.category}</li>
                   <li>
                     {product.inStock
