@@ -18,6 +18,7 @@ import { createColumns } from "./_components/columns";
 import { useUser } from "@clerk/nextjs";
 import { Category } from "./_components/product-form/types";
 import { formatToCOP } from "@/lib/utils";
+import { PlusCircle } from "lucide-react";
 
 interface ProductManagementContentProps {
   categories: Category[];
@@ -54,6 +55,42 @@ export const ProductManagementContent = ({
     setProducts((prev) => prev.filter((p) => p.id !== id));
   };
 
+  const stats = React.useMemo(() => {
+    const total = products.length;
+    const inStock = products.filter((p) => p.inStock).length;
+    const outOfStock = total - inStock;
+    const totalValue = products.reduce((sum, p) => sum + Number(p.price), 0);
+    const avgPrice = total > 0 ? totalValue / total : 0;
+    const categoriesSet = new Set(products.map((p) => p.category));
+    const categoriesCount = categoriesSet.size;
+    const categoryFreq: Record<string, number> = {};
+    products.forEach((p) => {
+      categoryFreq[p.category] = (categoryFreq[p.category] || 0) + 1;
+    });
+    const mostCommonCategory =
+      Object.keys(categoryFreq).sort(
+        (a, b) => (categoryFreq[b] ?? 0) - (categoryFreq[a] ?? 0)
+      )[0] || "—";
+    const maxPrice =
+      total > 0 ? Math.max(...products.map((p) => Number(p.price))) : 0;
+    const minPrice =
+      total > 0 ? Math.min(...products.map((p) => Number(p.price))) : 0;
+    const stockPct = total > 0 ? Math.round((inStock / total) * 100) : 0;
+
+    return {
+      total,
+      inStock,
+      outOfStock,
+      totalValue,
+      avgPrice,
+      categoriesCount,
+      mostCommonCategory,
+      maxPrice,
+      minPrice,
+      stockPct,
+    };
+  }, [products]);
+
   return (
     <div className="container mx-auto max-w-7xl px-4 py-8">
       {/* Header */}
@@ -69,7 +106,7 @@ export const ProductManagementContent = ({
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
             <Button size="lg" className="w-full md:w-auto">
-              + Create Product
+              <PlusCircle className="mr-2 h-5 w-5" /> Create Product
             </Button>
           </DialogTrigger>
           <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[600px]">
@@ -88,7 +125,7 @@ export const ProductManagementContent = ({
         </Dialog>
       </div>
 
-      {/* Products Table */}
+      {/* Products Table & Insights */}
       {products.length === 0 ? (
         <Card className="border-dashed">
           <CardContent className="flex min-h-[300px] flex-col items-center justify-center gap-4">
@@ -122,70 +159,136 @@ export const ProductManagementContent = ({
         </Card>
       ) : (
         <>
-          <div className="w-full">
-            <DataTable
-              columns={createColumns({ onDelete: handleDeleteProduct })}
-              data={products}
-            />
+          {/* KPI strip for small screens */}
+          <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:hidden">
+            <Card className="min-w-0">
+              <CardContent className="min-w-0 pt-4">
+                <p className="text-xs text-foreground/60">Total Products</p>
+                <p className="truncate text-base font-semibold tabular-nums sm:text-xl">
+                  {stats.total}
+                </p>
+              </CardContent>
+            </Card>
+            <Card className="min-w-0">
+              <CardContent className="min-w-0 pt-4">
+                <p className="text-xs text-foreground/60">In Stock</p>
+                <p className="truncate text-base font-semibold tabular-nums sm:text-xl">
+                  {stats.inStock}
+                </p>
+              </CardContent>
+            </Card>
+            <Card className="min-w-0">
+              <CardContent className="min-w-0 pt-4">
+                <p className="text-xs text-foreground/60">Total Value</p>
+                <p className="truncate text-base font-semibold tabular-nums sm:text-xl">
+                  {formatToCOP(stats.totalValue)}
+                </p>
+              </CardContent>
+            </Card>
           </div>
 
-          {/* Statistics Footer */}
-          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <Card>
-              <CardContent className="flex flex-col gap-2 pt-6">
-                <p className="text-sm text-foreground/60">Total Products</p>
-                <p className="text-3xl font-bold text-foreground">
-                  {products.length}
-                </p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="flex flex-col gap-2 pt-6">
-                <p className="text-sm text-foreground/60">In Stock</p>
-                <p className="text-3xl font-bold text-foreground">
-                  {products.filter((p) => p.inStock).length}
-                </p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="flex flex-col gap-2 pt-6">
-                <p className="text-sm text-foreground/60">Out of Stock</p>
-                <p className="text-3xl font-bold text-foreground">
-                  {products.filter((p) => !p.inStock).length}
-                </p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="flex flex-col gap-2 pt-6">
-                <p className="text-sm text-foreground/60">Categories</p>
-                <p className="text-3xl font-bold text-foreground">
-                  {new Set(products.map((p) => p.category)).size}
-                </p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="flex flex-col gap-2 pt-6">
-                <p className="text-sm text-foreground/60">Total Value</p>
-                <p className="text-3xl font-bold text-foreground">
-                  {formatToCOP(
-                    products.reduce((sum, p) => sum + Number(p.price), 0)
-                  )}
-                </p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="flex flex-col gap-2 pt-6">
-                <p className="text-sm text-foreground/60">Average Price</p>
-                <p className="text-3xl font-bold text-foreground">
-                  {products.length > 0
-                    ? formatToCOP(
-                        products.reduce((sum, p) => sum + Number(p.price), 0) /
-                          products.length
-                      )
-                    : formatToCOP(0)}
-                </p>
-              </CardContent>
-            </Card>
+          {/* Main content + sticky insights sidebar */}
+          <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
+            <div className="order-2 lg:order-1">
+              <DataTable
+                columns={createColumns({ onDelete: handleDeleteProduct })}
+                data={products}
+              />
+            </div>
+            <aside className="order-1 lg:order-2 lg:sticky lg:top-24">
+              <Card className="min-w-0">
+                <CardContent className="space-y-4 pt-6">
+                  <div>
+                    <p className="text-sm font-medium">Inventory Insights</p>
+                    <p className="text-xs text-foreground/60">
+                      Quick KPIs for your catalog
+                    </p>
+                  </div>
+                  <div className="grid gap-3">
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <span className="text-sm text-foreground/60">
+                        Total Products
+                      </span>
+                      <span className="text-sm font-semibold">
+                        {stats.total}
+                      </span>
+                    </div>
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <span className="text-sm text-foreground/60">
+                        In Stock
+                      </span>
+                      <span className="text-sm font-semibold">
+                        {stats.inStock}
+                      </span>
+                    </div>
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <span className="text-sm text-foreground/60">
+                        Out of Stock
+                      </span>
+                      <span className="text-sm font-semibold">
+                        {stats.outOfStock}
+                      </span>
+                    </div>
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <span className="text-sm text-foreground/60">
+                        Stock %
+                      </span>
+                      <span className="text-sm font-semibold">
+                        {stats.stockPct}%
+                      </span>
+                    </div>
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <span className="text-sm text-foreground/60">
+                        Categories
+                      </span>
+                      <span className="text-sm font-semibold">
+                        {stats.categoriesCount}
+                      </span>
+                    </div>
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <span className="text-sm text-foreground/60">
+                        Top Category
+                      </span>
+                      <span className="text-sm font-semibold capitalize">
+                        {stats.mostCommonCategory}
+                      </span>
+                    </div>
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <span className="text-sm text-foreground/60">
+                        Total Value
+                      </span>
+                      <span className="text-sm font-semibold">
+                        {formatToCOP(stats.totalValue)}
+                      </span>
+                    </div>
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <span className="text-sm text-foreground/60">
+                        Average Price
+                      </span>
+                      <span className="text-sm font-semibold">
+                        {formatToCOP(stats.avgPrice)}
+                      </span>
+                    </div>
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <span className="text-sm text-foreground/60">
+                        Highest Price
+                      </span>
+                      <span className="text-sm font-semibold">
+                        {formatToCOP(stats.maxPrice)}
+                      </span>
+                    </div>
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <span className="text-sm text-foreground/60">
+                        Lowest Price
+                      </span>
+                      <span className="text-sm font-semibold">
+                        {formatToCOP(stats.minPrice)}
+                      </span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </aside>
           </div>
         </>
       )}
