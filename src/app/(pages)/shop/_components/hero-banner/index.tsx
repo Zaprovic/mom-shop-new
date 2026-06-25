@@ -9,7 +9,7 @@ const HeroBanner = () => {
             Shop All Products
           </h1>
           <p className="text-lg text-muted-foreground">
-            Discover our complete collection of premium beauty and skincare
+            Find our complete collection of premium beauty and skincare
             products. Find your perfect match.
           </p>
         </div>

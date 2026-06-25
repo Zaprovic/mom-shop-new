@@ -15,10 +15,10 @@ export async function POST(req: Request) {
 
   if (!CLERK_WEBHOOK_SIGNING_SECRET) {
     console.error(
-      "❌ CLERK_WEBHOOK_SIGNING_SECRET not found in environment variables"
+      "❌ CLERK_WEBHOOK_SIGNING_SECRET not found in environment variables",
     );
     throw new Error(
-      "Please add CLERK_WEBHOOK_SIGNING_SECRET from Clerk Dashboard to .env or .env.local"
+      "Please add CLERK_WEBHOOK_SIGNING_SECRET from Clerk Dashboard to .env or .env.local",
     );
   }
 
