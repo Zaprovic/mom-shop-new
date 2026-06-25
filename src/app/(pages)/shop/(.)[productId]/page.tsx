@@ -1,6 +1,5 @@
-import { products } from "@/mock/products";
 import { ProductModalWrapper } from "../_components/product-modal";
-import { ProductFormData } from "@/schemas/product.schema";
+import { db } from "@/db";
 
 export default async function ProductInterceptPage({
   params,
@@ -9,9 +8,31 @@ export default async function ProductInterceptPage({
 }) {
   const { productId } = await params;
   const idNum = parseInt(productId || "", 10);
-  const product = products.find((p) => p.id === idNum) as
-    | ProductFormData
-    | undefined;
+
+  const productData = !isNaN(idNum)
+    ? await db.query.product.findFirst({
+        where: (product, { eq }) => eq(product.id, idNum),
+        with: {
+          productCategory: {
+            with: {
+              category: true,
+            },
+          },
+        },
+      })
+    : undefined;
+
+  const product = productData
+    ? {
+        id: productData.id,
+        name: productData.name,
+        price: productData.price,
+        imageUrl: productData.imageUrl,
+        inStock: productData.inStock,
+        category:
+          productData.productCategory[0]?.category.name || "Uncategorized",
+      }
+    : undefined;
 
   if (!product) {
     return null;

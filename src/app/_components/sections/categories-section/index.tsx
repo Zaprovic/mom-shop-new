@@ -6,26 +6,28 @@ const CategoriesSection = () => {
     <section className="container mx-auto px-4 py-16">
       <div className="text-center mb-12">
         <h2 className="text-3xl md:text-4xl font-bold mb-4">
-          Shop by Category
+          Comprar por Categoría
         </h2>
-        <p className="text-muted-foreground">Explore our curated collections</p>
+        <p className="text-muted-foreground">
+          Explora nuestras colecciones seleccionadas
+        </p>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
         {[
           {
-            name: "Skincare",
+            name: "Cuidado de la Piel",
             icon: "✨",
           },
           {
-            name: "Makeup",
+            name: "Maquillaje",
             icon: "💄",
           },
           {
-            name: "Haircare",
+            name: "Cuidado del Cabello",
             icon: "💆‍♀️",
           },
           {
-            name: "Fragrance",
+            name: "Fragancias",
             icon: "🌸",
           },
         ].map((category) => (

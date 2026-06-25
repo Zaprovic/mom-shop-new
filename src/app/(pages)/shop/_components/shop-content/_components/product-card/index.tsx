@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ProductImage, ProductRating, PriceAndCTA } from "./shared";
+import { ProductImage, PriceAndCTA } from "./shared";
 import { Heart } from "lucide-react";
 import Link from "next/link";
 import { ProductFormData } from "@/schemas/product.schema";
@@ -35,8 +35,6 @@ function ProductCardList({ product }: props) {
                     <Heart className="h-4 w-4" />
                   </Button>
                 </div>
-
-                <ProductRating product={product} />
               </div>
 
               <PriceAndCTA product={product} mode="list" />
@@ -66,8 +64,6 @@ function ProductCardGrid({ product }: props) {
             <p className="text-[11px] text-muted-foreground">
               {product.category}
             </p>
-
-            <ProductRating product={product} />
 
             <PriceAndCTA product={product} mode="grid" />
           </div>

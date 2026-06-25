@@ -5,25 +5,24 @@ export const productSchema = z.object({
   name: z
     .string()
     .min(2, {
-      message: "Product name must be at least 2 characters.",
+      message: "El nombre del producto debe tener al menos 2 caracteres.",
     })
     .max(100, {
-      message: "Product name must not exceed 100 characters.",
+      message: "El nombre del producto no debe exceder los 100 caracteres.",
     }),
   price: z.coerce.number().min(0, {
-    message: "Price must be a non-negative number.",
+    message: "El precio debe ser un número no negativo.",
   }),
   category: z.string().min(1, {
-    message: "Please select a category.",
+    message: "Por favor selecciona una categoría.",
   }),
-  rating: z.coerce.number().min(0).max(5, {
-    message: "Rating must be between 0 and 5.",
+  imageUrl: z.string().url({
+    message: "Por favor ingresa una URL válida.",
   }),
-  reviews: z.coerce.number().min(0, {
-    message: "Number of reviews must be a non-negative integer.",
-  }),
-  badge: z.union([z.string(), z.null()]).optional(),
   inStock: z.boolean(),
 });
 
+export const productFormSchema = productSchema.omit({ id: true });
+
 export type ProductFormData = z.infer<typeof productSchema>;
+export type ProductFormValues = z.infer<typeof productFormSchema>;

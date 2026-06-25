@@ -30,10 +30,17 @@ export function ShopContent({
   categories,
   sortOptions,
 }: props) {
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const maxPrice = Math.max(
+    ...initialProducts.map((p) =>
+      typeof p.price === "string" ? parseFloat(p.price) : p.price
+    ),
+    5_000_000
+  );
+
+  const [selectedCategory, setSelectedCategory] = useState("Todos");
   const [sortBy, setSortBy] = useState("featured");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 100]);
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, maxPrice]);
   const [showFilters, setShowFilters] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -73,7 +80,7 @@ export function ShopContent({
   const filteredProducts = initialProducts
     .filter((product) => {
       // Category filter
-      if (selectedCategory !== "All" && product.category !== selectedCategory)
+      if (selectedCategory !== "Todos" && product.category !== selectedCategory)
         return false;
       // Price range filter
       const price =
@@ -102,10 +109,6 @@ export function ShopContent({
           return (priceA ?? 0) - (priceB ?? 0);
         case "price-desc":
           return (priceB ?? 0) - (priceA ?? 0);
-        case "rating":
-          return Number(b.rating) - Number(a.rating);
-        case "reviews":
-          return Number(b.reviews) - Number(a.reviews);
         default:
           return 0;
       }
@@ -167,14 +170,14 @@ export function ShopContent({
 
   const handleResetFilters = () => {
     setSelectedCategoryWithReset("All");
-    setPriceRangeWithReset([0, 100]);
+    setPriceRangeWithReset([0, maxPrice]);
     setSortByWithReset("featured");
     setSearchQueryWithReset("");
   };
 
   const handleClearFilters = () => {
     setSelectedCategoryWithReset("All");
-    setPriceRangeWithReset([0, 100]);
+    setPriceRangeWithReset([0, maxPrice]);
     setSearchQueryWithReset("");
   };
 
@@ -237,6 +240,7 @@ export function ShopContent({
             onPriceRangeChange={setPriceRangeWithReset}
             onResetFilters={handleResetFilters}
             showFilters={showFilters}
+            maxPrice={maxPrice}
           />
 
           {/* Products Grid/List */}

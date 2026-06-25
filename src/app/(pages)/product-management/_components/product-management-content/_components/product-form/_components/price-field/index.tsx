@@ -22,7 +22,7 @@ export const PriceField = ({ disabled }: IFormFieldProps) => {
       render={({ field }) => (
         <FormItem>
           <FormLabel>
-            Price <CircleDollarSign className="size-4" />{" "}
+            Precio <CircleDollarSign className="size-4" />{" "}
           </FormLabel>
           <FormControl>
             <Input
@@ -34,7 +34,7 @@ export const PriceField = ({ disabled }: IFormFieldProps) => {
               disabled={disabled}
             />
           </FormControl>
-          <FormDescription>Product price in USD</FormDescription>
+          <FormDescription>Precio del producto en USD</FormDescription>
           <FormMessage />
         </FormItem>
       )}

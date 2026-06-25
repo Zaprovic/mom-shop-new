@@ -27,9 +27,9 @@ export const StockField = ({ disabled }: IFormFieldProps) => {
             />
           </FormControl>
           <div className="flex flex-col gap-1">
-            <FormLabel className="font-medium">In Stock</FormLabel>
+            <FormLabel className="font-medium">En Stock</FormLabel>
             <FormDescription>
-              Is this product currently available?
+              ¿Está este producto disponible actualmente?
             </FormDescription>
           </div>
         </FormItem>

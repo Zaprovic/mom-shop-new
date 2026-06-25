@@ -12,25 +12,23 @@ import { Input } from "@/components/ui/input";
 import { type ProductFormData } from "@/schemas/product.schema";
 import { type IFormFieldProps } from "../../types";
 
-export const ReviewsField = ({ disabled }: IFormFieldProps) => {
+export const ImageUrlField = ({ disabled }: IFormFieldProps) => {
   const { control } = useFormContext<ProductFormData>();
   return (
     <FormField
       control={control}
-      name="reviews"
+      name="imageUrl"
       render={({ field }) => (
         <FormItem>
-          <FormLabel>Number of Reviews</FormLabel>
+          <FormLabel>URL de la Imagen</FormLabel>
           <FormControl>
             <Input
-              placeholder="0"
-              type="number"
-              min="0"
+              placeholder="Ingresa la URL de la imagen..."
               {...field}
               disabled={disabled}
             />
           </FormControl>
-          <FormDescription>Total number of customer reviews</FormDescription>
+          <FormDescription>La URL de la imagen del producto</FormDescription>
           <FormMessage />
         </FormItem>
       )}

@@ -53,7 +53,7 @@ export function FiltersBar({
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 type="text"
-                placeholder="Search products..."
+                placeholder="Buscar productos..."
                 value={searchQuery}
                 onChange={(e) => onSearchChange(e.target.value)}
                 className="pl-9"
@@ -65,7 +65,7 @@ export function FiltersBar({
               {/* Sort Dropdown */}
               <Select value={sortBy} onValueChange={onSortChange}>
                 <SelectTrigger className="w-full md:w-[180px]">
-                  <SelectValue placeholder="Sort by" />
+                  <SelectValue placeholder="Ordenar por" />
                 </SelectTrigger>
                 <SelectContent>
                   {sortOptions.map((option) => (

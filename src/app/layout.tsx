@@ -4,7 +4,10 @@ import { ThemeProvider } from "@/components/providers/theme-provider";
 import Header from "@/components/global/header";
 import { Toaster } from "@/components/ui/sonner";
 import { ClerkProvider } from "@clerk/nextjs";
+import { getUser } from "@/server/auth";
 import "./globals.css";
+
+// this is just a test comment
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -13,19 +16,21 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "GlowBeauty - Premium Beauty & Skincare Products",
+  title: "GlowBeauty - Productos de Belleza y Cuidado de la Piel Premium",
   description:
-    "Discover premium beauty and skincare products crafted with natural ingredients. Transform your daily routine into a luxurious self-care ritual.",
+    "Descubre productos de belleza y cuidado de la piel premium elaborados con ingredientes naturales. Transforma tu rutina diaria en un lujoso ritual de autocuidado.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  await getUser();
+
   return (
     <ClerkProvider>
-      <html lang="en" suppressHydrationWarning>
+      <html lang="es" suppressHydrationWarning>
         <body className={`${poppins.variable} antialiased`}>
           <ThemeProvider
             attribute={"class"}

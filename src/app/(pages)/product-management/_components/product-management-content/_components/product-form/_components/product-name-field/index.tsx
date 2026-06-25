@@ -20,16 +20,16 @@ export const ProductNameField = ({ disabled }: IFormFieldProps) => {
       name="name"
       render={({ field }) => (
         <FormItem>
-          <FormLabel>Product Name</FormLabel>
+          <FormLabel>Nombre del Producto</FormLabel>
           <FormControl>
             <Input
-              placeholder="Enter product name..."
+              placeholder="Ingresa el nombre del producto..."
               {...field}
               disabled={disabled}
             />
           </FormControl>
           <FormDescription>
-            The name of your product (2-100 characters)
+            El nombre de tu producto (2-100 caracteres)
           </FormDescription>
           <FormMessage />
         </FormItem>

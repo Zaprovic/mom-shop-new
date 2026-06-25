@@ -9,18 +9,20 @@ const BenefitsSection = () => {
         {[
           {
             icon: <TrendingUp className="h-8 w-8" />,
-            title: "Premium Quality",
-            description: "Only the finest natural ingredients in every product",
+            title: "Calidad Premium",
+            description:
+              "Solo los mejores ingredientes naturales en cada producto",
           },
           {
             icon: <Heart className="h-8 w-8" />,
-            title: "Cruelty-Free",
-            description: "All products are ethically sourced and tested",
+            title: "Libre de Crueldad",
+            description: "Todos los productos son de origen ético y probados",
           },
           {
             icon: <Sparkles className="h-8 w-8" />,
-            title: "Visible Results",
-            description: "See the difference in just 7 days or money back",
+            title: "Resultados Visibles",
+            description:
+              "Ve la diferencia en solo 7 días o te devolvemos tu dinero",
           },
         ].map((benefit, i) => (
           <Card key={i} className="text-center">

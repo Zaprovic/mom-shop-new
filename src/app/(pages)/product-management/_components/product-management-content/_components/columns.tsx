@@ -11,81 +11,76 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { MoreHorizontal, Trash2 } from "lucide-react";
+import { MoreHorizontal, Trash2, Edit } from "lucide-react";
 import { ProductFormData } from "@/schemas/product.schema";
+import Image from "next/image";
+import { formatToCOP } from "@/lib/utils";
 
 interface ColumnsProps {
   onDelete: (id: number) => void;
+  onEdit: (product: ProductFormData) => void;
 }
 
 export const createColumns = ({
   onDelete,
+  onEdit,
 }: ColumnsProps): ColumnDef<ProductFormData>[] => [
   {
     accessorKey: "name",
-    header: "Name",
+    header: "Nombre",
     cell: ({ row }) => {
       const name = row.getValue("name") as string;
       return <div className="font-medium">{name}</div>;
     },
+    size: 250,
   },
   {
     accessorKey: "category",
-    header: "Category",
+    header: "Categoría",
     cell: ({ row }) => {
       const category = row.getValue("category") as string;
       return <div className="capitalize">{category}</div>;
     },
+    size: 150,
   },
   {
     accessorKey: "price",
-    header: "Price",
+    header: () => <div className="text-right">Precio</div>,
     cell: ({ row }) => {
       const price = row.getValue("price") as number;
-      return <div className="text-right font-medium">${price.toFixed(2)}</div>;
+      return (
+        <div className="text-right font-medium tabular-nums">
+          {formatToCOP(price)}
+        </div>
+      );
     },
+    size: 180,
   },
   {
-    accessorKey: "rating",
-    header: "Rating",
+    accessorKey: "imageUrl",
+    header: "Imagen",
     cell: ({ row }) => {
-      const rating = row.getValue("rating") as number;
-      return <div className="text-center">{rating.toFixed(1)} ⭐</div>;
+      const imageUrl = row.getValue("imageUrl") as string;
+      return (
+        <div className="h-10 w-10 overflow-hidden rounded-md">
+          <Image src={imageUrl} alt="Product" width={40} height={40} />
+        </div>
+      );
     },
-  },
-  {
-    accessorKey: "reviews",
-    header: "Reviews",
-    cell: ({ row }) => {
-      const reviews = row.getValue("reviews") as number;
-      return <div className="text-center">{reviews}</div>;
-    },
+    size: 80,
   },
   {
     accessorKey: "inStock",
-    header: "Stock",
+    header: "Inventario",
     cell: ({ row }) => {
       const inStock = row.getValue("inStock") as boolean;
       return (
         <Badge variant={inStock ? "default" : "destructive"}>
-          {inStock ? "In Stock" : "Out of Stock"}
+          {inStock ? "En Stock" : "Agotado"}
         </Badge>
       );
     },
-  },
-  {
-    accessorKey: "badge",
-    header: "Badge",
-    cell: ({ row }) => {
-      const badge = row.getValue("badge") as string | null;
-      return badge ? (
-        <Badge variant="secondary" className="capitalize">
-          {badge}
-        </Badge>
-      ) : (
-        <span className="text-muted-foreground">—</span>
-      );
-    },
+    size: 140,
   },
   {
     id: "actions",
@@ -96,12 +91,16 @@ export const createColumns = ({
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
+              <span className="sr-only">Abrir menú</span>
               <MoreHorizontal className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuLabel>Acciones</DropdownMenuLabel>
+            <DropdownMenuItem onClick={() => onEdit(product)}>
+              <Edit className="mr-2 h-4 w-4" />
+              Edit
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
               className="text-destructive"
@@ -114,5 +113,6 @@ export const createColumns = ({
         </DropdownMenu>
       );
     },
+    size: 70,
   },
 ];

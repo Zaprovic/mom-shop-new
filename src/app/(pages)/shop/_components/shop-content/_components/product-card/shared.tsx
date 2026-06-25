@@ -1,8 +1,10 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Star, Heart, Sparkles } from "lucide-react";
+import { Heart, Sparkles } from "lucide-react";
 import { ProductFormData } from "@/schemas/product.schema";
+import Image from "next/image";
+import { formatToCOP } from "@/lib/utils";
 
 type ImageProps = {
   product: ProductFormData;
@@ -20,20 +22,20 @@ export function ProductImage({ product, mode }: ImageProps) {
           : "w-28 h-28 bg-muted rounded-lg flex items-center justify-center flex-shrink-0 relative overflow-hidden"
       }
     >
-      <Sparkles
-        className={isGrid ? "h-14 w-14 text-primary" : "h-10 w-10 text-primary"}
-      />
-
-      {product.badge && (
-        <Badge
+      {product.imageUrl ? (
+        <Image
+          src={product.imageUrl}
+          alt={product.name}
+          width={400}
+          height={400}
+          className="h-full w-full object-cover"
+        />
+      ) : (
+        <Sparkles
           className={
-            isGrid
-              ? "absolute top-3 left-3 bg-background text-foreground"
-              : "absolute top-2 left-2 text-xs bg-background text-foreground"
+            isGrid ? "h-14 w-14 text-primary" : "h-10 w-10 text-primary"
           }
-        >
-          {product.badge}
-        </Badge>
+        />
       )}
 
       {/* Wishlist / Heart */}
@@ -52,34 +54,9 @@ export function ProductImage({ product, mode }: ImageProps) {
       {/* Stock overlay for grid */}
       {isGrid && !product.inStock && (
         <div className="absolute inset-0 bg-background/80 backdrop-blur flex items-center justify-center">
-          <Badge variant="secondary">Out of Stock</Badge>
+          <Badge variant="secondary">Agotado</Badge>
         </div>
       )}
-    </div>
-  );
-}
-
-type RatingProps = {
-  product: ProductFormData;
-};
-
-export function ProductRating({ product }: RatingProps) {
-  return (
-    <div className="flex items-center gap-1">
-      {[...Array(5)].map((_, i) => (
-        <Star
-          key={i}
-          className={`h-3 w-3 ${
-            i < Math.floor(Number(product.rating) || 0)
-              ? "text-chart-4 fill-chart-4"
-              : "text-muted fill-muted"
-          }`}
-        />
-      ))}
-      <span className="text-xs text-muted-foreground ml-1">
-        {product.rating} ({product.reviews}
-        {product.reviews !== undefined ? "" : ""})
-      </span>
     </div>
   );
 }
@@ -100,8 +77,8 @@ export function PriceAndCTA({ product, mode }: PriceCTAProps) {
           : "flex items-center justify-between"
       }
     >
-      <span className={isGrid ? "text-lg font-bold" : "text-xl font-bold"}>
-        ${product.price}
+      <span className={isGrid ? "text-base font-bold" : "text-xl font-bold"}>
+        {formatToCOP(product.price)}
       </span>
       <Button
         size={isGrid ? "sm" : undefined}
@@ -110,7 +87,11 @@ export function PriceAndCTA({ product, mode }: PriceCTAProps) {
           isGrid ? "group-hover:translate-x-1 transition-transform" : undefined
         }
       >
-        {product.inStock ? "Add to Cart" : "Out of Stock"}
+        {product.inStock ? (
+          <span className="text-xs">Añadir</span>
+        ) : (
+          <span className="text-xs">Agotado</span>
+        )}
       </Button>
     </div>
   );

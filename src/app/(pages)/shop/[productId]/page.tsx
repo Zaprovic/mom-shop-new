@@ -1,11 +1,11 @@
 import React from "react";
-import { products } from "@/mock/products";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Star, Heart, ShoppingCart, ArrowLeft } from "lucide-react";
+import { Heart, ShoppingCart, ArrowLeft } from "lucide-react";
 import Link from "next/link";
-import { ProductFormData } from "@/schemas/product.schema";
+import Image from "next/image";
+import { db } from "@/db";
+import { formatToCOP } from "@/lib/utils";
 
 export default async function SingleProductPage({
   params,
@@ -15,21 +15,43 @@ export default async function SingleProductPage({
   const { productId } = await params;
 
   const idNum = parseInt(productId || "", 10);
-  const product = products.find((p) => p.id === idNum) as
-    | ProductFormData
-    | undefined;
+
+  const productData = !isNaN(idNum)
+    ? await db.query.product.findFirst({
+        where: (product, { eq }) => eq(product.id, idNum),
+        with: {
+          productCategory: {
+            with: {
+              category: true,
+            },
+          },
+        },
+      })
+    : undefined;
+
+  const product = productData
+    ? {
+        id: productData.id,
+        name: productData.name,
+        price: productData.price,
+        imageUrl: productData.imageUrl,
+        inStock: productData.inStock,
+        category:
+          productData.productCategory[0]?.category.name || "Sin Categoría",
+      }
+    : undefined;
 
   if (!product) {
     return (
       <div className="max-w-4xl mx-auto px-4 py-10">
         <Card>
           <CardContent className="text-center py-12">
-            <h2 className="text-2xl font-bold mb-2">Product not found</h2>
+            <h2 className="text-2xl font-bold mb-2">Producto no encontrado</h2>
             <p className="text-muted-foreground mb-4">
-              We couldn&apos;t find the product you&apos;re looking for.
+              No pudimos encontrar el producto que buscas.
             </p>
             <Link href="/shop">
-              <Button variant="outline">Back to shop</Button>
+              <Button variant="outline">Volver a la tienda</Button>
             </Link>
           </CardContent>
         </Card>
@@ -44,8 +66,18 @@ export default async function SingleProductPage({
         <div className="w-full lg:w-1/2">
           <div className="rounded-xl overflow-hidden bg-muted p-6 flex items-center justify-center">
             {/* Placeholder visual using icon to match product-card style */}
-            <div className="w-full h-[420px] bg-gradient-to-b from-muted/60 to-muted/40 rounded-lg flex items-center justify-center">
-              <ShoppingCart className="h-28 w-28 text-primary" />
+            <div className="w-full h-[420px] bg-gradient-to-b from-muted/60 to-muted/40 rounded-lg flex items-center justify-center overflow-hidden">
+              {product.imageUrl ? (
+                <Image
+                  src={product.imageUrl}
+                  alt={product.name}
+                  width={400}
+                  height={400}
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                <ShoppingCart className="h-28 w-28 text-primary" />
+              )}
             </div>
           </div>
           <div className="mt-4 flex gap-3">
@@ -70,7 +102,6 @@ export default async function SingleProductPage({
             >
               <ArrowLeft className="h-4 w-4" /> Back
             </Link>
-            {product.badge && <Badge>{product.badge}</Badge>}
           </div>
 
           <h1 className="text-3xl font-semibold mb-2">{product.name}</h1>
@@ -78,32 +109,12 @@ export default async function SingleProductPage({
             {product.category}
           </p>
 
-          {/* Rating */}
-          <div className="flex items-center gap-2 mb-6">
-            <div className="flex items-center gap-1">
-              {[...Array(5)].map((_, i) => {
-                const ratingNum = Number(product.rating) || 0;
-                return (
-                  <Star
-                    key={i}
-                    className={`h-4 w-4 ${
-                      i < Math.floor(ratingNum)
-                        ? "text-chart-4 fill-chart-4"
-                        : "text-muted fill-muted"
-                    }`}
-                  />
-                );
-              })}
-            </div>
-            <span className="text-sm text-muted-foreground">
-              {product.rating} • {product.reviews} reviews
-            </span>
-          </div>
-
           {/* Price & Actions */}
           <div className="flex items-center gap-6 mb-6">
             <div>
-              <div className="text-3xl font-bold">${product.price}</div>
+              <div className="text-3xl font-bold">
+                {formatToCOP(product.price)}
+              </div>
               {!product.inStock && (
                 <div className="text-sm text-destructive mt-1">
                   Out of stock
@@ -127,14 +138,12 @@ export default async function SingleProductPage({
               <CardContent>
                 <h3 className="font-semibold mb-2">Highlights</h3>
                 <ul className="text-sm text-muted-foreground space-y-2 list-inside list-disc">
-                  <li>Highly rated by customers — {product.rating} stars</li>
                   <li>Category: {product.category}</li>
                   <li>
                     {product.inStock
                       ? "Available now"
                       : "Currently out of stock"}
                   </li>
-                  <li>{product.reviews} customer reviews</li>
                 </ul>
               </CardContent>
             </Card>

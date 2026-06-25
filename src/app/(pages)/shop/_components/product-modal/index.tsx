@@ -3,11 +3,11 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { X, ExternalLink, Star, Heart, ShoppingCart } from "lucide-react";
+import { X, ExternalLink, Heart, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import { ProductFormData } from "@/schemas/product.schema";
+import Image from "next/image";
 
 type Props = {
   product: ProductFormData;
@@ -78,7 +78,7 @@ export function ProductModal({ product, onClose }: Props) {
                 href={`/shop/${product.id}`}
                 className="text-sm text-primary hover:underline flex items-center gap-1"
               >
-                View full details <ExternalLink className="h-3 w-3" />
+                Ver detalles completos <ExternalLink className="h-3 w-3" />
               </Link>
               <Button
                 variant="ghost"
@@ -101,8 +101,18 @@ export function ProductModal({ product, onClose }: Props) {
                 }`}
               >
                 <div className="rounded-xl overflow-hidden bg-muted p-4">
-                  <div className="w-full h-[300px] lg:h-[350px] bg-gradient-to-b from-muted/60 to-muted/40 rounded-lg flex items-center justify-center">
-                    <ShoppingCart className="h-20 w-20 text-primary" />
+                  <div className="w-full h-[300px] lg:h-[350px] bg-gradient-to-b from-muted/60 to-muted/40 rounded-lg flex items-center justify-center overflow-hidden">
+                    {product.imageUrl ? (
+                      <Image
+                        src={product.imageUrl}
+                        width={400}
+                        height={400}
+                        alt={product.name}
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      <ShoppingCart className="h-20 w-20 text-primary" />
+                    )}
                   </div>
                 </div>
                 {/* Thumbnails */}
@@ -135,29 +145,6 @@ export function ProductModal({ product, onClose }: Props) {
                       {product.category}
                     </p>
                   </div>
-                  {product.badge && <Badge>{product.badge}</Badge>}
-                </div>
-
-                {/* Rating */}
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="flex items-center gap-1">
-                    {[...Array(5)].map((_, i) => {
-                      const ratingNum = Number(product.rating) || 0;
-                      return (
-                        <Star
-                          key={i}
-                          className={`h-4 w-4 ${
-                            i < Math.floor(ratingNum)
-                              ? "text-chart-4 fill-chart-4"
-                              : "text-muted fill-muted"
-                          }`}
-                        />
-                      );
-                    })}
-                  </div>
-                  <span className="text-sm text-muted-foreground">
-                    {product.rating} • {product.reviews} reviews
-                  </span>
                 </div>
 
                 {/* Price */}
@@ -189,14 +176,12 @@ export function ProductModal({ product, onClose }: Props) {
                   <CardContent className="p-4">
                     <h3 className="font-semibold mb-2 text-sm">Quick Info</h3>
                     <ul className="text-sm text-muted-foreground space-y-1.5 list-inside list-disc">
-                      <li>Rating: {product.rating} stars</li>
                       <li>Category: {product.category}</li>
                       <li>
                         {product.inStock
                           ? "Available now"
                           : "Currently out of stock"}
                       </li>
-                      <li>{product.reviews} customer reviews</li>
                     </ul>
                   </CardContent>
                 </Card>

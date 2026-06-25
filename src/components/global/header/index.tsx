@@ -24,12 +24,10 @@ const Header = () => {
           </Link>
         </div>
         <nav className="hidden md:flex items-center gap-6">
-          <NavItem href="/shop">Shop</NavItem>
+          <NavItem href="/shop">Tienda</NavItem>
           <SignedIn>
-            <NavItem href="/product-management">My products</NavItem>
+            <NavItem href="/product-management">Mis productos</NavItem>
           </SignedIn>
-          <NavItem href="#">Makeup</NavItem>
-          <NavItem href="#">About</NavItem>
         </nav>
         <div className="flex items-center gap-2">
           <Button variant="ghost" size="icon">
@@ -44,7 +42,7 @@ const Header = () => {
           <SignedOut>
             <Link href="/sign-in">
               <Button variant="default" size="sm" className="hidden md:flex">
-                Sign In
+                Iniciar Sesión
               </Button>
             </Link>
           </SignedOut>
@@ -65,43 +63,37 @@ const Header = () => {
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
         <SheetContent side="left">
           <SheetHeader>
-            <SheetTitle>Navigation</SheetTitle>
+            <SheetTitle>Navegación</SheetTitle>
           </SheetHeader>
           <div className="flex flex-col gap-4">
             <NavItem href="/" onClick={() => setIsOpen(false)}>
-              Home
+              Inicio
             </NavItem>
             <NavItem href="/shop" onClick={() => setIsOpen(false)}>
-              Shop
+              Tienda
             </NavItem>
             <SignedIn>
               <NavItem
                 href="/product-management"
                 onClick={() => setIsOpen(false)}
               >
-                Manage my products
+                Gestionar mis productos
               </NavItem>
             </SignedIn>
-            <NavItem href="#" onClick={() => setIsOpen(false)}>
-              Makeup
-            </NavItem>
-            <NavItem href="#" onClick={() => setIsOpen(false)}>
-              About
-            </NavItem>
 
             {/* Mobile Authentication */}
             <div className="pt-4 border-t">
               <SignedOut>
                 <Link href="/sign-in" onClick={() => setIsOpen(false)}>
                   <Button variant="default" className="w-full">
-                    Sign In
+                    Iniciar Sesión
                   </Button>
                 </Link>
               </SignedOut>
               <SignedIn>
                 <div className="flex items-center gap-2">
                   <UserButton afterSignOutUrl="/" />
-                  <span className="text-sm text-foreground/80">Account</span>
+                  <span className="text-sm text-foreground/80">Cuenta</span>
                 </div>
               </SignedIn>
             </div>
